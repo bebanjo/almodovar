@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'steak'
 require 'webmock'
 require "almodovar"

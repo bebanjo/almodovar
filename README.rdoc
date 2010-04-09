@@ -1,0 +1,57 @@
+=Almodovar
+
+Almodovar is a client for BeBanjo Movida API written in Ruby
+  
+==Getting started
+
+Install the gem (make sure you have http://rubygems.org in your gem source list):
+
+  $ [sudo] gem install almodovar
+  
+Now, let's play with irb:
+
+  >> require 'almodovar'
+  => true
+
+First you need an authentication token:  
+
+  >> auth = Almodovar::DigestAuth.new("realm", "user", "password")
+  => #<Almodovar::DigestAuth:0x101f846c8 @password="secret", @username="robot_five", @realm="Staging Movida", @domain=nil>
+  
+Now you have to instantiate a resource given its URL. Let's try with the root of the api:
+  
+  >> movida = Almodovar::Resource("http://movida.example.com/api", auth)
+  => <movida>
+  <link href="http://movida.example.com/api/titles" rel="titles"/>
+  <link href="http://movida.example.com/api/platforms" rel="platforms"/>
+  <link href="http://movida.example.com/api/title_groups" rel="title_groups"/>
+  </movida>
+  
+Ok. Let's see what we have under _platforms_
+  
+  >> movida.platforms
+  => [<platform>
+  <name>YouTube</name>
+  <link href="http://movida.example.com/api/platforms/5/schedule" rel="schedule"/>
+  </platform>, <platform>
+  <name>Vimeo</name>
+  <link href="http://movida.example.com/api/platforms/6/schedule" rel="schedule"/>
+  </platform>]
+  
+Now, show me the _schedule_ of the first _platform_:
+  
+  >> movida.platforms.first.schedule
+  => <schedule>
+  <link href="http://movida.example.com/api/platforms/1/schedule/schedulings" rel="schedulings"/>
+  <link href="http://movida.example.com/api/platforms/1" rel="platform"/>
+  </schedule>
+  
+Next, explore and see the {docs of the API}[http://wiki.github.com/bebanjo/almodovar/] to know about other resources.
+  
+==To-do
+
+* Ability to use parameters in linked resource calls (e.g. <tt>movida.titles(:external_id => "C51234500001")</tt>)
+* Memoize linked resource calls so that the same request isn't make several times
+* Ability to take advantage of the API _expand_ functionality (e.g. <tt>movida.titles(:expand => [:schedule, :schedulings]).schedule.schedulings</tt>)
+
+Copyright (c) 2008 BeBanjo S.L., released under the MIT license
