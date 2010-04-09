@@ -1,7 +1,7 @@
 require 'resourceful'
 require 'nokogiri'
 
-module MovidaClient
+module Almodovar
   
   class DigestAuth < Resourceful::DigestAuthenticator
   end
@@ -10,6 +10,10 @@ module MovidaClient
     def initialize(auth, xml)
       @auth = auth
       @xml = xml
+    end
+    
+    def inspect
+      @xml.to_s
     end
     
     private
@@ -26,7 +30,7 @@ module MovidaClient
     
     def get_linked_resource(link)
       expansion = link.at_xpath("./*")
-      expansion ? MovidaClient.instantiate(expansion, @auth) : MovidaClient::Resource(link['href'], @auth)
+      expansion ? Almodovar.instantiate(expansion, @auth) : Almodovar::Resource(link['href'], @auth)
     end
     
     def node_text(node)

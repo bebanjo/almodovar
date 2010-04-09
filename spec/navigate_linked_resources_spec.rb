@@ -8,7 +8,7 @@ feature "Navigating linked resources" do
       </user>
     XML
     
-    user = MovidaClient::Resource("http://movida.example.com/user/1", auth)
+    user = Almodovar::Resource("http://movida.example.com/user/1", auth)
     
     stub_auth_request(:get, "http://movida.example.com/company/2").to_return(:body => <<-XML)
       <company>
@@ -27,7 +27,7 @@ feature "Navigating linked resources" do
       </company>
     XML
     
-    company = MovidaClient::Resource("http://movida.example.com/company/1", auth)
+    company = Almodovar::Resource("http://movida.example.com/company/1", auth)
     
     stub_auth_request(:get, "http://movida.example.com/company/1/users").to_return(:body => <<-XML)
       <users type="array">
@@ -56,7 +56,7 @@ feature "Navigating linked resources" do
       </user>
     XML
     
-    user = MovidaClient::Resource("http://movida.example.com/user/1", auth, :expand => :company)
+    user = Almodovar::Resource("http://movida.example.com/user/1", auth, :expand => :company)
     
     user.company.should_not be_nil
     user.company.age.should == 15
@@ -87,7 +87,7 @@ feature "Navigating linked resources" do
       </company>
     XML
     
-    company = MovidaClient::Resource("http://movida.example.com/company/1", auth, :expand => [:users, :department])
+    company = Almodovar::Resource("http://movida.example.com/company/1", auth, :expand => [:users, :department])
     
     company.users.size.should == 2
     company.users.first.department.name.should == "Sales"

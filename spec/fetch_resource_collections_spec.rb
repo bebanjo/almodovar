@@ -14,7 +14,7 @@ feature "Fetching resource collections" do
       </resources>
     XML
     
-    resources = MovidaClient::Resource("http://movida.example.com/resources", auth)
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth)
 
     resources.should have(2).resources
     resources.should be_a(Array)
@@ -31,7 +31,7 @@ feature "Fetching resource collections" do
       </resources>
     XML
         
-    resources = MovidaClient::Resource("http://movida.example.com/resources", auth, :name => "pedro")
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "pedro")
     
     resources.should have(1).resource
     resources.should be_a(Array)

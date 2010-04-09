@@ -11,7 +11,7 @@ feature "Fetching individual resources" do
       </resource>
     XML
     
-    resource = MovidaClient::Resource("http://movida.example.com/resource", auth)
+    resource = Almodovar::Resource("http://movida.example.com/resource", auth)
     
     resource.name.should == "Resource Name"
     resource.integer.should == "12345"
@@ -28,7 +28,7 @@ feature "Fetching individual resources" do
       </resource>
     XML
     
-    resource = MovidaClient::Resource("http://movida.example.com/resource", auth)
+    resource = Almodovar::Resource("http://movida.example.com/resource", auth)
     
     resource.integer.should == 12345
     resource.date.should == Time.utc(2009,1,1,10,0,0)

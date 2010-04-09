@@ -1,6 +1,6 @@
 require 'steak'
 require 'webmock'
-require "movida_client"
+require "almodovar"
 
 module Helpers  
   def stub_auth_request(*args)
@@ -8,7 +8,7 @@ module Helpers
   end
   
   def auth
-    MovidaClient::DigestAuth.new("realm", "user", "password")
+    Almodovar::DigestAuth.new("realm", "user", "password")
   end
 end
 
