@@ -54,4 +54,4 @@ Next, explore and see the {docs of the API}[http://wiki.github.com/bebanjo/almod
 * Memoize linked resource calls so that the same request isn't make several times
 * Ability to take advantage of the API _expand_ functionality (e.g. <tt>movida.titles(:expand => [:schedule, :schedulings]).schedule.schedulings</tt>)
 
-Copyright (c) 2008 BeBanjo S.L., released under the MIT license
+Copyright (c) 2010 BeBanjo S.L., released under the MIT license
