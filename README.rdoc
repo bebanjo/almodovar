@@ -1,6 +1,6 @@
 =Almodovar
 
-Almodovar is a client for BeBanjo Movida API written in Ruby
+Almodovar is a client for BeBanjo's Movida API written in Ruby
   
 ==Getting started
 
@@ -46,12 +46,12 @@ Now, show me the _schedule_ of the first _platform_:
   <link href="http://movida.example.com/api/platforms/1" rel="platform"/>
   </schedule>
   
-Next, explore and see the {docs of the API}[http://wiki.github.com/bebanjo/almodovar/] to know about other resources.
+Next, explore the {API docs}[http://wiki.github.com/bebanjo/almodovar/] to learn about other resources.
   
 ==To-do
 
 * Ability to use parameters in linked resource calls (e.g. <tt>movida.titles(:external_id => "C51234500001")</tt>)
-* Memoize linked resource calls so that the same request isn't make several times
+* Memoize linked resource calls so that the same request isn't made several times
 * Ability to take advantage of the API _expand_ functionality (e.g. <tt>movida.titles(:expand => [:schedule, :schedulings]).schedule.schedulings</tt>)
 
 Copyright (c) 2010 BeBanjo S.L., released under the MIT license
