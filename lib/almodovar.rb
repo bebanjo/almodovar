@@ -19,10 +19,10 @@ module Almodovar
     private
     
     def method_missing(meth, *args, &blk)
-      attribute = @xml.at_xpath("./*[name()='#{meth}']")
+      attribute = @xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
       return node_text(attribute) if attribute
       
-      link = @xml.at_xpath("./link[@rel='#{meth}']")
+      link = @xml.at_xpath("./link[@rel='#{meth}' or @rel='#{attribute_name(meth)}']")
       return get_linked_resource(link) if link
       
       super
@@ -40,6 +40,10 @@ module Almodovar
       else
         node.text
       end
+    end
+    
+    def attribute_name(attribute)
+      attribute.to_s.gsub('_', '-')
     end
   end
   

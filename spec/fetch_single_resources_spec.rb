@@ -6,16 +6,16 @@ feature "Fetching individual resources" do
     stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => <<-XML)
       <resource>
         <name>Resource Name</name>
-        <integer>12345</integer>
-        <date>2009-01-01T10:00:00Z</date>
+        <res_id>12345</res_id>
+        <creation-date>2009-01-01T10:00:00Z</creation-date>
       </resource>
     XML
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
     
     resource.name.should == "Resource Name"
-    resource.integer.should == "12345"
-    resource.date.should == "2009-01-01T10:00:00Z"
+    resource.res_id.should == "12345"
+    resource.creation_date.should == "2009-01-01T10:00:00Z"
     
     expect { resource.wadus }.to raise_error(NoMethodError)
   end

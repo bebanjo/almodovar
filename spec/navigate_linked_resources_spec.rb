@@ -4,7 +4,7 @@ feature "Navigating linked resources" do
   scenario "Link to a single resource" do
     stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
       <user>
-        <link rel="company" href="http://movida.example.com/company/2"/>
+        <link rel="related-company" href="http://movida.example.com/company/2"/>
       </user>
     XML
     
@@ -16,14 +16,14 @@ feature "Navigating linked resources" do
       </company>
     XML
     
-    user.company.should_not be_nil
-    user.company.age.should == 15
+    user.related_company.should_not be_nil
+    user.related_company.age.should == 15
   end
   
   scenario "Link to a collection of resources" do
     stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
       <company>
-        <link rel="users" href="http://movida.example.com/company/1/users"/>
+        <link rel="related_users" href="http://movida.example.com/company/1/users"/>
       </company>
     XML
     
@@ -40,9 +40,9 @@ feature "Navigating linked resources" do
       </users>
     XML
     
-    company.users.size.should == 2
-    company.users.first.age.should == 46
-    company.users.last.age.should == 33
+    company.related_users.size.should == 2
+    company.related_users.first.age.should == 46
+    company.related_users.last.age.should == 33
   end
   
   scenario "Expanded link to a single resource" do
