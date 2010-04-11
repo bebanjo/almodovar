@@ -23,14 +23,14 @@ feature "Fetching individual resources" do
   scenario "Fetching typed attributes" do
     stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => <<-XML)
       <resource>
-        <integer type="integer">12345</integer>
+        <id type="integer">12345</id>
         <date type="datetime">2009-01-01T10:00:00Z</date>
       </resource>
     XML
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
     
-    resource.integer.should == 12345
+    resource.id.should == 12345
     resource.date.should == Time.utc(2009,1,1,10,0,0)
   end
   

@@ -18,6 +18,8 @@ module Almodovar
     
     private
     
+    undef id
+    
     def method_missing(meth, *args, &blk)
       attribute = @xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
       return node_text(attribute) if attribute
