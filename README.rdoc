@@ -67,7 +67,15 @@ Of course, once you've got the URL of a resource, the next time you don't need t
   <link href="http://staging.schedule.bebanjo.net/api/title_groups/129" rel="title_group"/>
   <link href="http://staging.schedule.bebanjo.net/api/titles/498" rel="title"/>
   </scheduling>]
+
+What if I want to access a specific node? Just do it:
   
+  >> schedulings.first.id
+  => 112
+  >> schedulings.first.scheduling_type
+  => "archive"
+  
+Note that fields with a hyphen are accessed with an underscore instead, otherwise ruby will think you are trying to substract ('-')
   
 Next, explore the {API docs}[http://wiki.github.com/bebanjo/almodovar/] to learn about other resources.
   
