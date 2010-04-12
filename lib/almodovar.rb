@@ -1,4 +1,4 @@
-require 'resourceful'
+require File.dirname(__FILE__) + '/../vendor/resourceful-0.5.3-patched/lib/resourceful'
 require 'nokogiri'
 
 module Almodovar
@@ -25,14 +25,15 @@ module Almodovar
       return node_text(attribute) if attribute
       
       link = @xml.at_xpath("./link[@rel='#{meth}' or @rel='#{attribute_name(meth)}']")
-      return get_linked_resource(link) if link
+      return get_linked_resource(link, args.first) if link
       
       super
     end
     
-    def get_linked_resource(link)
+    def get_linked_resource(link, options = {})
+      options ||= {}
       expansion = link.at_xpath("./*")
-      expansion ? Almodovar.instantiate(expansion, @auth) : Almodovar::Resource(link['href'], @auth)
+      options.empty? && expansion ? Almodovar.instantiate(expansion, @auth) : Almodovar::Resource(link['href'], @auth, options)
     end
     
     def node_text(node)

@@ -45,6 +45,29 @@ feature "Navigating linked resources" do
     company.related_users.last.age.should == 33
   end
   
+  scenario "Link to a collection of resources with params" do
+    stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
+      <company>
+        <link rel="related_users" href="http://movida.example.com/company/1/users"/>
+      </company>
+    XML
+    
+    company = Almodovar::Resource("http://movida.example.com/company/1", auth)
+    
+    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=23&recent=true").to_return(:body => <<-XML)
+      <users type="array">
+        <user>
+          <age type="integer">46</age>
+        </user>
+        <user>
+          <age type="integer">33</age>
+        </user>
+      </users>
+    XML
+    
+    company.related_users(:min_age => 23, :recent => true).size.should == 2
+  end
+  
   scenario "Expanded link to a single resource" do
     stub_auth_request(:get, "http://movida.example.com/user/1?expand=company").to_return(:body => <<-XML)
       <user>
@@ -93,5 +116,34 @@ feature "Navigating linked resources" do
     company.users.first.department.name.should == "Sales"
     company.users.last.department.name.should == "Development"
     
+  end
+  
+  scenario "Expanded link to a resource collection using params" do
+    stub_auth_request(:get, "http://movida.example.com/company/1?expand=users").to_return(:body => <<-XML)
+      <company>
+        <link rel="users" href="http://movida.example.com/company/1/users">
+          <users type="array">
+            <user>
+              <age type="integer">46</age>
+            </user>
+            <user>
+              <age type="integer">33</age>
+            </user>
+          </users>
+        </link>
+      </company>
+    XML
+    
+    company = Almodovar::Resource("http://movida.example.com/company/1", auth, :expand => :users)
+    
+    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=40").to_return(:body => <<-XML)
+      <users type="array">
+        <user>
+          <age type="integer">46</age>
+        </user>
+      </users>
+    XML
+    
+    company.users(:min_age => 40).size.should == 1
   end
 end

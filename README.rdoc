@@ -38,20 +38,42 @@ Ok. Let's see what we have under _platforms_
   <link href="http://movida.example.com/api/platforms/6/schedule" rel="schedule"/>
   </platform>]
   
-Now, show me the _schedule_ of the first _platform_:
-  
-  >> movida.platforms.first.schedule
+Now, show me the _schedule_ of a _title_ given its external id:
+
+  >> movida.titles(:external_id => "C5134350003").first.schedule(:expand => :schedulings)
   => <schedule>
-  <link href="http://movida.example.com/api/platforms/1/schedule/schedulings" rel="schedulings"/>
-  <link href="http://movida.example.com/api/platforms/1" rel="platform"/>
+  <link href="http://staging.schedule.bebanjo.net/api/titles/498/schedule/schedulings" rel="schedulings"><schedulings type="array">
+  <scheduling>
+  <id type="integer">1122</id>
+  <put-up type="datetime">2010-04-17T00:00:00Z</put-up>
+  <take-down type="datetime">2010-06-17T00:00:00Z</take-down>
+  <scheduling-type>archive</scheduling-type>
+  <link href="http://staging.schedule.bebanjo.net/api/title_groups/129" rel="title_group"/>
+  <link href="http://staging.schedule.bebanjo.net/api/titles/498" rel="title"/>
+  </scheduling>
+  </schedulings>
+  </link>
+  <link href="http://staging.schedule.bebanjo.net/api/titles/498" rel="title"/>
   </schedule>
+  
+Of course, once you've got the URL of a resource, the next time you don't need to navigate from the root of the API. You can (should!) start from the resource URL:
+
+  >> schedulings = Almodovar::Resource("http://staging.schedule.bebanjo.net/api/titles/498/schedule/schedulings", auth)
+  => [<scheduling>
+  <id type="integer">1122</id>
+  <put-up type="datetime">2010-04-17T00:00:00Z</put-up>
+  <take-down type="datetime">2010-06-17T00:00:00Z</take-down>
+  <scheduling-type>archive</scheduling-type>
+  <link href="http://staging.schedule.bebanjo.net/api/title_groups/129" rel="title_group"/>
+  <link href="http://staging.schedule.bebanjo.net/api/titles/498" rel="title"/>
+  </scheduling>]
+  
   
 Next, explore the {API docs}[http://wiki.github.com/bebanjo/almodovar/] to learn about other resources.
   
 ==To-do
 
-* Ability to use parameters in linked resource calls (e.g. <tt>movida.titles(:external_id => "C51234500001")</tt>)
 * Memoize linked resource calls so that the same request isn't made several times
-* Ability to take advantage of the API _expand_ functionality (e.g. <tt>movida.titles(:expand => [:schedule, :schedulings]).schedule.schedulings</tt>)
+* See what is preventing latest version of Resourceful from working and fix it (Now we're using a vendorized, patched version based on resourceful 0.5.3)
 
 Copyright (c) 2010 BeBanjo S.L., released under the MIT license
