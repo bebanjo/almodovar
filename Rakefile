@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "almodovar"
-  s.version           = "0.1.0"
+  s.version           = "0.1.2"
   s.summary           = "BeBanjo Movida API client"
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"
@@ -34,7 +34,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README.rdoc)
 
   # Add any extra files to include in the gem (like your README)
-  s.files             = %w() + Dir.glob("{spec,lib/**/*}")
+  s.files             = %w() + Dir.glob("{vendor/**/*,lib/**/*}")
   s.require_paths     = ["lib"]
 
   # If you want to depend on other gems, add them here, along with any
