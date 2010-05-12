@@ -1,11 +1,15 @@
 require 'rubygems'
 require 'steak'
-require 'webmock'
+require 'webmock/rspec'
 require "almodovar"
 
 module Helpers  
   def stub_auth_request(*args)
     stub_request(*args).with(:headers => {"Authorization" => /^Digest/ })
+  end
+  
+  def auth_request(*args)
+    request(*args).with(:headers => {"Authorization" => /^Digest/ })
   end
   
   def auth

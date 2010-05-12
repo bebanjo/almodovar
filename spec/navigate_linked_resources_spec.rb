@@ -146,4 +146,16 @@ feature "Navigating linked resources" do
     
     company.users(:min_age => 40).size.should == 1
   end
+
+  scenario "Link to self" do
+    stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
+      <user>
+        <link rel="self" href="http://movida.example.com/user/1"/>
+      </user>
+    XML
+    
+    user = Almodovar::Resource("http://movida.example.com/user/1", auth)
+    
+    user.href.should == "http://movida.example.com/user/1"
+  end
 end
