@@ -6,18 +6,19 @@ feature "Fetching resource collections" do
     stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => <<-XML)
       <resources type='array'>
         <resource>
+          <link rel='self' href='http://movida.example.com/resources/1'/>
           <name>Resource 1</name>
         </resource>
         <resource>
+          <link rel='self' href='http://movida.example.com/resources/2'/>
           <name>Resource 2</name>
         </resource>
       </resources>
     XML
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
-
-    resources.should have(2).resources
-    resources.should be_a(Array)
+    
+    resources.size.should == 2
     resources.first.name.should == "Resource 1"
     resources.last.name.should  == "Resource 2"
   end
@@ -33,8 +34,7 @@ feature "Fetching resource collections" do
         
     resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "pedro")
     
-    resources.should have(1).resource
-    resources.should be_a(Array)
+    resources.size.should == 1
     resources.first.name.should == "Pedro"
   end
 end

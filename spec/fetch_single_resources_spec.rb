@@ -12,7 +12,6 @@ feature "Fetching individual resources" do
     XML
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
-    
     resource.name.should == "Resource Name"
     resource.res_id.should == "12345"
     resource.creation_date.should == "2009-01-01T10:00:00Z"

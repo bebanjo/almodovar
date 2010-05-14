@@ -3,9 +3,8 @@ require 'spec_helper'
 feature "Creating new resources" do
   
   scenario "Creating a resource in a collection" do
-    stub_auth_request(:get, "http://movida.example.com/projects").to_return(:body => %q{
-      <projects type='array'></projects>
-    })  
+    
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth)
     
     stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
       req.body == {:name => "Wadus"}.to_xml(:root => "project")
@@ -16,6 +15,11 @@ feature "Creating new resources" do
       </project>
     })
     
+    project = projects.create(:name => "Wadus")
+    
+    project.should be_a(Almodovar::Resource)
+    project.name.should == "Wadus"
+    
     stub_auth_request(:get, "http://movida.example.com/projects/1").to_return(:body => %q{
       <project>
         <name>Wadus</name>
@@ -23,20 +27,10 @@ feature "Creating new resources" do
       </project>
     })
     
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth)
-    
-    project = projects.create(:name => "Wadus")
-    
-    project.should be_a(Almodovar::Resource)
-    project.name.should == "Wadus"
-    project.should == Almodovar::Resource(project.href, auth)    
+    project.name == Almodovar::Resource(project.url, auth).name
   end
   
-  scenario "Creating a resource expanding links" do
-    stub_auth_request(:get, "http://movida.example.com/projects?expand=tasks").to_return(:body => %q{
-      <projects type='array'></projects>
-    })  
-    
+  scenario "Creating a resource expanding links" do    
     stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
       req.body == {:name => "Wadus", :template => "Basic"}.to_xml(:root => "project")
     end.to_return(:body => %q{

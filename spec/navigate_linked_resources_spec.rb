@@ -156,6 +156,6 @@ feature "Navigating linked resources" do
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth)
     
-    user.href.should == "http://movida.example.com/user/1"
+    user.url.should == "http://movida.example.com/user/1"
   end
 end
