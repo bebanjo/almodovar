@@ -58,6 +58,9 @@ module Almodovar
       @url ||= xml.at_xpath("./link[@rel='self']").try(:[], "href")
     end
     
+    delegate :to_xml, :to => :xml
+    alias_method :inspect, :to_xml
+    
     private
     
     def object_type
@@ -93,6 +96,8 @@ module Almodovar
     
     include HttpAccessor
     
+    delegate :inspect, :to => :resources
+    
     def initialize(url, auth, xml = nil, options = {})
       @url = url
       @auth = auth
@@ -126,6 +131,8 @@ module Almodovar
     
     undef id
     
+    delegate :inspect, :to => :get!
+    
     def initialize(url, auth, xml = nil, options = {})
       @url = url
       @auth = auth
@@ -144,6 +151,11 @@ module Almodovar
       else
         SingleResource
       end
+    end
+    
+    def get!
+      klass = xml['type'] == 'array' ? ResourceCollection : SingleResource
+      @resource_object = klass.new(@url, @auth, @xml, @options)
     end
         
   end

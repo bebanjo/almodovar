@@ -33,4 +33,18 @@ feature "Fetching individual resources" do
     resource.date.should == Time.utc(2009,1,1,10,0,0)
   end
   
+  scenario "Inspecting a resource" do
+    xml = %q{
+      <resource>
+        <id type="integer">12345</id>
+        <date type="datetime">2009-01-01T10:00:00Z</date>
+      </resource>      
+    }
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => xml)
+    
+    resource = Almodovar::Resource("http://movida.example.com/resource", auth)
+
+    Nokogiri.parse(resource.inspect).to_xml.should == Nokogiri.parse(xml).to_xml
+  end
+  
 end

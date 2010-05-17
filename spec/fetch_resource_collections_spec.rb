@@ -37,4 +37,19 @@ feature "Fetching resource collections" do
     resources.size.should == 1
     resources.first.name.should == "Pedro"
   end
+  
+  scenario "Inspecting a collection" do
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+      <resources type='array'>
+        <resource>
+          <name>Pedro</name>
+        </resource>
+      </resources>
+    })
+    
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth)
+
+    resources.inspect.should == "[#{resources.first.inspect}]"
+  end
+  
 end
