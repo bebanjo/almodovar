@@ -1,6 +1,6 @@
 =Almodovar
 
-Almodovar is a client for BeBanjo's Movida API written in Ruby
+Almodovar is a client for BeBanjo's Sequence & Movida API written in Ruby (it's actually a generic client which plays nice with any RESTful API following some conventions).
   
 ==Getting started
 
@@ -16,9 +16,9 @@ Now, let's play with irb:
 First you need an authentication token:  
 
   >> auth = Almodovar::DigestAuth.new("realm", "user", "password")
-  => #<Almodovar::DigestAuth:0x101f846c8 @password="secret", @username="robot_five", @realm="Staging Movida", @domain=nil>
+  => #<Almodovar::DigestAuth:0x101f846c8 ... >
   
-Now you have to instantiate a resource given its URL. Let's try with the root of the api:
+Now you have to instantiate a resource given its URL. Let's try with the root of the Movida API:
   
   >> movida = Almodovar::Resource("http://movida.example.com/api", auth)
   => <movida>
@@ -78,10 +78,41 @@ What if I want to access a specific node? Just do it:
 Note that fields with a hyphen are accessed with an underscore instead, otherwise ruby will think you are trying to substract ('-')
   
 Next, explore the {API docs}[http://wiki.github.com/bebanjo/almodovar/] to learn about other resources.
+
+==Creating resources
+
+Resource collections have the _create_ method. Just call it with the attributes you want your new resource to have!
+
+  >> jobs = Almodovar::Resource("http://sequence.example.com/api/work_areas/52/jobs", auth)
+  => [<job> ... </job>, <job> ... </job>]
+  >> job = jobs.create(:name => "Wadus")
+  => <job> ... </job>
+  >> job.name
+  => "Wadus"
   
+==Modifying resources
+
+You can use the _update_ method:
+
+  >> job = Almodovar::Resource("http://sequence.example.com/api/work_areas/52/jobs", auth).first
+  => <job> ... </job>
+  >> job.update(:name => "Wadus wadus")
+  => ...
+  >> job.name
+  => "Wadus wadus"
+
+== Deleting resources
+
+And exactly the same with the _delete_ method:
+
+  >> job = Almodovar::Resource("http://sequence.example.com/api/work_areas/52/jobs", auth).first
+  => <job> ... </job>
+  >> job.delete
+
 ==To-do
 
-* Memoize linked resource calls so that the same request isn't made several times
 * See what is preventing latest version of Resourceful from working and fix it (Now we're using a vendorized, patched version based on resourceful 0.5.3)
+* Better error management
+* Write the conventions Almodovar expects in an API
 
 Copyright (c) 2010 BeBanjo S.L., released under the MIT license
