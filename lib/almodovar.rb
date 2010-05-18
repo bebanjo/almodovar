@@ -107,7 +107,7 @@ module Almodovar
     end
     
     def create(attrs = {})
-      response = http.resource(@url).post(attrs.to_xml(:root => object_type), :content_type => "application/xml")
+      response = http.resource(@url).post(attrs.to_xml(:root => object_type, :convert_links => true), :content_type => "application/xml")
       Resource.new(nil, @auth, Nokogiri.parse(response.body).root)
     end
     
