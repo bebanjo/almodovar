@@ -4,11 +4,19 @@ require "rake/rdoctask"
 
 require "spec"
 require "spec/rake/spectask"
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = %w(--format specdoc --colour)
-  t.libs = ["spec"]
+
+desc "Run acceptance specs"
+Spec::Rake::SpecTask.new("spec:acceptance") do |t|
+  t.spec_files = ["spec/acceptance"]
 end
 
+desc "Run unit specs"
+Spec::Rake::SpecTask.new("spec:unit") do |t|
+  t.spec_files = ["spec/unit"]
+end
+
+desc "Run all specs"
+task :spec => ["spec:unit", "spec:acceptance"]
 
 task :default => ["spec"]
 
