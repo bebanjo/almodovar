@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "almodovar"
-  s.version           = "0.1.2"
+  s.version           = "0.2.0"
   s.summary           = "BeBanjo Movida API client"
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"
