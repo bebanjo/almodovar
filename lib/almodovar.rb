@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../vendor/resourceful-0.5.3-patched/lib/resourceful'
 require 'nokogiri'
 require 'active_support'
+require 'to_xml'
 require 'uri'
 
 module Almodovar
