@@ -36,7 +36,7 @@ feature "Creating new resources" do
   end
   
   scenario "Creating a resource expanding links" do
-    stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
+    stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <name>Wadus</name>
       #   <template>Basic</template>
