@@ -18,6 +18,7 @@ feature "Fetching resource collections" do
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
     
+    resources.map(&:name).should == ["Resource 1", "Resource 2"]
     resources.size.should == 2
     resources.first.name.should == "Resource 1"
     resources.last.name.should  == "Resource 2"

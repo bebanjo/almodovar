@@ -147,7 +147,7 @@ module Almodovar
     end
     
     def resource_class(meth)
-      @resource_class ||= if [:create, :[], :first, :last, :size].include?(meth)
+      @resource_class ||= if (Array.instance_methods + ["create"] - ["delete", "id"]).include?(meth.to_s)
         ResourceCollection
       else
         SingleResource
