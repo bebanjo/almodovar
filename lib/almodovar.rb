@@ -69,6 +69,9 @@ module Almodovar
     end
     
     def method_missing(meth, *args, &blk)
+      document = xml.at_xpath("./*[(name()='#{meth}' or name()='#{attribute_name(meth)}') and @type='document']")
+      return Resource.new(nil, @auth, document) if document
+      
       attribute = xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
       return node_contents(attribute) if attribute
       
