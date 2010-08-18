@@ -37,7 +37,7 @@ module Almodovar
     
     include HttpAccessor
     
-    undef id
+    undef id, type
     
     def initialize(url, auth, xml = nil, options = {})
       @url = url
@@ -134,7 +134,7 @@ module Almodovar
     
     include HttpAccessor
     
-    undef id
+    undef id, type
     
     delegate :inspect, :to => :get!
     
