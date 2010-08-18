@@ -25,14 +25,6 @@ feature "Fetching individual resources" do
         <id type="integer">12345</id>
         <date type="datetime">2009-01-01T10:00:00Z</date>
         <type>wadus</type>
-        <responsibles type="array">
-          <responsible>
-            <name>porras</name>
-          </responsible>
-          <responsible>
-            <name>cavalle</name>
-          </responsible>
-        </responsibles>
       </resource>
     XML
     
@@ -41,7 +33,6 @@ feature "Fetching individual resources" do
     resource.id.should == 12345
     resource.date.should == Time.utc(2009,1,1,10,0,0)
     resource.type.should == "wadus"
-    resource.responsibles.map(&:name).should == ["porras", "cavalle"]
   end
   
   scenario "Inspecting a resource" do

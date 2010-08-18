@@ -73,7 +73,7 @@ module Almodovar
       return Resource.new(nil, @auth, document) if document
       
       attribute = xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
-      return node_contents(attribute) if attribute
+      return node_text(attribute) if attribute
       
       link = xml.at_xpath("./link[@rel='#{meth}' or @rel='#{attribute_name(meth)}']")
       return Resource.new(link["href"], @auth, link.at_xpath("./*"), *args) if link
@@ -81,9 +81,8 @@ module Almodovar
       super
     end
     
-    def node_contents(node)
+    def node_text(node)
       case node['type']
-      when "array": ResourceCollection.new(nil, @auth, node)
       when "integer": node.text.to_i
       when "datetime": Time.parse(node.text)
       else
