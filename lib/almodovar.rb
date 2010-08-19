@@ -70,7 +70,7 @@ module Almodovar
     
     def method_missing(meth, *args, &blk)
       document = xml.at_xpath("./*[(name()='#{meth}' or name()='#{attribute_name(meth)}') and @type='document']")
-      return Hash.from_xml(document.children.to_xml) if document
+      return Hash.from_xml(document.to_xml)[meth.to_s] if document
       
       attribute = xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
       return node_text(attribute) if attribute

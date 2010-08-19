@@ -21,6 +21,16 @@ feature "Navigating included documents" do
               </film>
             </films>
           </biography>
+          <oscars type="array">
+            <oscar>
+              <year type="integer">1999</year>
+              <film>Todo sobre mi madre</film>
+            </oscar>
+            <oscar>
+              <year type="integer">2002</year>
+              <film>Hable con ella</film>
+            </oscar>
+          </oscars>
         </extra-data>
       </person>
     XML
@@ -34,6 +44,11 @@ feature "Navigating included documents" do
     person.extra_data["biography"]["films"][0]["year"].should == 1984
     person.extra_data["biography"]["films"][1]["title"].should == "Mujeres al borde de un ataque de nervios"
     person.extra_data["biography"]["films"][1]["year"].should == 1988
+    person.extra_data["oscars"][0]["year"].should == 1999
+    person.extra_data["oscars"][0]["film"].should == "Todo sobre mi madre"
+    person.extra_data["oscars"][1]["year"].should == 2002
+    person.extra_data["oscars"][1]["film"].should == "Hable con ella"
+    
   end
   
 end
