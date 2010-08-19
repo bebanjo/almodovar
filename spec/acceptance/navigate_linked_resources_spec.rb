@@ -69,9 +69,9 @@ feature "Navigating linked resources" do
   end
   
   scenario "Expanded link to a single resource" do
-    stub_auth_request(:get, "http://movida.example.com/user/1?expand=company").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/user/1?expand=employer").to_return(:body => <<-XML)
       <user>
-        <link rel="company" href="http://movida.example.com/company/2">
+        <link rel="employer" href="http://movida.example.com/company/2">
           <company>
             <age type="integer">15</age>
           </company>
@@ -79,10 +79,10 @@ feature "Navigating linked resources" do
       </user>
     XML
     
-    user = Almodovar::Resource("http://movida.example.com/user/1", auth, :expand => :company)
+    user = Almodovar::Resource("http://movida.example.com/user/1", auth, :expand => :employer)
     
-    user.company.should_not be_nil
-    user.company.age.should == 15
+    user.employer.should_not be_nil
+    user.employer.age.should == 15
   end
   
   scenario "Expanded link to a resource collection" do
