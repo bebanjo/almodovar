@@ -68,9 +68,14 @@ module Almodovar
       @object_type ||= URI.parse(@url).path.split("/")[-2].singularize
     end
     
+    def [](key) # for resources with type "document"
+      return super unless xml.at_xpath("/*[@type='document']")
+      Hash.from_xml(xml.to_xml).values.first[key]
+    end
+    
     def method_missing(meth, *args, &blk)
       document = xml.at_xpath("./*[(name()='#{meth}' or name()='#{attribute_name(meth)}') and @type='document']")
-      return Hash.from_xml(document.to_xml)[meth.to_s] if document
+      return Resource.from_xml(document.to_xml) if document
       
       attribute = xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
       return node_text(attribute) if attribute
@@ -153,19 +158,21 @@ module Almodovar
       @resource_object.send(meth, *args, &blk)
     end
     
-    def resource_class(meth)
-      @resource_class ||= if (Array.instance_methods + ["create"] - ["delete", "id"]).include?(meth.to_s)
-        ResourceCollection
-      else
-        SingleResource
-      end
+    def resource_class(meth, *args)
+      @resource_class ||= collection_call?(meth, *args) ? ResourceCollection : SingleResource
     end
     
     def get!
       klass = xml['type'] == 'array' ? ResourceCollection : SingleResource
       @resource_object = klass.new(@url, @auth, @xml, @options)
     end
-        
+    
+    private
+    
+    def collection_call?(meth, *args)
+      (Array.instance_methods + ["create"] - ["delete", "id", "[]"]).include?(meth.to_s) ||
+      (meth.to_s == "[]" && args.size == 1 && args.first.is_a?(Fixnum))
+    end
   end
   
   def self.Resource(url, auth, params = {})

@@ -51,4 +51,32 @@ feature "Navigating included documents" do
     
   end
   
+  scenario "Accessing document resources" do
+    stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(:body => <<-XML)
+      <biography type="document">
+        <birthplace>Calzada de Calatrava</birthplace>
+        <birthyear type="integer">1949</birthyear>
+        <films type="array">
+          <film>
+            <title>¿Qué he hecho yo para merecer esto?</title>
+            <year type="integer">1984</year>
+          </film>
+          <film>
+            <title>Mujeres al borde de un ataque de nervios</title>
+            <year type="integer">1988</year>
+          </film>
+        </films>
+      </biography>
+    XML
+  
+    bio = Almodovar::Resource("http://movida.example.com/people/1/biography", auth)
+    
+    bio["birthplace"].should == "Calzada de Calatrava"
+    bio["birthyear"].should == 1949
+    bio["films"][0]["title"].should == "¿Qué he hecho yo para merecer esto?"
+    bio["films"][0]["year"].should == 1984
+    bio["films"][1]["title"].should == "Mujeres al borde de un ataque de nervios"
+    bio["films"][1]["year"].should == 1988
+  end
+  
 end
