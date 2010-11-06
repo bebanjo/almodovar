@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "almodovar"
-  s.version           = "0.5.4"
+  s.version           = "0.5.5"
   s.summary           = "BeBanjo API client"
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"
