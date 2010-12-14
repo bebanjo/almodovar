@@ -49,4 +49,15 @@ feature "Fetching individual resources" do
     Nokogiri.parse(resource.inspect).to_xml.should == Nokogiri.parse(xml).to_xml
   end
   
+  scenario "Using a port different than default" do
+    stub_auth_request(:get, "http://movida.example.com:3000/resource").to_return(:body => <<-XML)
+      <resource>
+        <name>Resource Name</name>
+      </resource>
+    XML
+    
+    resource = Almodovar::Resource("http://movida.example.com:3000/resource", auth)
+    resource.name.should == "Resource Name"
+  end
+  
 end

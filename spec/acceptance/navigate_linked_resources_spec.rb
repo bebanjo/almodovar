@@ -158,4 +158,23 @@ feature "Navigating linked resources" do
     
     user.url.should == "http://movida.example.com/user/1"
   end
+  
+  scenario "Using a port different than default" do
+    stub_auth_request(:get, "http://movida.example.com:3000/user/1").to_return(:body => <<-XML)
+      <user>
+        <link rel="related-company" href="http://movida.example.com:3000/company/2"/>
+      </user>
+    XML
+    
+    user = Almodovar::Resource("http://movida.example.com:3000/user/1", auth)
+    
+    stub_auth_request(:get, "http://movida.example.com:3000/company/2").to_return(:body => <<-XML)
+      <company>
+        <age type="integer">15</age>
+      </company>
+    XML
+    
+    user.related_company.should_not be_nil
+    user.related_company.age.should == 15
+  end
 end
