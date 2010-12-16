@@ -32,7 +32,9 @@ module Resourceful
 
     # Returns the host for this Resource's current uri
     def host
-      Addressable::URI.parse(uri).host
+      parsed_uri = URI.parse(uri)
+      port_string = (parsed_uri.port == parsed_uri.default_port ? "" : ":#{parsed_uri.port}")
+      "#{parsed_uri.host}#{port_string}"
     end
 
     # Updates the effective uri after following a permanent redirect
