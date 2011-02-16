@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (0.5.5)
+    almodovar (0.5.6)
       activesupport (~> 2.3.0)
       nokogiri
       resourceful (= 0.5.3)
