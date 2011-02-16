@@ -32,7 +32,7 @@ feature "Creating new resources" do
       </project>
     })
     
-    project.name == Almodovar::Resource(project.url, auth).name
+    project.name.should == Almodovar::Resource(project.url, auth).name
   end
   
   scenario "Creating a resource expanding links" do
@@ -66,6 +66,28 @@ feature "Creating new resources" do
     project.name.should == "Wadus"
     project.tasks.size.should == 1
     project.tasks.first.name.should == "Starting Meeting"
+  end
+  
+  scenario "Creating linking to existing resources" do
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth)
+    
+    stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
+      # <project>
+      #   <link rel="owner" href="http://example.com/people/luismi"/>
+      # </project>
+      xml = Nokogiri.parse(req.body)
+      xml.at_xpath("/project/link[@rel='owner'][@href='http://example.com/people/luismi'][not(node())]")
+    end.to_return(:body => %q{
+      <project>
+        <link rel="self" href="http://movida.example.com/projects/1"/>
+        <link rel="owner" href="http://example.com/people/luismi"/>
+      </project>
+    })
+    
+    project = projects.create(:owner => Almodovar::Resource("http://example.com/people/luismi"))
+    
+    project.should be_a(Almodovar::Resource)
+    project.owner.url.should == "http://example.com/people/luismi"
   end
   
   scenario "Creating nested resources" do

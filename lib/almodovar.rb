@@ -176,7 +176,7 @@ module Almodovar
     end
   end
   
-  def self.Resource(url, auth, params = {})
+  def self.Resource(url, auth = nil, params = {})
     Resource.new(url, auth, nil, params)
   end
   

@@ -16,6 +16,12 @@ module Almodovar
     
   end
   
+  class Resource
+    def to_xml(options = {})
+      options[:builder].tag!(:link, :rel => options[:root], :href => url)
+    end
+  end
+  
 end
 
 class Array
