@@ -6,9 +6,9 @@ rescue LoadError
   require 'active_support'
 end
 
-require 'almodovar/to_xml'
 require 'almodovar/digest_auth'
 require 'almodovar/http_accessor'
 require 'almodovar/resource'
 require 'almodovar/resource_collection'
 require 'almodovar/single_resource'
+require 'almodovar/to_xml'
