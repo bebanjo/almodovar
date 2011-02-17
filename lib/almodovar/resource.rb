@@ -18,8 +18,11 @@ module Almodovar
     end
   
     def method_missing(meth, *args, &blk)
+      resource_object(meth).send(meth, *args, &blk)
+    end
+    
+    def resource_object(meth)
       @resource_object ||= resource_class(meth).new(@url, @auth, @xml, @options)
-      @resource_object.send(meth, *args, &blk)
     end
   
     def resource_class(meth, *args)
@@ -29,6 +32,10 @@ module Almodovar
     def get!
       klass = xml['type'] == 'array' ? ResourceCollection : SingleResource
       @resource_object = klass.new(@url, @auth, @xml, @options)
+    end
+    
+    def respond_to?(meth)
+      super || resource_object(meth).respond_to?(meth)
     end
   
     private
