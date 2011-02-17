@@ -1,5 +1,3 @@
-require 'active_support/all'
-
 module Almodovar
   module ArrayToXml
     def to_xml_with_links(options = {})

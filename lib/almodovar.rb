@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../vendor/resourceful-0.5.3-patched/lib/resourceful'
 require 'nokogiri'
-require 'active_support'
+begin
+  require 'active_support/all'
+rescue LoadError
+  require 'active_support'
+end
 require 'to_xml'
 require 'uri'
 
