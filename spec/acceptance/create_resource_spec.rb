@@ -20,7 +20,7 @@ feature "Creating new resources" do
       </project>
     })
     
-    project = projects.create(:name => "Wadus")
+    project = projects.create(:project => {:name => "Wadus"})
     
     project.should be_a(Almodovar::Resource)
     project.name.should == "Wadus"
@@ -60,7 +60,7 @@ feature "Creating new resources" do
     })
     
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)    
-    project = projects.create(:name => "Wadus", :template => "Basic")
+    project = projects.create(:project => {:name => "Wadus", :template => "Basic"})
     
     project.should be_a(Almodovar::Resource)
     project.name.should == "Wadus"
@@ -84,16 +84,16 @@ feature "Creating new resources" do
       </project>
     })
     
-    project = projects.create(:owner => Almodovar::Resource("http://example.com/people/luismi"))
+    project = projects.create(:project => {:owner => Almodovar::Resource("http://example.com/people/luismi")})
     
     project.should be_a(Almodovar::Resource)
     project.owner.url.should == "http://example.com/people/luismi"
   end
   
   scenario "Creating nested resources" do
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth)
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
     
-    stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
+    stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <name>Wadus</name>
       #   <link rel="tasks">
@@ -111,24 +111,21 @@ feature "Creating new resources" do
       <project>
         <name>Wadus</name>
         <link rel="self" href="http://movida.example.com/projects/1"/>
-        <link rel="tasks" href="http://movida.example.com/projects/1/tasks"/>
+        <link rel="tasks" href="http://movida.example.com/projects/1/tasks">
+          <tasks type="array">
+            <task>
+              <name>Start project</name>
+            </task>
+          </tasks>
+        </link>
       </project>
     })
     
-    project = projects.create(:name => "Wadus", :tasks => [{:name => "Start project"}])
+    project = projects.create(:project => {:name => "Wadus", :tasks => [{:name => "Start project"}]})
     
     project.should be_a(Almodovar::Resource)
     project.name.should == "Wadus"
-    
-    stub_auth_request(:get, "http://movida.example.com/projects/1/tasks").to_return(:body => %q{
-      <tasks type="array">
-        <task>
-          <name>Start project</name>
-        </task>
-      </tasks>
-    })
-    
-    project.tasks.first.name.should == "Start project"    
+    project.tasks.first.name.should == "Start project"
   end
   
 end

@@ -47,7 +47,9 @@ module Almodovar
     end
     
     def update(attrs = {})
-      response = http.resource(@url).put(attrs.to_xml(:root => object_type), :content_type => "application/xml")
+      raise ArgumentError.new("You must specify one only root element which is the type of resource (e.g. `:project => { :name => 'Wadus' }` instead of just `:name => 'Wadus'`)") if attrs.size > 1
+      root, body = attrs.first
+      response = http.resource(@url).put(body.to_xml(:root => root), :content_type => "application/xml")
       @xml = Nokogiri.parse(response.body).root
     end
     
@@ -63,11 +65,6 @@ module Almodovar
     alias_method :inspect, :to_xml
     
     private
-    
-    def object_type
-      uri_parts = URI.parse(@url).path.split("/")
-      @object_type ||= (uri_parts.last =~ /^\d$/ ? uri_parts[-2].singularize : uri_parts.last.singularize)
-    end
     
     def [](key) # for resources with type "document"
       return super unless xml.at_xpath("/*[@type='document']")
@@ -116,15 +113,13 @@ module Almodovar
     end
     
     def create(attrs = {})
-      response = http.resource(url_with_params).post(attrs.to_xml(:root => object_type, :convert_links => true), :content_type => "application/xml")
+      raise ArgumentError.new("You must specify one only root element which is the type of resource (e.g. `:project => { :name => 'Wadus' }` instead of just `:name => 'Wadus'`)") if attrs.size > 1
+      root, body = attrs.first
+      response = http.resource(url_with_params).post(body.to_xml(:root => root, :convert_links => true), :content_type => "application/xml")
       Resource.new(nil, @auth, Nokogiri.parse(response.body).root)
     end
     
     private
-    
-    def object_type
-      @object_type ||= URI.parse(@url).path.split("/").last.singularize
-    end
     
     def resources
       @resources ||= xml.xpath("./*").map { |subnode| Resource.new(subnode.at_xpath("./link[@rel='self']").try(:[], "href"), @auth, subnode, @options) }
