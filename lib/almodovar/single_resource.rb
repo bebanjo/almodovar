@@ -35,21 +35,28 @@ module Almodovar
     end
     
     def respond_to?(meth)
-      super || xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']").present? ||
-               xml.at_xpath("./link[@rel='#{meth}' or @rel='#{attribute_name(meth)}']").present?
+      super || node(meth).present? || link(meth).present?
     end
   
     private
   
     def method_missing(meth, *args, &blk)
-      if node = xml.at_xpath("./*[name()='#{meth}' or name()='#{attribute_name(meth)}']")
+      if node = node(meth)
         return node['type'] == 'document' ? Resource.from_xml(node.to_xml) : node_text(node)
       end
     
-      link = xml.at_xpath("./link[@rel='#{meth}' or @rel='#{attribute_name(meth)}']")
+      link = link(meth)
       return Resource.new(link["href"], @auth, link.at_xpath("./*"), *args) if link
     
       super
+    end
+    
+    def node(name)
+      xml.at_xpath("./*[name()='#{name}' or name()='#{attribute_name(name)}']")
+    end
+    
+    def link(name)
+      xml.at_xpath("./link[@rel='#{name}' or @rel='#{attribute_name(name)}']")
     end
   
     def node_text(node)

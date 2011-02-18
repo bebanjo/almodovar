@@ -21,14 +21,6 @@ module Almodovar
       resource_object(meth).send(meth, *args, &blk)
     end
     
-    def resource_object(meth)
-      @resource_object ||= resource_class(meth).new(@url, @auth, @xml, @options)
-    end
-  
-    def resource_class(meth, *args)
-      @resource_class ||= collection_call?(meth, *args) ? ResourceCollection : SingleResource
-    end
-  
     def get!
       klass = xml['type'] == 'array' ? ResourceCollection : SingleResource
       @resource_object = klass.new(@url, @auth, @xml, @options)
@@ -44,6 +36,15 @@ module Almodovar
       (Array.instance_methods + ["create"] - ["delete", "id", "[]"]).include?(meth.to_s) ||
       (meth.to_s == "[]" && args.size == 1 && args.first.is_a?(Fixnum))
     end
+    
+    def resource_object(meth)
+      @resource_object ||= resource_class(meth).new(@url, @auth, @xml, @options)
+    end
+  
+    def resource_class(meth, *args)
+      @resource_class ||= collection_call?(meth, *args) ? ResourceCollection : SingleResource
+    end
+  
   end
   
   def self.Resource(url, auth = nil, params = {})
