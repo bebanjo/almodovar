@@ -3,7 +3,7 @@ module Almodovar
     def xml
       @xml ||= begin
         response = http.resource(url_with_params).get
-        Nokogiri.parse(response.body).root
+        Nokogiri::XML.parse(response.body).root
       end
     end
   

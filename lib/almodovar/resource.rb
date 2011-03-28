@@ -7,7 +7,7 @@ module Almodovar
     delegate :inspect, :to => :get!
   
     def self.from_xml(xml, auth = nil)
-      new(nil, auth, Nokogiri.parse(xml).root)
+      new(nil, auth, Nokogiri::XML.parse(xml).root)
     end
   
     def initialize(url, auth, xml = nil, options = {})

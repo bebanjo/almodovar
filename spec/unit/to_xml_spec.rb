@@ -5,7 +5,7 @@ describe Hash do
   describe "to_xml" do
     
     it "should convert the nested resources into 'link' tags if the :convert_links option is present" do
-      xml = Nokogiri.parse({"name" => "Almodovar", "tasks" => [{"name" => "Wadus"}]}.to_xml(:root => "project", :convert_links => true))
+      xml = Nokogiri::XML.parse({"name" => "Almodovar", "tasks" => [{"name" => "Wadus"}]}.to_xml(:root => "project", :convert_links => true))
       
       # <project>
       #   <name>Almodovar</name>
@@ -23,7 +23,7 @@ describe Hash do
     end
     
     it "should not convert the nested resources into 'link' tags if the :convert_links option is not present" do
-      xml = Nokogiri.parse({"name" => "Almodovar", "tasks" => [{"name" => "Wadus"}]}.to_xml(:root => "project", :convert_links => false))
+      xml = Nokogiri::XML.parse({"name" => "Almodovar", "tasks" => [{"name" => "Wadus"}]}.to_xml(:root => "project", :convert_links => false))
 
       # <project>
       #   <name>Almodovar</name>

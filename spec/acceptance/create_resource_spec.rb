@@ -12,7 +12,7 @@ feature "Creating new resources" do
       # <project>
       #   <name>Wadus</name>
       # </project>      
-      Nokogiri.parse(req.body).at_xpath("/project/name").text == "Wadus"
+      Nokogiri::XML.parse(req.body).at_xpath("/project/name").text == "Wadus"
     end.to_return(:body => %q{
       <project>
         <name>Wadus</name>
@@ -41,7 +41,7 @@ feature "Creating new resources" do
       #   <name>Wadus</name>
       #   <template>Basic</template>
       # </project>
-      xml = Nokogiri.parse(req.body)
+      xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/template").text == "Basic"
     end.to_return(:body => %q{
@@ -75,7 +75,7 @@ feature "Creating new resources" do
       # <project>
       #   <link rel="owner" href="http://example.com/people/luismi"/>
       # </project>
-      xml = Nokogiri.parse(req.body)
+      xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/link[@rel='owner'][@href='http://example.com/people/luismi'][not(node())]")
     end.to_return(:body => %q{
       <project>
@@ -104,7 +104,7 @@ feature "Creating new resources" do
       #     </tasks>
       #   </link>
       # </project>
-      xml = Nokogiri.parse(req.body)
+      xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/link[@rel='tasks']/tasks[@type='array']/task/name").text == "Start project"
     end.to_return(:body => %q{
