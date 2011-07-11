@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.email             = "ballsbreaking@bebanjo.com"
   s.homepage          = "http://wiki.github.com/bebanjo/almodovar/"
   
-  s.has_rdoc          = true
   s.extra_rdoc_files  = %w(README.rdoc)
   s.rdoc_options      = %w(--main README.rdoc)
   
