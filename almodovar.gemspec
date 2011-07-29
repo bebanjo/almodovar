@@ -15,9 +15,4 @@ Gem::Specification.new do |s|
   s.add_dependency("resourceful", "= 0.5.3")
   s.add_dependency("nokogiri")
   s.add_dependency("activesupport", "~> 2.3.0")
-  
-  s.add_development_dependency("rake")
-  s.add_development_dependency("rspec", "~> 1.3.0")
-  s.add_development_dependency("steak")
-  s.add_development_dependency("webmock", "~> 1.3.0")
 end
