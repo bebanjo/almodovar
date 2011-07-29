@@ -9,10 +9,12 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (2.3.10)
+    activesupport (2.3.12)
     addressable (2.2.2)
     crack (0.1.8)
     httpauth (0.1)
+    lorax (0.2.0)
+      nokogiri (>= 1.4.0)
     nokogiri (1.4.4)
     rake (0.8.7)
     resourceful (0.5.3)
@@ -29,11 +31,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 2.3.0)
   almodovar!
-  nokogiri
+  lorax
   rake
-  resourceful (= 0.5.3)
   rspec (~> 1.3.0)
   steak
   webmock (~> 1.3.0)
