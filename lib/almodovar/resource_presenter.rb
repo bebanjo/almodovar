@@ -1,7 +1,8 @@
 module Almodovar
+  
   class ResourcePresenter
     
-    attr_writer :url
+    attr_accessor :url
     
     def attributes
       @attributes ||= ActiveSupport::OrderedHash.new
@@ -10,51 +11,27 @@ module Almodovar
     def links
       @links ||= []
     end
+    
+    def self.resource_type
+      name.gsub(/Resource$/, '').underscore
+    end
+    
+    def resource_type
+      self.class.resource_type
+    end
 
     def to_xml(options = {})
-      attributes_to_xml(options.merge(:root => resource_type)) do |builder|
-        links_to_xml(options.merge(:builder => builder))
-      end
+      XmlSerializer.new(self, options).to_xml
     end
     
     def to_json(options = {})
-      require 'yajl'
-      Yajl::Encoder.encode(as_json(options), :pretty => true) + "\n"
+      JsonSerializer.new(self, options).to_json
     end
     
     def as_json(options = {})
-      ActiveSupport::OrderedHash[:resource_type, resource_type].tap do |message|
-        message.merge! attributes_as_json
-        message.merge! links_as_json(options)
-      end
-    end
-
-    private
-    
-    def attributes_to_xml(options, &block)
-      attributes.to_xml(options, &block)
+      JsonSerializer.new(self, options).as_json
     end
     
-    def links_to_xml(options)
-      all_links.each do |link|
-        link.to_xml(options_for_link(options))
-      end
-    end
-
-    def attributes_as_json
-      attributes
-    end
-    
-    def links_as_json(options = {})
-      all_links.inject(ActiveSupport::OrderedHash.new) do |message, link|
-        message.merge! link.as_json(options_for_link(options))
-      end
-    end
-    
-    def options_for_link(options)
-      options.merge(:dont_expand => Array(options[:dont_expand]) << @url)
-    end
-
     def all_links
       ([link_to_self] + links).compact
     end
@@ -62,14 +39,65 @@ module Almodovar
     def link_to_self
       Link.new(:self, @url) if @url
     end
+    
+    class Serializer < Struct.new(:resource, :options)
 
-    def resource_type
-      self.class.resource_type
+      def options_for_link
+        options.merge(:dont_expand => Array(options[:dont_expand]) << resource.url)
+      end
+      
     end
     
-    def self.resource_type
-      name.gsub(/Resource$/, '').underscore
+    class XmlSerializer < Serializer
+      
+      def to_xml
+        attributes_to_xml do |builder|
+          links_to_xml builder
+        end
+      end
+      
+      private
+      
+      def attributes_to_xml(&block)
+        resource.attributes.to_xml(options.merge(:root => resource.resource_type), &block)
+      end
+
+      def links_to_xml(builder)
+        resource.all_links.each do |link|
+          link.to_xml(options_for_link.merge(:builder => builder))
+        end
+      end
+
+    end
+    
+    class JsonSerializer < Serializer
+      
+      def to_json
+        require 'yajl'
+        Yajl::Encoder.encode(as_json, :pretty => true) + "\n"
+      end
+      
+      def as_json
+        ActiveSupport::OrderedHash[:resource_type, resource.resource_type].tap do |message|
+          message.merge! attributes_as_json
+          message.merge! links_as_json
+        end
+      end
+      
+      private
+      
+      def attributes_as_json
+        resource.attributes
+      end
+
+      def links_as_json
+        resource.all_links.inject(ActiveSupport::OrderedHash.new) do |message, link|
+          message.merge! link.as_json(options_for_link)
+        end
+      end
+      
     end
 
   end
+  
 end

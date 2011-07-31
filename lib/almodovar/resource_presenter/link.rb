@@ -3,23 +3,19 @@ module Almodovar
   class ResourcePresenter::Link < Struct.new(:rel, :href, :expand_resource, :expand_args)
     
     def to_xml(options = {})
-      XmlSerializer.new(self, options.merge(:skip_instruct => true)).serialize
+      XmlSerializer.new(self, options.merge(:skip_instruct => true)).to_xml
     end
     
     def as_json(options)
-      JSONSerializer.new(self, options).as_json
-    end
-    
-    def resource_collection?
-      expand_args.is_a?(Array)
-    end
-    
-    def resource_type
-      expand_resource.resource_type
+      JsonSerializer.new(self, options).as_json
     end
     
     def resource
       resource_collection? ? resource_collection : single_resource
+    end
+    
+    def resource_collection?
+      expand_args.is_a?(Array)
     end
     
     def resource_collection
@@ -50,7 +46,7 @@ module Almodovar
     
     class XmlSerializer < Serializer
       
-      def serialize
+      def to_xml
         builder.link :rel => link.rel, :href => link.href, &expand_block
       end
       
@@ -71,7 +67,7 @@ module Almodovar
       
     end
     
-    class JSONSerializer < Serializer
+    class JsonSerializer < Serializer
       
       def as_json
         ActiveSupport::OrderedHash.new.tap do |message|
@@ -79,6 +75,8 @@ module Almodovar
           message[link.rel] = expand_resource if expands?
         end
       end
+      
+      private
       
       def expand_resource
         dont_expand_link!
