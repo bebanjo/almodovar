@@ -11,6 +11,10 @@ module Almodovar
       @resources.to_xml(options.merge({:root => resource_type.pluralize}))
     end
     
+    def as_json(options = {})
+      { 'entries' => @resources.map { |resource| resource.as_json(options) }}
+    end
+    
     def resource_type
       @resource_class.resource_type
     end

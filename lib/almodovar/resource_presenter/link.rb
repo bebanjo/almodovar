@@ -6,6 +6,10 @@ module Almodovar
       XmlSerializer.new(self, options.merge(:skip_instruct => true)).serialize
     end
     
+    def as_json(options)
+      JSONSerializer.new(self, options).as_json
+    end
+    
     def resource_collection?
       expand_args.is_a?(Array)
     end
@@ -30,7 +34,21 @@ module Almodovar
       expand_resource.present?
     end
     
-    class XmlSerializer < Struct.new(:link, :options)
+    class Serializer < Struct.new(:link, :options)
+      
+      def expands?
+        link.expand_resource? && 
+        Array(options[:expand]).include?(link.rel) && 
+        !Array(options[:dont_expand]).include?(link.href)
+      end
+      
+      def dont_expand_link!
+        (options[:dont_expand] ||= []) << link.href
+      end
+      
+    end
+    
+    class XmlSerializer < Serializer
       
       def serialize
         builder.link :rel => link.rel, :href => link.href, &expand_block
@@ -47,15 +65,26 @@ module Almodovar
       end
 
       def expand_resource
-        link.resource.to_xml(options.merge(:dont_expand => Array(options[:dont_expand]) << link.href))
-      end
-
-      def expands?
-        link.expand_resource? && 
-        Array(options[:expand]).include?(link.rel) && 
-        !Array(options[:dont_expand]).include?(link.href)
+        dont_expand_link!
+        link.resource.to_xml(options)
       end
       
+    end
+    
+    class JSONSerializer < Serializer
+      
+      def as_json
+        ActiveSupport::OrderedHash.new.tap do |message|
+          message["#{link.rel}_link"] = link.href
+          message[link.rel] = expand_resource if expands?
+        end
+      end
+      
+      def expand_resource
+        dont_expand_link!
+        link.resource.as_json(options)
+      end
+
     end
     
   end

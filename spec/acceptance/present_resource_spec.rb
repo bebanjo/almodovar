@@ -74,4 +74,51 @@ XML
 XML
   end
   
+  scenario 'Presenting a resource in json format' do
+    resource = SeriesResource.new(Series.new(5, 'Mad Men S1'))
+    
+    resource.to_json.should == <<-JSON
+{
+  "resource_type": "series",
+  "id": 5,
+  "name": "Mad Men S1",
+  "self_link": "http://wadus.com/series/5",
+  "show_link": "http://wadus.com/show/20",
+  "episodes_link": "http://wadus.com/series/5/episodes"
+}
+JSON
+  end
+  
+  scenario 'Presenting a resource in json format expanding its links' do
+    series = Series.new(5, 'Mad Men S1', {:name => 'Mad Men'}, [{:name => 'Ep1'}, {:name => 'Ep2'}])
+    
+    resource = SeriesResource.new(series)
+    
+    resource.to_json(:expand => [:show, :episodes]).should == <<-JSON
+{
+  "resource_type": "series",
+  "id": 5,
+  "name": "Mad Men S1",
+  "self_link": "http://wadus.com/series/5",
+  "show_link": "http://wadus.com/show/20",
+  "show": {
+    "resource_type": "show",
+    "name": "Mad Men"
+  },
+  "episodes_link": "http://wadus.com/series/5/episodes",
+  "episodes": {
+    "entries": [
+      {
+        "resource_type": "episode",
+        "title": "Ep1"
+      },
+      {
+        "resource_type": "episode",
+        "title": "Ep2"
+      }
+    ]
+  }
+}
+JSON
+  end
 end

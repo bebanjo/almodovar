@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.add_dependency("resourceful", "= 0.5.3")
   s.add_dependency("nokogiri")
   s.add_dependency("activesupport", "~> 2.3.0")
+  s.add_dependency("yajl-ruby")
 end
