@@ -1,6 +1,12 @@
 module Almodovar
   
-  class ResourcePresenter::Link < Struct.new(:rel, :href, :expand_resource, :expand_args)
+  class ResourcePresenter::Link
+    
+    attr_reader :rel, :href, :expand_resource, :expand_args
+    
+    def initialize(*args)
+      @rel, @href, @expand_resource, @expand_args = args
+    end
     
     def to_xml(options = {})
       XmlSerializer.new(self, options.merge(:skip_instruct => true)).to_xml
@@ -30,7 +36,14 @@ module Almodovar
       expand_resource.present?
     end
     
-    class Serializer < Struct.new(:link, :options)
+    class Serializer
+      
+      attr_reader :link, :options
+      
+      def initialize(link, options)
+        @link = link
+        @options = options
+      end
       
       def expands?
         link.expand_resource? && 

@@ -40,7 +40,14 @@ module Almodovar
       Link.new(:self, @url) if @url
     end
     
-    class Serializer < Struct.new(:resource, :options)
+    class Serializer
+      
+      attr_reader :resource, :options
+      
+      def initialize(resource, options)
+        @resource = resource
+        @options  = options
+      end
 
       def options_for_link
         options.merge(:dont_expand => Array(options[:dont_expand]) << resource.url)
