@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Navigating included documents" do
+describe "Navigating included documents" do
   
-  scenario "Accesing included data" do
+  example "Accesing included data" do
     stub_auth_request(:get, "http://movida.example.com/people/1").to_return(:body => <<-XML)
       <person>
         <name>Pedro Almodóvar</name>
@@ -53,7 +53,7 @@ feature "Navigating included documents" do
     
   end
   
-  scenario "Accessing document resources" do
+  example "Accessing document resources" do
     stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(:body => <<-XML)
       <biography type="document">
         <birthplace>Calzada de Calatrava</birthplace>

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Deleting resources" do
+describe "Deleting resources" do
   
-  scenario "Deleting a resource" do
+  example "Deleting a resource" do
     project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
     
     stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(:status => 200)

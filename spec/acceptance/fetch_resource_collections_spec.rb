@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Fetching resource collections" do
+describe "Fetching resource collections" do
   
-  scenario "Fetch collection" do
+  example "Fetch collection" do
     stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => <<-XML)
       <resources type='array'>
         <resource>
@@ -24,7 +24,7 @@ feature "Fetching resource collections" do
     resources.last.name.should  == "Resource 2"
   end
   
-  scenario "Fetch a collection with params" do
+  example "Fetch a collection with params" do
     stub_auth_request(:get, "http://movida.example.com/resources?name=pedro").to_return(:body => <<-XML)
       <resources type='array'>
         <resource>
@@ -39,7 +39,7 @@ feature "Fetching resource collections" do
     resources.first.name.should == "Pedro"
   end
   
-  scenario "Inspecting a collection" do
+  example "Inspecting a collection" do
     stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
       <resources type='array'>
         <resource>

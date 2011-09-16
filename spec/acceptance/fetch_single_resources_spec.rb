@@ -1,8 +1,8 @@
 require "spec_helper"
 
-feature "Fetching individual resources" do  
+describe "Fetching individual resources" do  
 
-  scenario "Fetching untyped attributes" do
+  example "Fetching untyped attributes" do
     stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => <<-XML)
       <resource>
         <name>Resource Name</name>
@@ -19,7 +19,7 @@ feature "Fetching individual resources" do
     expect { resource.wadus }.to raise_error(NoMethodError)
   end
   
-  scenario "Fetching typed attributes" do
+  example "Fetching typed attributes" do
     stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => <<-XML)
       <resource>
         <id type="integer">12345</id>
@@ -40,7 +40,7 @@ feature "Fetching individual resources" do
     resource.type.should == "wadus"
   end
   
-  scenario "Inspecting a resource" do
+  example "Inspecting a resource" do
     xml = %q{
       <resource>
         <id type="integer">12345</id>
@@ -54,7 +54,7 @@ feature "Fetching individual resources" do
     Nokogiri::XML.parse(resource.inspect).to_xml.should == Nokogiri::XML.parse(xml).to_xml
   end
   
-  scenario "Using a port different than default" do
+  example "Using a port different than default" do
     stub_auth_request(:get, "http://movida.example.com:3000/resource").to_return(:body => <<-XML)
       <resource>
         <name>Resource Name</name>

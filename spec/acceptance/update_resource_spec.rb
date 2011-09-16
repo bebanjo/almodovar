@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Updating resources" do
+describe "Updating resources" do
   
-  scenario "Updating a resource" do
+  example "Updating a resource" do
     stub_auth_request(:put, "http://movida.example.com/projects/1").with do |req|
       req.body == {:name => "Wadus Wadus"}.to_xml(:root => "project")
     end.to_return(:body => <<-XML)
@@ -19,7 +19,7 @@ feature "Updating resources" do
     project.name.should == "Wadus Wadus"
   end
   
-  scenario "Updating a document resource" do
+  example "Updating a document resource" do
     stub_auth_request(:put, "http://movida.example.com/people/1/extra_data").with do |req|
       req.body == {:birthplace => "Calzada de Calatrava"}.to_xml(:root => "extra-data")
     end.to_return(:body => <<-XML)

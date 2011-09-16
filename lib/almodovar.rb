@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../vendor/resourceful-0.5.3-patched/lib/resourceful'
+require 'resourceful'
 require 'nokogiri'
 begin
   require 'active_support/all'

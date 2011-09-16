@@ -1,8 +1,6 @@
 require 'rubygems'
-require 'steak'
 require 'webmock/rspec'
 require 'lorax'
-
 require "almodovar"
 
 
@@ -12,7 +10,7 @@ module Helpers
   end
   
   def auth_request(*args)
-    request(*args).with(:headers => {"Authorization" => /^Digest/ })
+    a_request(*args).with(:headers => {"Authorization" => /^Digest/ })
   end
   
   def auth
@@ -20,9 +18,9 @@ module Helpers
   end
 end
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include Helpers
-  config.include WebMock
+  config.include WebMock::API
   config.before(:each) do
     stub_request(:any, //).with { |request| !request.headers.has_key?("Authorization") }.
                            to_return(
@@ -30,11 +28,11 @@ Spec::Runner.configure do |config|
                                "WWW-Authenticate" => 'Digest realm="realm", qop="auth", algorithm=MD5, nonce="MTI3MDczNjM0NTpiNjQ5MDNkMzMyNDVhYWE0M2M2OWRiYmJmNDU2MjhlMg==", opaque="0b3ab90874517ff5f4ea48fe15f49f8c"'
                             })
   end
-  config.after(:each) { reset_webmock }
+  config.after(:each) { WebMock.reset! }
 end
 
 module NokogiriMatchers
-  Spec::Matchers.define :have_processing_instruction do |processing_instruction|
+  RSpec::Matchers.define :have_processing_instruction do |processing_instruction|
     match do |xml_string|
       xml_string.starts_with?(processing_instruction)
     end
@@ -44,7 +42,7 @@ module NokogiriMatchers
     end
   end
   
-  Spec::Matchers.define :match_xpath do |xpath|
+  RSpec::Matchers.define :match_xpath do |xpath|
     match do |xml_string|
       Nokogiri::XML.parse(xml_string).at_xpath(xpath).present?
     end
@@ -59,7 +57,7 @@ module NokogiriMatchers
     
   end
   
-  Spec::Matchers.define :equal_xml do |expected_xml_string|
+  RSpec::Matchers.define :equal_xml do |expected_xml_string|
     match do |actual_xml_string|
       @expected_doc = Nokogiri.parse(expected_xml_string)
       @actual_doc   = Nokogiri.parse(actual_xml_string)

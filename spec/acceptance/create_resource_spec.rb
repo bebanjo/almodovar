@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-feature "Creating new resources" do
+describe "Creating new resources" do
   
-  scenario "Creating a resource in a collection" do
+  example "Creating a resource in a collection" do
     
     projects = Almodovar::Resource("http://movida.example.com/projects", auth)
     
@@ -35,7 +35,7 @@ feature "Creating new resources" do
     project.name.should == Almodovar::Resource(project.url, auth).name
   end
   
-  scenario "Creating a resource expanding links" do
+  example "Creating a resource expanding links" do
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <name>Wadus</name>
@@ -68,7 +68,7 @@ feature "Creating new resources" do
     project.tasks.first.name.should == "Starting Meeting"
   end
   
-  scenario "Creating linking to existing resources" do
+  example "Creating linking to existing resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth)
     
     stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
@@ -90,7 +90,7 @@ feature "Creating new resources" do
     project.owner.url.should == "http://example.com/people/luismi"
   end
   
-  scenario "Creating nested resources" do
+  example "Creating nested resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
     
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|

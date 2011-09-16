@@ -1,35 +1,44 @@
 require 'spec_helper'
 
-feature 'Presenting resources' do
+describe 'Presenting resources' do
   
-  class Series < Struct.new(:id, :name, :show, :episodes)
-  end
+  before do
+    class Series < Struct.new(:id, :name, :show, :episodes)
+    end
     
-  class ShowResource < Almodovar::ResourcePresenter
-    def initialize(model)
-      attributes[:name] = model[:name]
+    class ShowResource < Almodovar::ResourcePresenter
+      def initialize(model)
+        attributes[:name] = model[:name]
+      end
     end
-  end
 
-  class SeriesResource < Almodovar::ResourcePresenter
-    def initialize(model)
-      self.url = "http://wadus.com/series/#{model.id}"
+    class SeriesResource < Almodovar::ResourcePresenter
+      def initialize(model)
+        self.url = "http://wadus.com/series/#{model.id}"
       
-      attributes[:id]   = model.id
-      attributes[:name] = model.name
+        attributes[:id]   = model.id
+        attributes[:name] = model.name
       
-      links << Link.new(:show, "http://wadus.com/show/20", ShowResource, model.show)
-      links << Link.new(:episodes, "http://wadus.com/series/#{model.id}/episodes", EpisodeResource, model.episodes)
+        links << Link.new(:show, "http://wadus.com/show/20", ShowResource, model.show)
+        links << Link.new(:episodes, "http://wadus.com/series/#{model.id}/episodes", EpisodeResource, model.episodes)
+      end
+    end
+  
+    class EpisodeResource < Almodovar::ResourcePresenter
+      def initialize(model)
+        attributes[:title] = model[:name]
+      end
     end
   end
   
-  class EpisodeResource < Almodovar::ResourcePresenter
-    def initialize(model)
-      attributes[:title] = model[:name]
-    end
+  after do
+    Object.send :remove_const, :Series
+    Object.send :remove_const, :ShowResource
+    Object.send :remove_const, :SeriesResource
+    Object.send :remove_const, :EpisodeResource
   end
   
-  scenario 'Presenting a resource in xml format' do
+  example 'Presenting a resource in xml format' do
     resource = SeriesResource.new(Series.new(5, 'Mad Men S1'))
     
     resource.to_xml.should equal_xml <<-XML
@@ -44,7 +53,7 @@ feature 'Presenting resources' do
 XML
   end
   
-  scenario 'Presenting a resource in xml format expanding its links' do
+  example 'Presenting a resource in xml format expanding its links' do
     series = Series.new(5, 'Mad Men S1', {:name => 'Mad Men'}, [{:name => 'Ep1'}, {:name => 'Ep2'}])
     
     resource = SeriesResource.new(series)
@@ -74,7 +83,7 @@ XML
 XML
   end
   
-  scenario 'Presenting a resource in json format' do
+  example 'Presenting a resource in json format' do
     resource = SeriesResource.new(Series.new(5, 'Mad Men S1'))
     
     resource.to_json.should == <<-JSON
@@ -89,7 +98,7 @@ XML
 JSON
   end
   
-  scenario 'Presenting a resource in json format expanding its links' do
+  example 'Presenting a resource in json format expanding its links' do
     series = Series.new(5, 'Mad Men S1', {:name => 'Mad Men'}, [{:name => 'Ep1'}, {:name => 'Ep2'}])
     
     resource = SeriesResource.new(series)

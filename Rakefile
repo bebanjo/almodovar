@@ -1,27 +1,28 @@
 require "rubygems"
 
 require 'bundler/setup'
+include Rake::DSL
 Bundler::GemHelper.install_tasks
 
-require "spec"
-require "spec/rake/spectask"
+require 'rspec/core/rake_task'
 
-desc "Run acceptance specs"
-Spec::Rake::SpecTask.new("spec:acceptance") do |t|
-  t.spec_files = ["spec/acceptance"]
-end
+desc 'Default: run specs.'
+task :default => :spec
 
-desc "Run unit specs"
-Spec::Rake::SpecTask.new("spec:unit") do |t|
-  t.spec_files = ["spec/unit"]
-end
-
-desc "Run all specs"
+desc "Run specs"
 task :spec => ["spec:unit", "spec:acceptance"]
 
-task :default => ["spec"]
+desc "Run unit specs"
+RSpec::Core::RakeTask.new("spec:unit") do |t|
+  t.pattern = "spec/unit/**/*_spec.rb"
+end
 
-require "rake/rdoctask"
+desc "Run acceptance specs"
+RSpec::Core::RakeTask.new("spec:acceptance") do |t|
+  t.pattern = "spec/acceptance/**/*_spec.rb"
+end
+
+require "rdoc/task"
 Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("lib/**/*.rb", "README.rdoc")
   rd.rdoc_dir = "rdoc"

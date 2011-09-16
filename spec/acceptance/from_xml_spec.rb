@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Instantiate resources from xml" do
+describe "Instantiate resources from xml" do
   
   it "should instantiate the resource without HTTP calls" do
     xml = %q{

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-feature "Navigating linked resources" do
-  scenario "Link to a single resource" do
+describe "Navigating linked resources" do
+  example "Link to a single resource" do
     stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
       <user>
         <link rel="related-company" href="http://movida.example.com/company/2"/>
@@ -22,7 +22,7 @@ feature "Navigating linked resources" do
     user.related_company.age.should == 15
   end
   
-  scenario "Link to a collection of resources" do
+  example "Link to a collection of resources" do
     stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
       <company>
         <link rel="related_users" href="http://movida.example.com/company/1/users"/>
@@ -49,7 +49,7 @@ feature "Navigating linked resources" do
     company.related_users.last.age.should == 33
   end
   
-  scenario "Link to a collection of resources with params" do
+  example "Link to a collection of resources with params" do
     stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
       <company>
         <link rel="related_users" href="http://movida.example.com/company/1/users"/>
@@ -72,7 +72,7 @@ feature "Navigating linked resources" do
     company.related_users(:min_age => 23, :recent => true).size.should == 2
   end
   
-  scenario "Expanded link to a single resource" do
+  example "Expanded link to a single resource" do
     stub_auth_request(:get, "http://movida.example.com/user/1?expand=employer").to_return(:body => <<-XML)
       <user>
         <link rel="employer" href="http://movida.example.com/company/2">
@@ -89,7 +89,7 @@ feature "Navigating linked resources" do
     user.employer.age.should == 15
   end
   
-  scenario "Expanded link to a resource collection" do
+  example "Expanded link to a resource collection" do
     
     stub_auth_request(:get, "http://movida.example.com/company/1?expand=users,department").to_return(:body => <<-XML)
       <company>
@@ -122,7 +122,7 @@ feature "Navigating linked resources" do
     
   end
   
-  scenario "Expanded link to a resource collection using params" do
+  example "Expanded link to a resource collection using params" do
     stub_auth_request(:get, "http://movida.example.com/company/1?expand=users").to_return(:body => <<-XML)
       <company>
         <link rel="users" href="http://movida.example.com/company/1/users">
@@ -151,7 +151,7 @@ feature "Navigating linked resources" do
     company.users(:min_age => 40).size.should == 1
   end
 
-  scenario "Link to self" do
+  example "Link to self" do
     stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
       <user>
         <link rel="self" href="http://movida.example.com/user/1"/>
@@ -163,7 +163,7 @@ feature "Navigating linked resources" do
     user.url.should == "http://movida.example.com/user/1"
   end
   
-  scenario "Using a port different than default" do
+  example "Using a port different than default" do
     stub_auth_request(:get, "http://movida.example.com:3000/user/1").to_return(:body => <<-XML)
       <user>
         <link rel="related-company" href="http://movida.example.com:3000/company/2"/>

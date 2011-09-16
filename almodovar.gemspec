@@ -12,8 +12,10 @@ Gem::Specification.new do |s|
   s.files             = %w() + Dir.glob("{vendor/**/*,lib/**/*}")
   s.require_paths     = ["lib"]
   
-  s.add_dependency("resourceful", "= 0.5.3")
+  s.add_dependency("resourceful")
+  s.add_dependency("builder")
   s.add_dependency("nokogiri")
-  s.add_dependency("activesupport", "~> 2.3.0")
+  s.add_dependency("activesupport")
+  s.add_dependency("i18n")
   s.add_dependency("yajl-ruby")
 end
