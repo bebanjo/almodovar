@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe "Navigating linked resources" do
   example "Link to a single resource" do
-    stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => %q{
       <user>
         <link rel="related-company" href="http://movida.example.com/company/2"/>
       </user>
-    XML
+    })
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth)
     
-    stub_auth_request(:get, "http://movida.example.com/company/2").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/2").to_return(:body => %q{
       <company>
         <age type="integer">15</age>
       </company>
-    XML
+    })
     
     user.should respond_to(:related_company)
     
@@ -23,15 +23,15 @@ describe "Navigating linked resources" do
   end
   
   example "Link to a collection of resources" do
-    stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => %q{
       <company>
         <link rel="related_users" href="http://movida.example.com/company/1/users"/>
       </company>
-    XML
+    })
     
     company = Almodovar::Resource("http://movida.example.com/company/1", auth)
     
-    stub_auth_request(:get, "http://movida.example.com/company/1/users").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1/users").to_return(:body => %q{
       <users type="array">
         <user>
           <age type="integer">46</age>
@@ -40,7 +40,7 @@ describe "Navigating linked resources" do
           <age type="integer">33</age>
         </user>
       </users>
-    XML
+    })
     
     company.should respond_to(:related_users)
     
@@ -50,15 +50,15 @@ describe "Navigating linked resources" do
   end
   
   example "Link to a collection of resources with params" do
-    stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1").to_return(:body => %q{
       <company>
         <link rel="related_users" href="http://movida.example.com/company/1/users"/>
       </company>
-    XML
+    })
     
     company = Almodovar::Resource("http://movida.example.com/company/1", auth)
     
-    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=23&recent=true").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=23&recent=true").to_return(:body => %q{
       <users type="array">
         <user>
           <age type="integer">46</age>
@@ -67,13 +67,13 @@ describe "Navigating linked resources" do
           <age type="integer">33</age>
         </user>
       </users>
-    XML
+    })
     
     company.related_users(:min_age => 23, :recent => true).size.should == 2
   end
   
   example "Expanded link to a single resource" do
-    stub_auth_request(:get, "http://movida.example.com/user/1?expand=employer").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/user/1?expand=employer").to_return(:body => %q{
       <user>
         <link rel="employer" href="http://movida.example.com/company/2">
           <company>
@@ -81,7 +81,7 @@ describe "Navigating linked resources" do
           </company>
         </link>
       </user>
-    XML
+    })
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth, :expand => :employer)
     
@@ -91,7 +91,7 @@ describe "Navigating linked resources" do
   
   example "Expanded link to a resource collection" do
     
-    stub_auth_request(:get, "http://movida.example.com/company/1?expand=users,department").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1?expand=users,department").to_return(:body => %q{
       <company>
         <link rel="users" href="http://movida.example.com/company/1/users">
           <users type="array">
@@ -112,7 +112,7 @@ describe "Navigating linked resources" do
           </users>
         </link>
       </company>
-    XML
+    })
     
     company = Almodovar::Resource("http://movida.example.com/company/1", auth, :expand => [:users, :department])
     
@@ -123,7 +123,7 @@ describe "Navigating linked resources" do
   end
   
   example "Expanded link to a resource collection using params" do
-    stub_auth_request(:get, "http://movida.example.com/company/1?expand=users").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1?expand=users").to_return(:body => %q{
       <company>
         <link rel="users" href="http://movida.example.com/company/1/users">
           <users type="array">
@@ -136,27 +136,27 @@ describe "Navigating linked resources" do
           </users>
         </link>
       </company>
-    XML
+    })
     
     company = Almodovar::Resource("http://movida.example.com/company/1", auth, :expand => :users)
     
-    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=40").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/company/1/users?min_age=40").to_return(:body => %q{
       <users type="array">
         <user>
           <age type="integer">46</age>
         </user>
       </users>
-    XML
+    })
     
     company.users(:min_age => 40).size.should == 1
   end
 
   example "Link to self" do
-    stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/user/1").to_return(:body => %q{
       <user>
         <link rel="self" href="http://movida.example.com/user/1"/>
       </user>
-    XML
+    })
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth)
     
@@ -164,19 +164,19 @@ describe "Navigating linked resources" do
   end
   
   example "Using a port different than default" do
-    stub_auth_request(:get, "http://movida.example.com:3000/user/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com:3000/user/1").to_return(:body => %q{
       <user>
         <link rel="related-company" href="http://movida.example.com:3000/company/2"/>
       </user>
-    XML
+    })
     
     user = Almodovar::Resource("http://movida.example.com:3000/user/1", auth)
     
-    stub_auth_request(:get, "http://movida.example.com:3000/company/2").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com:3000/company/2").to_return(:body => %q{
       <company>
         <age type="integer">15</age>
       </company>
-    XML
+    })
     
     user.related_company.should_not be_nil
     user.related_company.age.should == 15

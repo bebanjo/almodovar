@@ -1,9 +1,10 @@
 module Almodovar
   class SingleResource
     include HttpAccessor
-  
-    undef id, type
-  
+    
+    undef_method :id if instance_methods.include?("id")
+    undef_method :type if instance_methods.include?("type")
+        
     def initialize(url, auth, xml = nil, options = {})
       @url = url
       @auth = auth
@@ -61,8 +62,10 @@ module Almodovar
   
     def node_text(node)
       case node['type']
-      when "integer": node.text.to_i
-      when "datetime": Time.parse(node.text)
+      when "integer"
+        node.text.to_i
+      when "datetime"
+        Time.parse(node.text)
       else
         node.text
       end

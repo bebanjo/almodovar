@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Fetching resource collections" do
   
   example "Fetch collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
       <resources type='array'>
         <resource>
           <link rel='self' href='http://movida.example.com/resources/1'/>
@@ -14,7 +14,7 @@ describe "Fetching resource collections" do
           <name>Resource 2</name>
         </resource>
       </resources>
-    XML
+    })
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
     
@@ -25,14 +25,14 @@ describe "Fetching resource collections" do
   end
   
   example "Fetch a collection with params" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=pedro").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/resources?name=pedro").to_return(:body => %q{
       <resources type='array'>
         <resource>
           <name>Pedro</name>
         </resource>
       </resources>
-    XML
-        
+    })
+    
     resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "pedro")
     
     resources.size.should == 1

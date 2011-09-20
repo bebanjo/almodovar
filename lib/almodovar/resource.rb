@@ -1,8 +1,9 @@
 module Almodovar
   class Resource
     include HttpAccessor
-  
-    undef id, type
+
+    undef_method :id if instance_methods.include?("id")
+    undef_method :type if instance_methods.include?("type")
   
     delegate :inspect, :to => :get!
   
@@ -33,7 +34,8 @@ module Almodovar
     private
   
     def collection_call?(meth, *args)
-      (Array.instance_methods + ["create"] - ["delete", "id", "[]"]).include?(meth.to_s) ||
+      ([].respond_to?(meth) && !["delete", "id", "[]"].include?(meth.to_s)) ||
+      ["create"].include?(meth.to_s) ||
       (meth.to_s == "[]" && args.size == 1 && args.first.is_a?(Fixnum))
     end
     

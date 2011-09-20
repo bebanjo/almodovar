@@ -1,9 +1,11 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe "Navigating included documents" do
   
   example "Accesing included data" do
-    stub_auth_request(:get, "http://movida.example.com/people/1").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/people/1").to_return(:body => %q{
       <person>
         <name>Pedro Almodóvar</name>
         <extra-data type="document">
@@ -33,7 +35,7 @@ describe "Navigating included documents" do
           </oscars>
         </extra-data>
       </person>
-    XML
+    })
   
     person = Almodovar::Resource("http://movida.example.com/people/1", auth)
     
@@ -54,7 +56,7 @@ describe "Navigating included documents" do
   end
   
   example "Accessing document resources" do
-    stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(:body => <<-XML)
+    stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(:body => %q{
       <biography type="document">
         <birthplace>Calzada de Calatrava</birthplace>
         <birthyear type="integer">1949</birthyear>
@@ -69,7 +71,7 @@ describe "Navigating included documents" do
           </film>
         </films>
       </biography>
-    XML
+    })
   
     bio = Almodovar::Resource("http://movida.example.com/people/1/biography", auth)
     

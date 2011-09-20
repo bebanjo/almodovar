@@ -160,7 +160,7 @@ describe Almodovar::ResourcePresenter do
       
       describe 'expanding' do
         
-        it 'doesn’t expand links without expand option' do
+        it "doesn't expand links without expand option" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show', ShowResource)
@@ -172,7 +172,7 @@ describe Almodovar::ResourcePresenter do
           xml.should match_xpath('/series/link[not(node())]')
         end
         
-        it 'doesn’t expand links with a expand option that does’t specify the link rel' do
+        it "doesn't expand links with a expand option that doesn't specify the link rel" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show', ShowResource)
@@ -184,7 +184,7 @@ describe Almodovar::ResourcePresenter do
           xml.should match_xpath('/series/link[not(node())]')
         end
         
-        it 'doesn’t expand links when no expanding resource is specified' do
+        it "doesn't expand links when no expanding resource is specified" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show')
@@ -299,7 +299,7 @@ describe Almodovar::ResourcePresenter do
           xml.should match_xpath('/series-episode/link/series/link[@rel="first_episode"][not(node())]')
         end
         
-        it 'expands the same resource more than once if there’s no infinite recursion' do
+        it "expands the same resource more than once if there's no infinite recursion" do
           class ShowResource
             def initialize
               links << Link.new(:first_episode, 'http://example.com/episode/1', SeriesEpisodeResource)
@@ -354,7 +354,7 @@ describe Almodovar::ResourcePresenter do
           SeriesEpisodeResource.received.should == [1, 2]
         end
         
-        it 'doesn’t recurse infinitely with resource collections' do
+        it "doesn't recurse infinitely with resource collections" do
           class SeriesResource
             def initialize
               links << Link.new(:episodes, 'http://example.com/episodes', SeriesEpisodeResource, [1, 2])
@@ -397,7 +397,7 @@ describe Almodovar::ResourcePresenter do
       it 'only includes the root when nothing is set' do
         json = SeriesResource.new.to_json
 
-        Yajl::Parser.parse(json).should have(1).key
+        Yajl::Parser.parse(json).size.should == 1
       end
       
     end
@@ -512,7 +512,7 @@ describe Almodovar::ResourcePresenter do
           
       describe 'expanding' do
         
-        it 'doesn’t expand links without expand option' do
+        it "doesn't expand links without expand option" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show', ShowResource)
@@ -524,7 +524,7 @@ describe Almodovar::ResourcePresenter do
           Yajl::Parser.parse(json).should_not have_key('show')
         end
         
-        it 'doesn’t expand links with a expand option that does’t specify the link rel' do
+        it "doesn't expand links with a expand option that doesn't specify the link rel" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show', ShowResource)
@@ -536,7 +536,7 @@ describe Almodovar::ResourcePresenter do
           Yajl::Parser.parse(json).should_not have_key('show')
         end
         
-        it 'doesn’t expand links when no expanding resource is specified' do
+        it "doesn't expand links when no expanding resource is specified" do
           class SeriesResource
             def initialize
               links << Link.new(:show, 'http://example.com/show')
@@ -659,7 +659,7 @@ describe Almodovar::ResourcePresenter do
           end
         end
         
-        it 'expands the same resource more than once if there’s no infinite recursion' do
+        it "expands the same resource more than once if there's no infinite recursion" do
           class ShowResource
             def initialize
               links << Link.new(:first_episode, 'http://example.com/episode/1', SeriesEpisodeResource)
@@ -717,7 +717,7 @@ describe Almodovar::ResourcePresenter do
           end
         end
         
-        it 'doesn’t recurse infinitely with resource collections' do
+        it "doesn't recurse infinitely with resource collections" do
           class SeriesResource
             def initialize
               links << Link.new(:episodes, 'http://example.com/episodes', SeriesEpisodeResource, [1, 2])

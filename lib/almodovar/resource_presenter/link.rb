@@ -70,7 +70,7 @@ module Almodovar
       end
       
       def expand_block
-        lambda { expand_resource } if expands?
+        Proc.new { expand_resource } if expands?
       end
 
       def expand_resource
