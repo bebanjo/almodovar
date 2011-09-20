@@ -111,8 +111,8 @@ And exactly the same with the _delete_ method:
 
 ==To-do
 
-* See what is preventing latest version of Resourceful from working and fix it (Now we're using a vendorized, patched version based on resourceful 0.5.3)
 * Better error management
 * Write the conventions Almodovar expects in an API
+* Other authentication methods than digest
 
 Copyright (c) 2010 BeBanjo S.L., released under the MIT license

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = %w(README.rdoc)
   s.rdoc_options      = %w(--main README.rdoc)
   
-  s.files             = %w() + Dir.glob("{vendor/**/*,lib/**/*}")
+  s.files             = %w(README.rdoc) + Dir.glob("{lib/**/*}")
   s.require_paths     = ["lib"]
   
   s.add_dependency("patron")
