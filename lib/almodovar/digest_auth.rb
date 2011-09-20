@@ -1,4 +1,4 @@
 module Almodovar
-  class DigestAuth < Resourceful::DigestAuthenticator
+  class DigestAuth < Struct.new(:realm, :username, :password)
   end
 end

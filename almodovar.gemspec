@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files             = %w() + Dir.glob("{vendor/**/*,lib/**/*}")
   s.require_paths     = ["lib"]
   
-  s.add_dependency("resourceful")
+  s.add_dependency("patron")
   s.add_dependency("builder")
   s.add_dependency("nokogiri")
   s.add_dependency("activesupport")

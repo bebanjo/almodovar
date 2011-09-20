@@ -14,12 +14,12 @@ module Almodovar
     def update(attrs = {})
       raise ArgumentError.new("You must specify one only root element which is the type of resource (e.g. `:project => { :name => 'Wadus' }` instead of just `:name => 'Wadus'`)") if attrs.size > 1
       root, body = attrs.first
-      response = http.resource(@url).put(body.to_xml(:root => root), :content_type => "application/xml")
+      response = http.put(@url, body.to_xml(:root => root), :content_type => "application/xml")
       @xml = Nokogiri::XML.parse(response.body).root
     end
   
     def delete
-      http.resource(@url).delete
+      http.delete(@url)
     end
   
     def url

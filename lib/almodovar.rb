@@ -1,4 +1,4 @@
-require 'resourceful'
+require 'patron'
 require 'nokogiri'
 begin
   require 'active_support/all'
