@@ -8,4 +8,4 @@ gem 'webmock'
 gem 'lorax'
 gem 'rdoc'
 
-gem 'activesupport', '~> 3.1.0'
+gem 'activesupport', '~> 2.3.0'
