@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "almodovar"
-  s.version           = "0.5.6"
+  s.version           = "0.6.0"
   s.summary           = "BeBanjo API client"
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"

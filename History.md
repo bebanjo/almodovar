@@ -1,6 +1,6 @@
 # Almodovar Release History
 
-## HEAD
+## Version 0.6.0 (2011-10-07)
 
 ### Features
 
