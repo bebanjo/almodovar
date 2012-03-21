@@ -1,9 +1,9 @@
 module Almodovar
   module ArrayToXml
-    def to_xml_with_links(options = {})
-      return to_xml_without_links(options) unless options[:convert_links]
+    def to_xml_with_links(options = {}, &block)
+      return to_xml_without_links(options, &block) unless options[:convert_links]
       options[:builder].tag!(:link, :rel => options[:root]) do |xml|
-        to_xml_without_links options.merge(:builder => xml)
+        to_xml_without_links options.merge(:builder => xml), &block
       end
     end
   end

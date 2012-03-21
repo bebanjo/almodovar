@@ -51,6 +51,12 @@ describe Array do
       [].to_xml.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<nil-classes type=\"array\"/>\n"
     end
     
+    it "should be able to receive a block" do
+      [{}].to_xml do |xml| 
+        xml.wadus "Almodovar" 
+      end.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<records type=\"array\">\n  <wadus>Almodovar</wadus>\n  <record>\n  </record>\n</records>\n"
+    end
+
   end
   
 end
