@@ -73,6 +73,42 @@ XML
 </series>
 XML
   end
+
+  example 'Presenting a resource collection in xml format with options' do
+    collection = []
+    1.upto(3) { |i| collection << Series.new(i, 'Mad Men S1')}
+
+    resources = Almodovar::ResourcePresenter::Collection.new(SeriesResource, collection, { :total_entries => 3, :next_link => 'http://wadus.com/series?after=3' })
+
+    resources.to_xml.should equal_xml <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<series type="array">
+  <total-entries>3</total-entries>
+  <link rel="next" href="http://wadus.com/series?after=3"/>
+  <series>
+    <id type="integer">1</id>
+    <name>Mad Men S1</name>
+    <link rel="self" href="http://wadus.com/series/1"/>
+    <link rel="show" href="http://wadus.com/show/20"/>
+    <link rel="episodes" href="http://wadus.com/series/1/episodes"/>
+  </series>
+  <series>
+    <id type="integer">2</id>
+    <name>Mad Men S1</name>
+    <link rel="self" href="http://wadus.com/series/2"/>
+    <link rel="show" href="http://wadus.com/show/20"/>
+    <link rel="episodes" href="http://wadus.com/series/2/episodes"/>
+  </series>
+  <series>
+    <id type="integer">3</id>
+    <name>Mad Men S1</name>
+    <link rel="self" href="http://wadus.com/series/3"/>
+    <link rel="show" href="http://wadus.com/show/20"/>
+    <link rel="episodes" href="http://wadus.com/series/3/episodes"/>
+  </series>
+</series> 
+XML
+  end
   
   scenario 'Presenting a resource in json format' do
     resource = SeriesResource.new(Series.new(5, 'Mad Men S1'))
@@ -118,6 +154,45 @@ JSON
       }
     ]
   }
+}
+JSON
+  end
+
+  example 'Presenting a resource in json format with options' do
+    collection = []
+    1.upto(3) { |i| collection << Series.new(i, 'Two and a Half Men ')}
+
+    resources = Almodovar::ResourcePresenter::Collection.new(SeriesResource, collection, { :total_entries => 3, :prev_link => 'http://wadus.com/series?before=1' })
+    resources.to_json.should == <<-JSON
+{
+  "total_entries": 3,
+  "prev_link": "http://wadus.com/series?before=1",
+  "entries": [
+    {
+      "resource_type": "series",
+      "id": 1,
+      "name": "Two and a Half Men ",
+      "self_link": "http://wadus.com/series/1",
+      "show_link": "http://wadus.com/show/20",
+      "episodes_link": "http://wadus.com/series/1/episodes"
+    },
+    {
+      "resource_type": "series",
+      "id": 2,
+      "name": "Two and a Half Men ",
+      "self_link": "http://wadus.com/series/2",
+      "show_link": "http://wadus.com/show/20",
+      "episodes_link": "http://wadus.com/series/2/episodes"
+    },
+    {
+      "resource_type": "series",
+      "id": 3,
+      "name": "Two and a Half Men ",
+      "self_link": "http://wadus.com/series/3",
+      "show_link": "http://wadus.com/show/20",
+      "episodes_link": "http://wadus.com/series/3/episodes"
+    }
+  ]
 }
 JSON
   end
