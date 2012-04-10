@@ -66,7 +66,7 @@ module Almodovar
     
     def object_type
       uri_parts = URI.parse(@url).path.split("/")
-      @object_type ||= (uri_parts.last =~ /^\d$/ ? uri_parts[-2].singularize : uri_parts.last.singularize)
+      @object_type ||= (uri_parts.last =~ /^\d+$/ ? uri_parts[-2].singularize : uri_parts.last.singularize)
     end
     
     def [](key) # for resources with type "document"
