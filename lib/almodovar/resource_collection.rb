@@ -14,7 +14,7 @@ module Almodovar
     def create(attrs = {})
       raise ArgumentError.new("You must specify one only root element which is the type of resource (e.g. `:project => { :name => 'Wadus' }` instead of just `:name => 'Wadus'`)") if attrs.size > 1
       root, body = attrs.first
-      response = http.post(url_with_params, body.to_xml(:root => root, :convert_links => true), :content_type => "application/xml")
+      response = http.post(url_with_params, body.to_xml(:root => root, :convert_links => true), "Content-Type" => "application/xml")
       Resource.new(nil, @auth, Nokogiri::XML.parse(response.body).root)
     end
     
