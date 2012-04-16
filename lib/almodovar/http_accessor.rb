@@ -16,9 +16,11 @@ module Almodovar
     
     def http
       @http ||= Patron::Session.new.tap do |session|
-        session.username = @auth.username
-        session.password = @auth.password
-        session.auth_type = :digest
+        if @auth
+          session.username = @auth.username
+          session.password = @auth.password
+          session.auth_type = :digest
+        end
       end
     end
   end
