@@ -23,12 +23,12 @@ module Almodovar
 
       xml = options[:builder]
 
-      xml.instruct! unless options.delete(:skip_instruct)
-      xml.tag! ActiveSupport::XmlMini.rename_key(resource_type.pluralize, options), :type => 'array' do
+      xml.instruct! unless options[:skip_instruct]
+      xml.tag! resource_type.pluralize.dasherize, :type => 'array' do
         xml.tag!('total-entries', @total) if @total
         xml.link :rel => 'next', :href => @next if @next
         xml.link :rel => 'prev', :href => @prev if @prev
-        @resources.each { |value| ActiveSupport::XmlMini.to_tag(resource_type.singularize, value, options) }
+        @resources.each { |value| value.to_xml(options.merge(:root => resource_type.singularize, :skip_instruct => true)) }
       end
     end
     
