@@ -2,3 +2,4 @@ rdoc
 pkg
 .bundle/config
 almodovar-*.gem
+.bin
