@@ -52,9 +52,10 @@ describe Array do
     end
     
     it "should be able to receive a block" do
-      [{}].to_xml do |xml| 
-        xml.wadus "Almodovar" 
-      end.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<records type=\"array\">\n  <wadus>Almodovar</wadus>\n  <record>\n  </record>\n</records>\n"
+      xml = [{}].to_xml { |xml| xml.wadus "Almodovar" }
+      xml = Nokogiri::XML.parse(xml)
+
+      xml.at_xpath("//wadus").text.should == "Almodovar"
     end
 
   end
