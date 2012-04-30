@@ -16,6 +16,8 @@ feature "Navigating linked resources" do
       </company>
     XML
     
+    user.should respond_to(:related_company)
+    
     user.related_company.should_not be_nil
     user.related_company.age.should == 15
   end
@@ -39,6 +41,8 @@ feature "Navigating linked resources" do
         </user>
       </users>
     XML
+    
+    company.should respond_to(:related_users)
     
     company.related_users.size.should == 2
     company.related_users.first.age.should == 46

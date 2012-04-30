@@ -85,7 +85,7 @@ Resource collections have the _create_ method. Just call it with the attributes 
 
   >> jobs = Almodovar::Resource("http://sequence.example.com/api/work_areas/52/jobs", auth)
   => [<job> ... </job>, <job> ... </job>]
-  >> job = jobs.create(:name => "Wadus")
+  >> job = jobs.create(:job => {:name => "Wadus"})
   => <job> ... </job>
   >> job.name
   => "Wadus"
@@ -96,7 +96,7 @@ You can use the _update_ method:
 
   >> job = Almodovar::Resource("http://sequence.example.com/api/work_areas/52/jobs", auth).first
   => <job> ... </job>
-  >> job.update(:name => "Wadus wadus")
+  >> job.update(:job => {:name => "Wadus wadus"})
   => ...
   >> job.name
   => "Wadus wadus"

@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.email             = "ballsbreaking@bebanjo.com"
   s.homepage          = "http://wiki.github.com/bebanjo/almodovar/"
   
-  s.has_rdoc          = true
   s.extra_rdoc_files  = %w(README.rdoc)
   s.rdoc_options      = %w(--main README.rdoc)
   
@@ -16,9 +15,5 @@ Gem::Specification.new do |s|
   s.add_dependency("resourceful", "= 0.5.3")
   s.add_dependency("nokogiri")
   s.add_dependency("activesupport", "~> 2.3.0")
-  
-  s.add_development_dependency("rake")
-  s.add_development_dependency("rspec", "~> 1.3.0")
-  s.add_development_dependency("steak")
-  s.add_development_dependency("webmock", "~> 1.3.0")
+  s.add_dependency("yajl-ruby")
 end

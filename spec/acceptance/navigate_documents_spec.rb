@@ -36,7 +36,9 @@ feature "Navigating included documents" do
     XML
   
     person = Almodovar::Resource("http://movida.example.com/people/1", auth)
-  
+    
+    person.should respond_to(:extra_data)
+    
     person.name.should == "Pedro Almodóvar"
     person.extra_data["biography"]["birthplace"].should == "Calzada de Calatrava"
     person.extra_data["biography"]["birthyear"].should == 1949

@@ -29,6 +29,11 @@ feature "Fetching individual resources" do
     XML
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
+
+    resource.should respond_to(:id)
+    resource.should respond_to(:date)
+    resource.should respond_to(:type)
+    resource.should_not respond_to(:wadus)
     
     resource.id.should == 12345
     resource.date.should == Time.utc(2009,1,1,10,0,0)
@@ -46,7 +51,7 @@ feature "Fetching individual resources" do
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
 
-    Nokogiri.parse(resource.inspect).to_xml.should == Nokogiri.parse(xml).to_xml
+    Nokogiri::XML.parse(resource.inspect).to_xml.should == Nokogiri::XML.parse(xml).to_xml
   end
   
   scenario "Using a port different than default" do

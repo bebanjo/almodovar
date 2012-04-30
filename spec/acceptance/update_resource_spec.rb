@@ -14,14 +14,14 @@ feature "Updating resources" do
     
     project = Almodovar::Resource("http://movida.example.com/projects/12", auth)
     
-    project.update(:name => "Wadus Wadus")
+    project.update(:project => {:name => "Wadus Wadus"})
     
     project.name.should == "Wadus Wadus"
   end
   
   scenario "Updating a document resource" do
     stub_auth_request(:put, "http://movida.example.com/people/1/extra_data").with do |req|
-      req.body == {:birthplace => "Calzada de Calatrava"}.to_xml(:root => "extra-datum")
+      req.body == {:birthplace => "Calzada de Calatrava"}.to_xml(:root => "extra-data")
     end.to_return(:body => <<-XML)
       <extra-data type="document">
         <birthplace>Calzada de Calatrava</birthplace>
@@ -30,9 +30,8 @@ feature "Updating resources" do
     XML
     
     extra_data = Almodovar::Resource("http://movida.example.com/people/1/extra_data", auth)
-    extra_data.update(:birthplace => "Calzada de Calatrava")
+    extra_data.update(:extra_data => {:birthplace => "Calzada de Calatrava"})
     extra_data.birthplace.should == "Calzada de Calatrava"
-    
   end
   
 end
