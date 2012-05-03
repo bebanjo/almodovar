@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.6.1 (2012-05-03)
+
+### Features
+
+* Throws an exception when the HTTP return an error with status code. See Almodovar::HttpError
+
 ## Version 0.6.0 (2011-10-07)
 
 ### Features
