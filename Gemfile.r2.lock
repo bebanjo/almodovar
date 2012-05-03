@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (0.6.0)
+    almodovar (0.6.1)
       activesupport
       builder
       i18n
