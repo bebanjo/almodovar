@@ -1,6 +1,8 @@
+require File.expand_path('../lib/almodovar/version', __FILE__)
+
 Gem::Specification.new do |s|
   s.name              = "almodovar"
-  s.version           = "0.6.1"
+  s.version           = Almodovar::VERSION
   s.summary           = "BeBanjo API client"
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"
