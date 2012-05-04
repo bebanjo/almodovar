@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.6.2 (2012-05-4)
+
+### Other
+
+* Ability to set default values for `timeout` and `connection_timeout_`
+
 ## Version 0.6.1 (2012-05-03)
 
 ### Features
