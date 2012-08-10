@@ -7,5 +7,6 @@ gem 'rspec'
 gem 'webmock'
 gem 'lorax'
 gem 'rdoc'
+gem 'ruby-debug'
 
 gem 'activesupport', '~> 3.1.0'

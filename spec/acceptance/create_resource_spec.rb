@@ -90,12 +90,46 @@ describe "Creating new resources" do
     project.owner.url.should == "http://example.com/people/luismi"
   end
   
-  example "Creating nested resources" do
+  example "Creating single nested resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
     
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <name>Wadus</name>
+      #   <link rel="timeline">
+      #     <timeline>
+      #       <name>Start project</name>
+      #     </timeline>
+      #   </link>
+      # </project>
+      xml = Nokogiri::XML.parse(req.body)
+      xml.at_xpath("/project/name").text == "Wadus" &&
+      xml.at_xpath("/project/link[@rel='timeline']/timeline/name").text == "Start project" &&
+      xml.at_xpath("/project/link[@rel='timeline']/timeline/link[@rel='wadus']/wadus").present?
+    end.to_return(:body => %q{
+      <project>
+        <name>Wadus</name>
+        <link rel="self" href="http://movida.example.com/projects/1"/>
+        <link rel="timeline" href="http://movida.example.com/projects/1/timeline">
+          <timeline>
+            <name>Start project</name>
+          </timeline>
+        </link>
+      </project>
+    })
+    
+    project = projects.create(:project => {:name => "Wadus", :timeline => {:name => "Start project", :wadus => {}}})
+    
+    project.should be_a(Almodovar::Resource)
+    project.name.should == "Wadus"
+    project.timeline.name.should == "Start project"
+  end
+  
+  example "Creating multiple nested resources" do
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
+    
+    stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
+      # <project>
       #   <link rel="tasks">
       #     <tasks type="array">
       #       <task>
@@ -105,12 +139,9 @@ describe "Creating new resources" do
       #   </link>
       # </project>
       xml = Nokogiri::XML.parse(req.body)
-      xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/link[@rel='tasks']/tasks[@type='array']/task/name").text == "Start project"
     end.to_return(:body => %q{
       <project>
-        <name>Wadus</name>
-        <link rel="self" href="http://movida.example.com/projects/1"/>
         <link rel="tasks" href="http://movida.example.com/projects/1/tasks">
           <tasks type="array">
             <task>
@@ -121,10 +152,9 @@ describe "Creating new resources" do
       </project>
     })
     
-    project = projects.create(:project => {:name => "Wadus", :tasks => [{:name => "Start project"}]})
+    project = projects.create(:project => {:tasks => [{:name => "Start project"}]})
     
     project.should be_a(Almodovar::Resource)
-    project.name.should == "Wadus"
     project.tasks.first.name.should == "Start project"
   end
   
