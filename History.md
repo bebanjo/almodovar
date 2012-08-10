@@ -1,6 +1,12 @@
 # Almodovar Release History
 
-## Version 0.6.2 (2012-05-4)
+## Version 0.7.0 (2012-08-10)
+
+### Features
+
+* Support for nesting single resources on creation
+
+## Version 0.6.2 (2012-05-04)
 
 ### Other
 
