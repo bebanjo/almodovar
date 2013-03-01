@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.8.0 (2013-03-01)
+
+### Features
+
+* Html Serializer for Resource Presenters
+
 ## Version 0.7.0 (2012-08-10)
 
 ### Features
