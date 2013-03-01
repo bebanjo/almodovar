@@ -72,4 +72,19 @@ module NokogiriMatchers
     end
     
   end
+
+  RSpec::Matchers.define :have_text do |expected_text|
+    match do |actual_xml_string|
+      actual_text = Nokogiri.parse(actual_xml_string).text
+      actual_text.gsub(/\s+/,' ').include? expected_text.gsub(/\s+/,' ')
+    end
+
+    failure_message_for_should do |actual_xml_string|
+      "Document expected to contain \"#{expected_text}\". Actual:\n#{actual_xml_string}"
+    end
+
+    failure_message_for_should_not do |actual_xml_string|
+      "Document expected to not contain \"#{expected_text}\". Actual:\n#{actual_xml_string}"
+    end
+  end
 end

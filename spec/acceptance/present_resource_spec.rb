@@ -13,6 +13,10 @@ describe 'Presenting resources' do
     end
 
     class SeriesResource < Almodovar::ResourcePresenter
+      desc 'A Series is a group of episodes'
+      attribute :name, :desc => 'The title of the series'
+      link :show, :desc => 'The show the series belongs to'
+
       def initialize(model)
         self.url = "http://wadus.com/series/#{model.id}"
       
@@ -204,5 +208,51 @@ JSON
   ]
 }
 JSON
+  end
+
+  example 'Presenting a resource in html format expanding its links' do
+    series = Series.new(5, 'Mad Men S1', {:name => 'Mad Men'}, [{:name => 'Ep1'}, {:name => 'Ep2'}])
+    
+    resource = SeriesResource.new(series)
+    
+    html = resource.to_html(:expand => [:show, :episodes])
+
+    # XML tab
+    html.should have_text('<name>Mad Men S1</name>')
+    html.should have_text('<name>Mad Men</name>')
+    html.should have_text('<title>Ep1</title>')
+
+    # JSON tab
+    html.should have_text('"name": "Mad Men S1"')
+    html.should have_text('"name": "Mad Men"')
+    html.should have_text('"title": "Ep1"')
+
+    # Reference tab
+    html.should have_text('Series')
+    html.should have_text('A Series is a group of episodes')
+    html.should have_text('name The title of the series')
+    html.should have_text('show The show the series belongs to')
+  end                        
+
+  example 'Presenting a resource collection in html format expanding its links' do
+    collection = 3.times.map { |i| Series.new(i, "Mad Men S#{i}", {:name => 'Mad Men'})}
+
+    resources = Almodovar::ResourcePresenter::Collection.new(
+      SeriesResource, collection, :total_entries => 3
+    )
+
+    html = resources.to_html(:expand => :show)
+
+    # XML tab
+    html.should have_text('<total-entries>3</total-entries>')
+    html.should have_text('<name>Mad Men S1</name>')
+    html.should have_text('<name>Mad Men</name>')
+
+    # JSON tab
+    html.should have_text('"total_entries": 3')
+    html.should have_text('"name": "Mad Men S2"')
+
+    # Reference tab
+    html.should have_text('A Series is a group of episodes')
   end
 end
