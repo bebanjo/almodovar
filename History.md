@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.0 (2013-04-15)
+
+### Features
+
+* Support for custom attributes in Links
+
 ## Version 0.8.0 (2013-03-01)
 
 ### Features
