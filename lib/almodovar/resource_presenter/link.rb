@@ -2,10 +2,11 @@ module Almodovar
   class ResourcePresenter
     class Link
       
-      attr_reader :rel, :href, :expand_resource, :expand_args
+      attr_reader :rel, :href, :expand_resource, :expand_args, :attributes
       
       def initialize(*args)
-        @rel, @href, @expand_resource, @expand_args = args
+        @rel, @href, @expand_resource, @expand_args, @attributes = args
+        @attributes ||= {}
       end
       
       def to_xml(options = {})
@@ -60,7 +61,7 @@ module Almodovar
       class XmlSerializer < Serializer
         
         def to_xml
-          builder.link :rel => link.rel, :href => link.href, &expand_block
+          builder.link link.attributes.merge(:rel => link.rel, :href => link.href), &expand_block
         end
         
         private

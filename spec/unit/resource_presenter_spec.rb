@@ -131,6 +131,18 @@ describe Almodovar::ResourcePresenter do
         xml.should match_xpath('/series/link[@rel = "episodes"][@href = "http://example.com/episodes"]')
       end
       
+      it 'returns one link with attributes node when one link with attributes is set' do
+        class SeriesResource
+          def initialize
+            links << Link.new(:episodes, 'http://example.com/episodes', nil, nil, :type => 'text/html')
+          end
+        end
+        
+        xml = SeriesResource.new.to_xml
+        
+        xml.should match_xpath('/series/link[@rel = "episodes"][@type = "text/html"]')
+      end
+      
       it 'returns several link nodes when several links are set' do
         class SeriesResource
           def initialize
