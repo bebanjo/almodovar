@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.1 (2013-08-20)
+
+### Features
+
+* Remove JSON tab on PresenterResource. JSON API is not fully supported
+
 ## Version 0.9.0 (2013-04-15)
 
 ### Features
