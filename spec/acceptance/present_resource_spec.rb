@@ -222,11 +222,6 @@ JSON
     html.should have_text('<name>Mad Men</name>')
     html.should have_text('<title>Ep1</title>')
 
-    # JSON tab
-    html.should have_text('"name": "Mad Men S1"')
-    html.should have_text('"name": "Mad Men"')
-    html.should have_text('"title": "Ep1"')
-
     # Reference tab
     html.should have_text('Series')
     html.should have_text('A Series is a group of episodes')
@@ -247,10 +242,6 @@ JSON
     html.should have_text('<total-entries>3</total-entries>')
     html.should have_text('<name>Mad Men S1</name>')
     html.should have_text('<name>Mad Men</name>')
-
-    # JSON tab
-    html.should have_text('"total_entries": 3')
-    html.should have_text('"name": "Mad Men S2"')
 
     # Reference tab
     html.should have_text('A Series is a group of episodes')

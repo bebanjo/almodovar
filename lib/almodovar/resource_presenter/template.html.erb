@@ -77,17 +77,12 @@
 
       <ul class="nav nav-tabs">
         <li><a href="#xml"  data-toggle="tab">XML</a> </li>
-        <li><a href="#json" data-toggle="tab">JSON</a> </li>
         <li><a href="#help" data-toggle="tab">Reference</a> </li>
       </ul>
 
       <div class="tab-content">
         <div class="tab-pane" id="xml">
           <%= beautify resource.to_xml(options),  :xml %>
-        </div>
-        <div class="tab-pane" id="json">
-          <p><em>JSON support is experimental and it's subject to change in the future</em></p>
-          <%= beautify resource.to_json(options), :json %>
         </div>
         <div class="tab-pane" id="help">
           <h2><%= metadata[:name] %></h2>
