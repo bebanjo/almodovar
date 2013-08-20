@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (0.8.0)
+    almodovar (0.9.1)
       activesupport
       builder
       i18n
@@ -14,11 +14,11 @@ GEM
   specs:
     activesupport (2.3.14)
     addressable (2.2.6)
-    builder (3.1.4)
+    builder (3.2.2)
     crack (0.1.8)
     diff-lcs (1.1.3)
     github-markdown (0.5.3)
-    i18n (0.6.4)
+    i18n (0.6.5)
     lorax (0.2.0)
       nokogiri (>= 1.4.0)
     nokogiri (1.5.0)
