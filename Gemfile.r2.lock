@@ -10,7 +10,7 @@ PATH
       yajl-ruby
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     activesupport (2.3.14)
     addressable (2.2.6)
