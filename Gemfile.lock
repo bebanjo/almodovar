@@ -10,7 +10,7 @@ PATH
       yajl-ruby
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     activesupport (3.1.0)
       multi_json (~> 1.0)
