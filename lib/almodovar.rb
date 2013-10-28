@@ -1,4 +1,3 @@
-require 'patron'
 require 'nokogiri'
 begin
   require 'active_support/all'
@@ -7,6 +6,7 @@ rescue LoadError
 end
 
 require 'almodovar/version' unless defined?(Almodovar::VERSION)
+require 'almodovar/alternatives/alternatives'
 require 'almodovar/digest_auth'
 require 'almodovar/http_accessor'
 require 'almodovar/resource'

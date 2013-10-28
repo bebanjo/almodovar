@@ -397,19 +397,19 @@ describe Almodovar::ResourcePresenter do
       it 'returns the resource type as the document root' do
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['resource_type'].should == 'series'
+        parse_json(json)['resource_type'].should == 'series'
       end
       
       it 'returns composed resource types' do
         json = SeriesEpisodeResource.new.to_json
         
-        Yajl::Parser.parse(json)['resource_type'].should == 'series_episode'
+        parse_json(json)['resource_type'].should == 'series_episode'
       end
       
       it 'only includes the root when nothing is set' do
         json = SeriesResource.new.to_json
 
-        Yajl::Parser.parse(json).size.should == 1
+        parse_json(json).size.should == 1
       end
       
     end
@@ -425,7 +425,7 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['name'].should == 'Mad Men'
+        parse_json(json)['name'].should == 'Mad Men'
       end
       
       it 'returns several attribute nodes when several attributes are set' do
@@ -438,8 +438,8 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['name'].should == 'Mad Men'
-        Yajl::Parser.parse(json)['main_character'].should == 'Donald Draper'
+        parse_json(json)['name'].should == 'Mad Men'
+        parse_json(json)['main_character'].should == 'Donald Draper'
       end
       
       it 'specifies the type of non-string attributes' do
@@ -451,7 +451,7 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['id'].should == 20
+        parse_json(json)['id'].should == 20
       end
       
       it 'keeps the assignment order of the attributes' do
@@ -480,7 +480,7 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['self_link'].should == 'http://example.com/resource'
+        parse_json(json)['self_link'].should == 'http://example.com/resource'
       end
       
       it 'returns one link node when one link is set' do
@@ -492,7 +492,7 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['episodes_link'].should == 'http://example.com/episodes'
+        parse_json(json)['episodes_link'].should == 'http://example.com/episodes'
       end
       
       it 'returns several link nodes when several links are set' do
@@ -505,8 +505,8 @@ describe Almodovar::ResourcePresenter do
         
         json = SeriesResource.new.to_json
         
-        Yajl::Parser.parse(json)['show_link'].should     == 'http://example.com/show'
-        Yajl::Parser.parse(json)['episodes_link'].should == 'http://example.com/episodes'
+        parse_json(json)['show_link'].should     == 'http://example.com/show'
+        parse_json(json)['episodes_link'].should == 'http://example.com/episodes'
       end
       
       it 'keeps the assignment order of the links' do
@@ -533,7 +533,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json
           
-          Yajl::Parser.parse(json).should_not have_key('show')
+          parse_json(json).should_not have_key('show')
         end
         
         it "doesn't expand links with a expand option that doesn't specify the link rel" do
@@ -545,7 +545,7 @@ describe Almodovar::ResourcePresenter do
 
           json = SeriesResource.new.to_json(:expand => :episodes)
           
-          Yajl::Parser.parse(json).should_not have_key('show')
+          parse_json(json).should_not have_key('show')
         end
         
         it "doesn't expand links when no expanding resource is specified" do
@@ -557,7 +557,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => :show)
           
-          Yajl::Parser.parse(json).should_not have_key('show')
+          parse_json(json).should_not have_key('show')
         end
         
         it 'expands links when a expanding resource is specified' do
@@ -569,7 +569,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => :show)
           
-          Yajl::Parser.parse(json)['show'].should be_present
+          parse_json(json)['show'].should be_present
         end
         
         it 'instantiates expanding resource passing expading args' do
@@ -603,7 +603,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => [:show, :first_episode])
           
-          Yajl::Parser.parse(json).tap do |json|  
+          parse_json(json).tap do |json|  
             json['show'].should be_present
             json['first_episode'].should be_present
             json['prev_show'].should_not be_present
@@ -625,7 +625,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesEpisodeResource.new.to_json(:expand => [:show, :series])
           
-          Yajl::Parser.parse(json)['series']['show'].should be_present
+          parse_json(json)['series']['show'].should be_present
         end
         
         it 'expands recursively avoiding infinite recursion' do
@@ -643,7 +643,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesEpisodeResource.new.to_json(:expand => [:first_episode, :series])
           
-          Yajl::Parser.parse(json)['series']['first_episode'].tap do |episode|
+          parse_json(json)['series']['first_episode'].tap do |episode|
             episode.should have_key('series_link')
             episode.should_not have_key('series')
           end
@@ -665,7 +665,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesEpisodeResource.new.to_json(:expand => [:first_episode, :series])
           
-          Yajl::Parser.parse(json)['series'].tap do |series|
+          parse_json(json)['series'].tap do |series|
             series.should have_key('first_episode_link')
             series.should_not have_key('first_episode')
           end
@@ -687,7 +687,7 @@ describe Almodovar::ResourcePresenter do
           
           json = ShowResource.new.to_json(:expand => [:first_episode, :second_episode, :series])
           
-          Yajl::Parser.parse(json)['second_episode']['series'].should be_present
+          parse_json(json)['second_episode']['series'].should be_present
         end
         
         it 'never expands link to self' do
@@ -700,7 +700,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => [:self, :show])
           
-          Yajl::Parser.parse(json).tap do |json|
+          parse_json(json).tap do |json|
             json['self_link'].should be_present
             json['self'].should_not be_present
           end
@@ -721,7 +721,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => :episodes)
           
-          Yajl::Parser.parse(json)['episodes'].tap do |episodes|
+          parse_json(json)['episodes'].tap do |episodes|
             episodes.should be_present
             episodes['entries'].should be_present
             episodes['entries'].length.should == 2
@@ -744,7 +744,7 @@ describe Almodovar::ResourcePresenter do
           
           json = SeriesResource.new.to_json(:expand => [:episodes, :series])
           
-          Yajl::Parser.parse(json)['episodes']['entries'][0]['series'].tap do |series|
+          parse_json(json)['episodes']['entries'][0]['series'].tap do |series|
             series.should have_key('episodes_link')
             series.should_not have_key('episodes')
           end

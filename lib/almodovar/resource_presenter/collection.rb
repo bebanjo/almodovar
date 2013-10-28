@@ -44,8 +44,7 @@ module Almodovar
       end
       
       def to_json(options = {})
-        require 'yajl'
-        Yajl::Encoder.encode(as_json(options), :pretty => true) + "\n"
+        Almodovar.alternatives.json_encoder.encode(as_json(options), :pretty => true) + "\n"
       end
 
       def to_html(options = {})

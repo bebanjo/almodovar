@@ -3,8 +3,7 @@ module Almodovar
     class JsonSerializer < Serializer
         
       def to_json
-        require 'yajl'
-        Yajl::Encoder.encode(as_json, :pretty => true) + "\n"
+        Almodovar.alternatives.json_encoder.encode(as_json, :pretty => true) + "\n"
       end
       
       def as_json

@@ -13,11 +13,9 @@ Gem::Specification.new do |s|
   
   s.files             = %w(README.rdoc) + Dir.glob("{lib/**/*}")
   s.require_paths     = ["lib"]
-  
-  s.add_dependency("patron")
+
   s.add_dependency("builder")
   s.add_dependency("nokogiri")
   s.add_dependency("activesupport")
   s.add_dependency("i18n")
-  s.add_dependency("yajl-ruby")
 end

@@ -1,9 +1,15 @@
 require 'rubygems'
 require 'webmock/rspec'
 require 'lorax'
-require "almodovar"
+require 'almodovar'
+
 
 module Helpers
+
+  def parse_json(json)
+    Almodovar.alternatives.json_parser.parse(json)
+  end
+
   def stub_auth_request(method, url)
     stub_request(method, auth_url(url))
   end
@@ -21,6 +27,42 @@ module Helpers
       uri.user = auth.username
       uri.password = auth.password
     end.to_s
+  end
+
+  def mount_rack(rack, port)
+    rack_handler = Almodovar.alternatives.rack_handler
+    server_thread = Thread.new do
+        rack_handler.run(rack, :Port => port)
+    end
+    sleep(1)
+    server_thread
+  end
+
+  #
+  # The returned rack echoes the env property pointed by the request_path
+  #
+  # Given it's mounted in port 9292, a get request to
+  # `localhost:9292/HTTP_USER_AGENT` will return env["HTTP_USER_AGENT"]
+  #
+  def env_inspector_rack
+    Proc.new do |env|
+      property = env["REQUEST_PATH"][1..-1]
+      [200, {"Content-Type" => "text/plain"}, env[property]]
+    end
+  end
+
+  #
+  # Enables digest auth on top of a rack:
+  #  * authorized_users is a hash in the form {"username" => "password"}
+  #    that contains the credentials for authorized users
+  #
+  def with_digest_auth(rack, authorized_users, realm = nil, opaque = nil)
+    app = Rack::Auth::Digest::MD5.new(rack) do |username|
+      authorized_users[username]
+    end
+    app.realm = realm || "protected area"
+    app.opaque = opaque || "secret"
+    app
   end
 end
 
