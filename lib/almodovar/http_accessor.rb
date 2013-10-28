@@ -16,11 +16,11 @@ module Almodovar
     end
     
     def http
-      @http ||= Patron::Session.new.tap do |session|
+      @http ||= Almodovar::HttpClient.new.tap do |session|
         session.timeout  = Almodovar::default_options[:timeout]
         session.connect_timeout = Almodovar::default_options[:connect_timeout]
-        session.headers['User-Agent'] = Almodovar::default_options[:user_agent]
-        
+        session.agent_name = Almodovar::default_options[:user_agent]
+
         if @auth
           session.username = @auth.username
           session.password = @auth.password
