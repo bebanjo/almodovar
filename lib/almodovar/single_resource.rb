@@ -37,7 +37,7 @@ module Almodovar
     end
     
     def respond_to?(meth)
-      super || node(meth).present? || link(meth).present?
+      super || (node(meth) != nil) || (link(meth) != nil)
     end
   
     private

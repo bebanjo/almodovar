@@ -7,7 +7,7 @@ describe "Http Session" do
     connect_timout = 5
     user_agent = "Dummy/0.1"
 
-    @session = Almodovar.alternatives.http_session.new.tap do |session|
+    @session = Almodovar::Alternatives::HttpClient.new.tap do |session|
       session.timeout= timeout
       session.connect_timeout = connect_timout
       session.agent_name = user_agent

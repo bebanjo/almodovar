@@ -6,7 +6,7 @@ rescue LoadError
 end
 
 require 'almodovar/version' unless defined?(Almodovar::VERSION)
-require 'almodovar/alternatives/alternatives'
+require 'almodovar/alternatives'
 require 'almodovar/digest_auth'
 require 'almodovar/http_accessor'
 require 'almodovar/resource'

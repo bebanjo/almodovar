@@ -16,7 +16,7 @@ module Almodovar
     end
     
     def http
-      @http ||= Almodovar::alternatives.http_session.new.tap do |session|
+      @http ||= Almodovar::Alternatives::HttpClient.new.tap do |session|
         session.timeout  = Almodovar::default_options[:timeout]
         session.connect_timeout = Almodovar::default_options[:connect_timeout]
         session.agent_name = Almodovar::default_options[:user_agent]

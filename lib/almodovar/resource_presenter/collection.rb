@@ -44,11 +44,11 @@ module Almodovar
       end
       
       def to_json(options = {})
-        Almodovar.alternatives.json_encoder.encode(as_json(options), :pretty => true) + "\n"
+        Almodovar::Alternatives::JSONEncoder.encode(as_json(options), :pretty => true) + "\n"
       end
 
       def to_html(options = {})
-        HtmlSerializer.new(self, options).to_html
+        Almodovar::Alternatives::HtmlSerialzer.new(self, options).to_html
       end
       
       def resource_type

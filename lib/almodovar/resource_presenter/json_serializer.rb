@@ -3,7 +3,7 @@ module Almodovar
     class JsonSerializer < Serializer
         
       def to_json
-        Almodovar.alternatives.json_encoder.encode(as_json, :pretty => true) + "\n"
+        Almodovar::Alternatives::JSONEncoder.encode(as_json, :pretty => true) + "\n"
       end
       
       def as_json

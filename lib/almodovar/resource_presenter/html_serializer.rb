@@ -1,11 +1,3 @@
-%w(pygments.rb github-markdown).each do |lib|
-  begin
-    require lib.gsub('-', '/')
-  rescue LoadError => ex
-    raise ex, "In order to use the HtmlSerializer you need the gem `#{lib}` in your Gemfile"
-  end
-end
-
 module Almodovar
   class ResourcePresenter
     class HtmlSerializer < Serializer
@@ -22,7 +14,7 @@ module Almodovar
       end
 
       def beautify(representation, format)
-        body = Pygments.highlight(representation, :lexer => format)
+        body = highlight(representation, format)
         body = body.gsub(/&quot;(http\S+)&quot;/) { url = $1; "&quot;<a href=\"#{url}\">#{url}</a>&quot;" }
         body.html_safe
       end
@@ -35,8 +27,18 @@ module Almodovar
         end
 
         text = text.strip
-        text = GitHub::Markdown.render text
+        text = markdown_render(text)
         text.html_safe
+      end
+
+      protected
+
+      def highlight(representation, format)
+        raise "This method should be implemented by subclasses"
+      end
+
+      def markdown_render(text)
+        raise "This method should be implemented by subclasses"
       end
 
     end

@@ -125,7 +125,6 @@ XML
   
   example 'Presenting a resource in json format' do
     resource = SeriesResource.new(Series.new(5, 'Mad Men S1'))
-    
     resource.to_json.should == <<-JSON
 {
   "resource_type": "series",

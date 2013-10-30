@@ -1,12 +1,11 @@
+%w(serializer xml_serializer json_serializer metadata).each do |serializer|
+  require "almodovar/resource_presenter/#{serializer}"
+end
+
+
 module Almodovar
   
   class ResourcePresenter
-    
-    autoload :Serializer,     'almodovar/resource_presenter/serializer'
-    autoload :XmlSerializer,  'almodovar/resource_presenter/xml_serializer'
-    autoload :JsonSerializer, 'almodovar/resource_presenter/json_serializer'
-    autoload :HtmlSerializer, 'almodovar/resource_presenter/html_serializer'
-    autoload :Metadata,       'almodovar/resource_presenter/metadata'
 
     extend Metadata
 
@@ -45,7 +44,7 @@ module Almodovar
     end
 
     def to_html(options = {})
-      HtmlSerializer.new(self, options).to_html
+      Almodovar::Alternatives::HtmlSerialzer.new(self, options).to_html
     end
     
     def all_links
@@ -57,5 +56,4 @@ module Almodovar
     end
 
   end
-  
 end

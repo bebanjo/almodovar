@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe Almodovar::ResourcePresenter do
   
@@ -31,7 +32,6 @@ describe Almodovar::ResourcePresenter do
       
       it 'returns the resource type as the document root' do
         xml = SeriesResource.new.to_xml
-        
         xml.should match_xpath('/series')
       end
       
