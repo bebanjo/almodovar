@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.3 (2013-10-31)
+
+### Features
+
+* Display the URL of the resource in the error message
+
 ## Version 0.9.2 (2013-10-31)
 
 ### Other
