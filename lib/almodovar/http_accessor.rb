@@ -3,7 +3,7 @@ module Almodovar
     def xml
       @xml ||= begin
         response = http.get(url_with_params)
-        check_errors(response)
+        check_errors(response, url_with_params)
         Nokogiri::XML.parse(response.body).root
       end
     end
@@ -29,8 +29,8 @@ module Almodovar
       end
     end
     
-    def check_errors(response)
-      raise(Almodovar::HttpError, "Status code: #{response.status}") if response.status >= 400
+    def check_errors(response, url)
+      raise(Almodovar::HttpError.new(response, url)) if response.status >= 400
     end
   end
   
