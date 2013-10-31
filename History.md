@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.2 (2013-10-31)
+
+### Other
+
+* Use secure Rubygems server
+
 ## Version 0.9.1 (2013-08-20)
 
 ### Features
