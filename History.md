@@ -1,6 +1,12 @@
 # Almodovar Release History
 
-## Version 0.9.6 (2013-11-13)
+## Version 0.9.7 (2013-11-13)
+
+### Other
+
+* Rollback link escaping fixes as behaviour was correct
+
+## Version 0.9.7 (2013-11-13)
 
 ### Other
 
