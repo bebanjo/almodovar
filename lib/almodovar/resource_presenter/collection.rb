@@ -28,17 +28,17 @@ module Almodovar
         xml.instruct! unless options[:skip_instruct]
         xml.tag! resource_type.pluralize.dasherize, :type => 'array' do
           xml.tag!('total-entries', @total) if @total
-          xml.link :rel => 'next', :href => @next if @next
-          xml.link :rel => 'prev', :href => @prev if @prev
+          next_link.to_xml(:builder => xml) if next_link
+          prev_link.to_xml(:builder => xml) if prev_link
           @resources.each { |value| value.to_xml(options.merge(:root => resource_type.singularize, :skip_instruct => true)) }
         end
       end
       
       def as_json(options = {})
-        ActiveSupport::OrderedHash.new.tap do |message|
+        message = ActiveSupport::OrderedHash.new.tap do |message|
           message[:total_entries] = @total if @total
-          message[:next_link] = @next if @next
-          message[:prev_link] = @prev if @prev
+          message.merge! next_link.as_json if next_link 
+          message.merge! prev_link.as_json if prev_link
           message[:entries] = @resources.map { |resource| resource.as_json(options) }
         end
       end
@@ -54,6 +54,14 @@ module Almodovar
       
       def resource_type
         @resource_class.resource_type
+      end
+
+      def next_link
+        Link.new(:next, @next) if @next
+      end
+
+      def prev_link
+        Link.new(:prev, @prev) if @prev
       end
 
     end

@@ -13,7 +13,7 @@ module Almodovar
         XmlSerializer.new(self, options.merge(:skip_instruct => true)).to_xml
       end
       
-      def as_json(options)
+      def as_json(options = {})
         JsonSerializer.new(self, options).as_json
       end
       
