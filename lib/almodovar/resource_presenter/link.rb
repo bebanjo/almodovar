@@ -61,7 +61,7 @@ module Almodovar
       class XmlSerializer < Serializer
         
         def to_xml
-          builder.link link.attributes.merge(:rel => link.rel, :href => link.href.to_sym), &expand_block
+          builder.link link.attributes.merge(:rel => link.rel, :href => link.href), &expand_block
         end
         
         private
