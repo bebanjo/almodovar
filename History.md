@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.6 (2013-11-13)
+
+### Other
+
+* Show prev link before next link
+
 ## Version 0.9.5 (2013-11-13)
 
 ### Bugfixes
