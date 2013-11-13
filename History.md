@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.5 (2013-11-13)
+
+### Bugfixes
+
+* Fix link escaping in pagination
+
 ## Version 0.9.4 (2013-11-13)
 
 ### Bugfixes
