@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 0.9.4 (2013-11-13)
+
+### Bugfixes
+
+* Don't escape link's `href` attribute
+
 ## Version 0.9.3 (2013-10-31)
 
 ### Features
