@@ -24,7 +24,7 @@ describe 'Presenting resources' do
         attributes[:name] = model.name
       
         links << Link.new(:show, "http://wadus.com/show/20", ShowResource, model.show)
-        links << Link.new(:episodes, "http://wadus.com/series/#{model.id}/episodes", EpisodeResource, model.episodes)
+        links << Link.new(:episodes, "http://wadus.com/series/#{model.id}/episodes?param=1&param=2", EpisodeResource, model.episodes)
       end
     end
   
@@ -52,7 +52,7 @@ describe 'Presenting resources' do
   <name>Mad Men S1</name>
   <link rel="self" href="http://wadus.com/series/5"/>
   <link rel="show" href="http://wadus.com/show/20"/>
-  <link rel="episodes" href="http://wadus.com/series/5/episodes"/>
+  <link rel="episodes" href="http://wadus.com/series/5/episodes?param=1&param=2"/>
 </series>
 XML
   end
@@ -73,7 +73,7 @@ XML
       <name>Mad Men</name>
     </show>
   </link>
-  <link rel="episodes" href="http://wadus.com/series/5/episodes">
+  <link rel="episodes" href="http://wadus.com/series/5/episodes?param=1&param=2">
     <episodes type="array">
       <episode>
         <title>Ep1</title>
@@ -103,21 +103,21 @@ XML
     <name>Mad Men S1</name>
     <link rel="self" href="http://wadus.com/series/1"/>
     <link rel="show" href="http://wadus.com/show/20"/>
-    <link rel="episodes" href="http://wadus.com/series/1/episodes"/>
+    <link rel="episodes" href="http://wadus.com/series/1/episodes?param=1&param=2"/>
   </series>
   <series>
     <id type="integer">2</id>
     <name>Mad Men S1</name>
     <link rel="self" href="http://wadus.com/series/2"/>
     <link rel="show" href="http://wadus.com/show/20"/>
-    <link rel="episodes" href="http://wadus.com/series/2/episodes"/>
+    <link rel="episodes" href="http://wadus.com/series/2/episodes?param=1&param=2"/>
   </series>
   <series>
     <id type="integer">3</id>
     <name>Mad Men S1</name>
     <link rel="self" href="http://wadus.com/series/3"/>
     <link rel="show" href="http://wadus.com/show/20"/>
-    <link rel="episodes" href="http://wadus.com/series/3/episodes"/>
+    <link rel="episodes" href="http://wadus.com/series/3/episodes?param=1&param=2"/>
   </series>
 </series> 
 XML
@@ -133,7 +133,7 @@ XML
   "name": "Mad Men S1",
   "self_link": "http://wadus.com/series/5",
   "show_link": "http://wadus.com/show/20",
-  "episodes_link": "http://wadus.com/series/5/episodes"
+  "episodes_link": "http://wadus.com/series/5/episodes?param=1&param=2"
 }
 JSON
   end
@@ -154,7 +154,7 @@ JSON
     "resource_type": "show",
     "name": "Mad Men"
   },
-  "episodes_link": "http://wadus.com/series/5/episodes",
+  "episodes_link": "http://wadus.com/series/5/episodes?param=1&param=2",
   "episodes": {
     "entries": [
       {
@@ -187,7 +187,7 @@ JSON
       "name": "Two and a Half Men ",
       "self_link": "http://wadus.com/series/1",
       "show_link": "http://wadus.com/show/20",
-      "episodes_link": "http://wadus.com/series/1/episodes"
+      "episodes_link": "http://wadus.com/series/1/episodes?param=1&param=2"
     },
     {
       "resource_type": "series",
@@ -195,7 +195,7 @@ JSON
       "name": "Two and a Half Men ",
       "self_link": "http://wadus.com/series/2",
       "show_link": "http://wadus.com/show/20",
-      "episodes_link": "http://wadus.com/series/2/episodes"
+      "episodes_link": "http://wadus.com/series/2/episodes?param=1&param=2"
     },
     {
       "resource_type": "series",
@@ -203,7 +203,7 @@ JSON
       "name": "Two and a Half Men ",
       "self_link": "http://wadus.com/series/3",
       "show_link": "http://wadus.com/show/20",
-      "episodes_link": "http://wadus.com/series/3/episodes"
+      "episodes_link": "http://wadus.com/series/3/episodes?param=1&param=2"
     }
   ]
 }
