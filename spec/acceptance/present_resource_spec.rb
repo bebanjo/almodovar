@@ -91,13 +91,13 @@ XML
     collection = []
     1.upto(3) { |i| collection << Series.new(i, 'Mad Men S1')}
 
-    resources = Almodovar::ResourcePresenter::Collection.new(SeriesResource, collection, { :total_entries => 3, :next_link => 'http://wadus.com/series?after=3&per_page=10' })
+    resources = Almodovar::ResourcePresenter::Collection.new(SeriesResource, collection, { :total_entries => 3, :next_link => 'http://wadus.com/series?after=3' })
 
     resources.to_xml.should equal_xml <<-XML
 <?xml version="1.0" encoding="UTF-8"?>
 <series type="array">
   <total-entries>3</total-entries>
-  <link rel="next" href="http://wadus.com/series?after=3&per_page=10"/>
+  <link rel="next" href="http://wadus.com/series?after=3"/>
   <series>
     <id type="integer">1</id>
     <name>Mad Men S1</name>
