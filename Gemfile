@@ -21,7 +21,3 @@ gem 'httpclient',   :platform => :jruby
 gem 'kramdown',     :platform => :jruby
 gem 'pry', :require => "pry"
 
-group :test do
-  gem 'thin',       :platforms => [:mri_18, :mri_19]
-  gem 'jruby-rack', :platform  => :jruby
-end
