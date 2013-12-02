@@ -1,6 +1,7 @@
 module Almodovar
   class ResourceCollection
     include HttpAccessor
+    include Enumerable
     
     delegate :inspect, :to => :resources
     
