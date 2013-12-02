@@ -1,9 +1,16 @@
 require 'rubygems'
 require 'webmock/rspec'
 require 'lorax'
-require "almodovar"
+require 'almodovar'
+require 'rack'
+
 
 module Helpers
+
+  def parse_json(json)
+    Almodovar::Alternatives::JSONParser.parse(json)
+  end
+
   def stub_auth_request(method, url)
     stub_request(method, auth_url(url))
   end
@@ -43,7 +50,7 @@ module NokogiriMatchers
   
   RSpec::Matchers.define :match_xpath do |xpath|
     match do |xml_string|
-      Nokogiri::XML.parse(xml_string).at_xpath(xpath).present?
+      Nokogiri::XML.parse(xml_string).at_xpath(xpath) != nil
     end
     
     failure_message_for_should do |xml_string|
