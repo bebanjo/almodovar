@@ -53,4 +53,26 @@ describe "Fetching resource collections" do
     resources.inspect.should == "[#{resources.first.inspect}]"
   end
   
+  example "Selecting elements from a collection" do
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+      <resources type='array'>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/1'/>
+          <name>Resource 1</name>
+        </resource>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/2'/>
+          <name>Resource 2</name>
+        </resource>
+      </resources>
+    })
+
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth)
+    resources.size.should == 2
+
+    selected = resources.select {|r| r.name == "Resource 1"}
+    selected.size.should == 1
+    selected.first.name.should == "Resource 1"
+  end
+
 end
