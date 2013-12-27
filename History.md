@@ -1,12 +1,18 @@
 # Almodovar Release History
 
+## Version 0.9.8 (2013-12-27)
+
+### Features
+
+* Almodovar::Resource now includes Enumerable, so we can use #select
+
 ## Version 0.9.7 (2013-11-13)
 
 ### Other
 
 * Rollback link escaping fixes as behaviour was correct
 
-## Version 0.9.7 (2013-11-13)
+## Version 0.9.6 (2013-11-13)
 
 ### Other
 
