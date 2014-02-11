@@ -35,7 +35,7 @@ module Almodovar
   
     def collection_call?(meth, *args)
       ([].respond_to?(meth) && !["delete", "id", "[]"].include?(meth.to_s)) ||
-      ["create"].include?(meth.to_s) ||
+      ResourceCollection.instance_methods(false).map(&:to_s).include?(meth.to_s) ||
       (meth.to_s == "[]" && args.size == 1 && args.first.is_a?(Fixnum))
     end
     

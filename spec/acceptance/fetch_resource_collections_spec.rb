@@ -75,4 +75,25 @@ describe "Fetching resource collections" do
     selected.first.name.should == "Resource 1"
   end
 
+  example "Pagination methods on non paginated collection" do
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+      <resources type='array'>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/1'/>
+          <name>Resource 1</name>
+        </resource>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/2'/>
+          <name>Resource 2</name>
+        </resource>
+      </resources>
+    })
+
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth)
+    resources.total_entries.should == 2
+    resources.size.should == 2
+    resources.next_url.should be_nil
+    resources.prev_url.should be_nil
+  end
+
 end
