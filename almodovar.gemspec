@@ -1,7 +1,6 @@
 require File.expand_path('../lib/almodovar/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.platform          = Gem::Platform::CURRENT
   s.name              = "almodovar"
   s.version           = Almodovar::VERSION
   s.summary           = "BeBanjo API client"
