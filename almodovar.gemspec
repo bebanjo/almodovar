@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.author            = "BeBanjo S.L."
   s.email             = "ballsbreaking@bebanjo.com"
   s.homepage          = "http://wiki.github.com/bebanjo/almodovar/"
+  s.license           = "MIT"
   
   s.extra_rdoc_files  = %w(README.rdoc)
   s.rdoc_options      = %w(--main README.rdoc)
