@@ -78,7 +78,7 @@ module Almodovar
         uri.password = password
         set_client_auth(domain)
       end
-      client.request(method, uri, :body => options[:body], :header => options[:headers] || {}, :follow_redirect => true)
+      client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
     end
   end
 
