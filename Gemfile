@@ -8,10 +8,5 @@ gem 'webmock'
 gem 'lorax'
 gem 'rdoc'
 
-gem 'ruby-debug',   :platform => :mri_18
-gem 'ruby-debug19', :platform => :mri_19, :require => 'ruby-debug'
-
 gem 'activesupport', '~> 3.1.0'
-
-gem 'pygments.rb'
-gem 'github-markdown'
+gem 'nokogiri', '~> 1.5.10'

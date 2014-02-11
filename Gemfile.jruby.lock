@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (0.9.8)
+    almodovar (0.9.8-java)
       activesupport
       builder
       httpclient
@@ -22,10 +22,13 @@ GEM
     httpclient (2.3.4.1)
     i18n (0.6.9)
     json (1.8.1)
+    json (1.8.1-java)
     lorax (0.2.0)
       nokogiri (>= 1.4.0)
+    mini_portile (0.5.2)
     multi_json (1.8.4)
-    nokogiri (1.5.11)
+    nokogiri (1.6.1-java)
+      mini_portile (~> 0.5.0)
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
@@ -43,13 +46,13 @@ GEM
       crack (>= 0.3.2)
 
 PLATFORMS
-  ruby
+  java
 
 DEPENDENCIES
   activesupport (~> 3.1.0)
   almodovar!
   lorax
-  nokogiri (~> 1.5.10)
+  nokogiri
   rake
   rdoc
   rspec

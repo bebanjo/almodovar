@@ -105,7 +105,7 @@ describe "Creating new resources" do
       xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/link[@rel='timeline']/timeline/name").text == "Start project" &&
-      xml.at_xpath("/project/link[@rel='timeline']/timeline/link[@rel='wadus']/wadus").present?
+      xml.at_xpath("/project/link[@rel='timeline']/timeline/link[@rel='wadus']/wadus") != nil
     end.to_return(:body => %q{
       <project>
         <name>Wadus</name>
