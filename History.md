@@ -1,5 +1,15 @@
 # Almodovar Release History
 
+## Version 1.0.0.pre (2014-02-11)
+
+### Features
+
+* Big refactor:
+
+  * Remove serverside code, now into bebanjo/almodovar-server #15
+  * Added support for paginated resources #14
+  * Replaced HTTP client in favor of pure-ruby one (https://github.com/nahi/httpclient) #15
+
 ## Version 0.9.8 (2013-12-27)
 
 ### Features
