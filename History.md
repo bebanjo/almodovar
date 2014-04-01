@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.0.0 (2014-04-01)
+
+### Bugfixes
+
+* Send a proper "Content-Type" header and include session headers (#18)[https://github.com/bebanjo/almodovar/pull/18]
+
 ## Version 1.0.0.pre (2014-02-11)
 
 ### Features
