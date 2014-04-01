@@ -11,8 +11,6 @@ describe Almodovar::HttpClient do
 
     client.get("http://www.bebanjo.com", 'Baz' => 'Oink')
 
-    a_request(:get, "http://www.bebanjo.com")
-      .with(:headers => {'Foo' => 'Bar', 'Baz' => 'Oink'})
-      .should have_been_made
+    a_request(:get, "http://www.bebanjo.com").with(:headers => {'Foo' => 'Bar', 'Baz' => 'Oink'}).should have_been_made
   end
 end
