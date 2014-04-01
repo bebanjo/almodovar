@@ -41,7 +41,7 @@ module Almodovar
     private
 
     def merge_headers(headers)
-      headers.merge(headers)
+      (self.headers ||= {}).merge(headers)
     end
 
     def requires_auth?
