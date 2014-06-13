@@ -1,13 +1,17 @@
 require 'httpclient'
+require 'httpclient/include_client'
 
 module Almodovar
   class HttpClient
+    extend HTTPClient::IncludeClient
 
     attr_accessor :client,
                   :headers,
                   :username,
                   :password,
                   :auth_type
+
+    include_http_client(:method_name => :client)
 
     delegate :agent_name=,
              :connect_timeout=,
@@ -16,10 +20,6 @@ module Almodovar
 
     def timeout=(value)
       client.send_timeout = value
-    end
-
-    def initialize
-      @client = HTTPClient.new
     end
 
     def get(uri, headers = {})
