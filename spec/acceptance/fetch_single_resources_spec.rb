@@ -24,6 +24,7 @@ describe "Fetching individual resources" do
       <resource>
         <id type="integer">12345</id>
         <date type="datetime">2009-01-01T10:00:00Z</date>
+        <expire-at type="date">2009-01-01</expire-at>
         <type>wadus</type>
       </resource>
     })
@@ -33,11 +34,13 @@ describe "Fetching individual resources" do
     resource.should respond_to(:id)
     resource.should respond_to(:date)
     resource.should respond_to(:type)
+    resource.should respond_to(:expire_at)
     resource.should_not respond_to(:wadus)
     
     resource.id.should == 12345
     resource.date.should == Time.utc(2009,1,1,10,0,0)
     resource.type.should == "wadus"
+    resource.expire_at.should == Date.parse('2009-1-1')
   end
   
   example "Inspecting a resource" do

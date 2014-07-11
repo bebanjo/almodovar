@@ -67,6 +67,8 @@ module Almodovar
         node.text.to_i
       when "datetime"
         Time.parse(node.text)
+      when "date"
+        Date.parse(node.text)
       else
         node.text
       end
