@@ -2,7 +2,6 @@ require 'rubygems'
 require 'webmock/rspec'
 require 'lorax'
 require 'almodovar'
-require 'json/pure'
 
 module Helpers
 
