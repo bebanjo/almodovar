@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.1.0 (2014-07-12)
+
+### Feature
+
+* Add support for date type nodes (#20)[https://github.com/bebanjo/almodovar/pull/20]
+
 ## Version 1.0.0 (2014-04-01)
 
 ### Bugfixes
