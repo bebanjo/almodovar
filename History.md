@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.1.2 (2014-10-16)
+
+## Other 
+
+Upgrade httpclient dependency (#22)[https://github.com/bebanjo/almodovar/pull/22]
+
 ## Version 1.1.1 (2014-09-02)
 
 ### Other
