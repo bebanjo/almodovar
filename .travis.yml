@@ -10,8 +10,7 @@ gemfile:
   - Gemfile
 matrix:
   include:
-    - rvm: jruby-1.7.6
+    - rvm: jruby-19mode
       gemfile: Gemfile.jruby
   allow_failures:
-      - rvm: 2.1.0
-      - rvm: jruby-1.7.6
+    - rvm: jruby-19mode

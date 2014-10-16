@@ -10,3 +10,4 @@ gem 'rdoc'
 
 gem 'activesupport', '~> 3.1.0'
 gem 'nokogiri'
+gem 'httpclient', '~> 2.5'

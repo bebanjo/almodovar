@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.email             = "ballsbreaking@bebanjo.com"
   s.homepage          = "http://wiki.github.com/bebanjo/almodovar/"
   s.license           = "MIT"
-  
+
   s.extra_rdoc_files  = %w(README.rdoc)
   s.rdoc_options      = %w(--main README.rdoc)
-  
+
   s.files             = %w(README.rdoc) + Dir.glob("{lib/**/*}")
   s.require_paths     = ["lib"]
 
@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("nokogiri")
   s.add_runtime_dependency("activesupport")
   s.add_runtime_dependency("i18n")
-  s.add_runtime_dependency("httpclient")
+  s.add_runtime_dependency("httpclient", "~> 2.5")
   s.add_runtime_dependency("json")
 end

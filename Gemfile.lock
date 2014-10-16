@@ -4,7 +4,7 @@ PATH
     almodovar (1.0.0)
       activesupport
       builder
-      httpclient
+      httpclient (~> 2.5)
       i18n
       json
       nokogiri
@@ -19,8 +19,8 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
-    httpclient (2.3.4.1)
-    i18n (0.6.9)
+    httpclient (2.5.0)
+    i18n (0.6.11)
     json (1.8.1)
     lorax (0.2.0)
       nokogiri (>= 1.4.0)
