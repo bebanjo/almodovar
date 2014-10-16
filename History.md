@@ -1,5 +1,17 @@
 # Almodovar Release History
 
+## Version 1.1.1 (2014-09-02)
+
+### Other
+
+* Store response body in Almodovar::HttpError (#21)[https://github.com/bebanjo/almodovar/pull/21]
+
+## Version 1.1.0 (2014-07-12)
+
+### Feature
+
+* Add support for date type nodes (#20)[https://github.com/bebanjo/almodovar/pull/20]
+
 ## Version 1.0.0 (2014-04-01)
 
 ### Bugfixes
