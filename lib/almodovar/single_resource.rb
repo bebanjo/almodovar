@@ -69,6 +69,8 @@ module Almodovar
         Time.parse(node.text)
       when "date"
         Date.parse(node.text)
+      when "array"
+        return node.element_children.map { |c| node_text(c) }
       else
         node.text
       end
