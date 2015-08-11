@@ -5,6 +5,7 @@ gemspec
 gem 'rake'
 gem 'rspec'
 gem 'webmock'
+gem 'safe_yaml', '>= 1.0.4'
 gem 'lorax'
 gem 'rdoc'
 
