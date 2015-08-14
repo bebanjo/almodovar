@@ -1,5 +1,13 @@
 # Almodovar Release History
 
+## Version 1.2.0 (2015-08-14)
+
+## Other
+
+Implement attributes type array (#24)[https://github.com/bebanjo/almodovar/pull/24]
+
+# Almodovar Release History
+
 ## Version 1.1.2 (2014-10-16)
 
 ## Other 
