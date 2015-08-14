@@ -42,7 +42,28 @@ describe "Fetching individual resources" do
     resource.type.should == "wadus"
     resource.expire_at.should == Date.parse('2009-1-1')
   end
-  
+
+  example "Fetching typed attributes: array" do
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => %q{
+      <resource>
+        <cue-points type="array">
+          <cue-point>00:07:00</cue-point>
+          <cue-point>00:14:00</cue-point>
+        </cue-points>
+      </resource>
+    })
+
+    resource = Almodovar::Resource("http://movida.example.com/resource", auth)
+
+    resource.should respond_to(:'cue-points')
+    resource.should_not respond_to(:wadus)
+
+    resource.cue_points.should == ["00:07:00", "00:14:00"]
+    resource.cue_points[0].should == "00:07:00"
+    resource.cue_points[1].should == "00:14:00"
+    resource.cue_points.length.should == 2
+  end
+
   example "Inspecting a resource" do
     xml = %q{
       <resource>
