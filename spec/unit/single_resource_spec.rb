@@ -13,8 +13,8 @@ describe Almodovar::SingleResource do
 
   it "#to_xml" do
     builder = Builder::XmlMarkup.new
-    xml     = Almodovar::SingleResource.new("http://movida.bebanjo.com/titles/1", nil).to_xml(builder: builder, root: "series")
+    xml     = Almodovar::SingleResource.new("http://movida.bebanjo.com/series/1", nil).to_xml(:builder => builder, :root => "series")
 
-    expect(xml).to eq("<link rel=\"series\" href=\"http://movida.bebanjo.com/titles/1\"/>")
+    expect(xml).to eq("<link href=\"http://movida.bebanjo.com/series/1\" rel=\"series\"/>")
   end
 end
