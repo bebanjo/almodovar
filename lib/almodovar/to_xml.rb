@@ -11,10 +11,16 @@ module Almodovar
       end
     end
   end
-  
+
   class Resource
     def to_xml(options = {})
       options[:builder].tag!(:link, :rel => options[:root], :href => url)
+    end
+  end
+
+  class SingleResource
+    def to_xml(options = {})
+      options[:builder].tag!(:link, :href => url, :rel => options[:root])
     end
   end
 end

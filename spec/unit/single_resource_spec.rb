@@ -10,4 +10,11 @@ describe Almodovar::SingleResource do
 
     a_request(:put, "http://movida.bebanjo.com/titles/1").with(:headers => {'Content-Type' => "application/xml"}).should have_been_made
   end
+
+  it "#to_xml" do
+    builder = Builder::XmlMarkup.new
+    xml     = Almodovar::SingleResource.new("http://movida.bebanjo.com/series/1", nil).to_xml(:builder => builder, :root => "series")
+
+    expect(xml).to eq("<link href=\"http://movida.bebanjo.com/series/1\" rel=\"series\"/>")
+  end
 end
