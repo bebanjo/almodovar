@@ -2,16 +2,9 @@ before_install:
   - gem update --system 2.1.11
   - gem --version
 rvm:
-  - ree
   - 1.9.3
   - 2.0.0
   - 2.1.6
   - 2.2.2
 gemfile:
   - Gemfile
-matrix:
-  include:
-    - rvm: jruby-19mode
-      gemfile: Gemfile.jruby
-  allow_failures:
-    - rvm: jruby-19mode
