@@ -1,5 +1,13 @@
 # Almodovar Release History
 
+## Version 1.3.0 (2015-12-21)
+
+## Other
+
+Avoid explicit calls to get! over Resource (#30)[https://github.com/bebanjo/almodovar/pull/30]
+
+# Almodovar Release History
+
 ## Version 1.2.0 (2015-08-14)
 
 ## Other
@@ -10,7 +18,7 @@ Implement attributes type array (#24)[https://github.com/bebanjo/almodovar/pull/
 
 ## Version 1.1.2 (2014-10-16)
 
-## Other 
+## Other
 
 Upgrade httpclient dependency (#22)[https://github.com/bebanjo/almodovar/pull/22]
 
