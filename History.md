@@ -1,10 +1,16 @@
 # Almodovar Release History
 
+## Version 1.4.0 (2016-01-08)
+
+## Other
+
+Update Almodovar::HttpError superclass to StandardError so it can be rescued using the idiom `rescue => e` [#32](https://github.com/bebanjo/almodovar/pull/32)
+
 ## Version 1.3.0 (2015-12-21)
 
 ## Other
 
-Avoid explicit calls to get! over Resource (#30)[https://github.com/bebanjo/almodovar/pull/30]
+Avoid explicit calls to get! over Resource [#30](https://github.com/bebanjo/almodovar/pull/30)
 
 # Almodovar Release History
 
@@ -12,7 +18,7 @@ Avoid explicit calls to get! over Resource (#30)[https://github.com/bebanjo/almo
 
 ## Other
 
-Implement attributes type array (#24)[https://github.com/bebanjo/almodovar/pull/24]
+Implement attributes type array [#24](https://github.com/bebanjo/almodovar/pull/24)
 
 # Almodovar Release History
 
@@ -20,25 +26,25 @@ Implement attributes type array (#24)[https://github.com/bebanjo/almodovar/pull/
 
 ## Other
 
-Upgrade httpclient dependency (#22)[https://github.com/bebanjo/almodovar/pull/22]
+Upgrade httpclient dependency [#22](https://github.com/bebanjo/almodovar/pull/22)
 
 ## Version 1.1.1 (2014-09-02)
 
 ### Other
 
-* Store response body in Almodovar::HttpError (#21)[https://github.com/bebanjo/almodovar/pull/21]
+* Store response body in Almodovar::HttpError [#21](https://github.com/bebanjo/almodovar/pull/21)
 
 ## Version 1.1.0 (2014-07-12)
 
 ### Feature
 
-* Add support for date type nodes (#20)[https://github.com/bebanjo/almodovar/pull/20]
+* Add support for date type nodes [#20](https://github.com/bebanjo/almodovar/pull/20)
 
 ## Version 1.0.0 (2014-04-01)
 
 ### Bugfixes
 
-* Send a proper "Content-Type" header and include session headers (#18)[https://github.com/bebanjo/almodovar/pull/18]
+* Send a proper "Content-Type" header and include session headers [#18](https://github.com/bebanjo/almodovar/pull/18)
 
 ## Version 1.0.0.pre (2014-02-11)
 
