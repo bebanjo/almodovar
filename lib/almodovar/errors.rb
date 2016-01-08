@@ -1,5 +1,5 @@
 module Almodovar
-  class HttpError < Exception
+  class HttpError < StandardError
     attr_reader :response_status, :response_body
 
     def initialize(response, url)
