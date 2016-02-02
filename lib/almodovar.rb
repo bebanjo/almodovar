@@ -16,13 +16,26 @@ require 'almodovar/errors'
 require 'almodovar/to_xml'
 
 module Almodovar
-
   class << self
+    DEFAULT_SEND_TIMEOUT = 30
+    DEFAULT_CONNECT_TIMEOUT = 30
+    DEFAULT_RECEIVE_TIMEOUT = 30
+
     def default_options
-      @default_options ||= {
-        :timeout => 120,
-        :connect_timeout => 30,
-        :user_agent => "Almodovar/#{Almodovar::VERSION}"
+      default = {
+        send_timeout: DEFAULT_SEND_TIMEOUT,
+        connect_timeout: DEFAULT_CONNECT_TIMEOUT,
+        receive_timeout: DEFAULT_RECEIVE_TIMEOUT,
+        user_agent: "Almodovar/#{Almodovar::VERSION}"
+      }
+      default.merge(@default_options || {})
+    end
+
+    def default_options=(options = {})
+      @default_options = {
+        send_timeout: options[:send_timeout],
+        connect_timeout: options[:connect_timeout],
+        receive_timeout: options[:receive_timeout]
       }
     end
   end

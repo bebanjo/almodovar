@@ -2,7 +2,6 @@ require 'httpclient'
 
 module Almodovar
   class HttpClient
-
     attr_accessor :client,
                   :headers,
                   :username,
@@ -11,12 +10,9 @@ module Almodovar
 
     delegate :agent_name=,
              :connect_timeout=,
+             :send_timeout=,
+             :receive_timeout=,
              :to => :client
-
-
-    def timeout=(value)
-      client.send_timeout = value
-    end
 
     def initialize
       @client = HTTPClient.new
@@ -79,6 +75,8 @@ module Almodovar
         set_client_auth(domain)
       end
       client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
+    rescue HTTPClient::TimeoutError => e
+      raise TimeoutError.new(e)
     end
   end
 
@@ -100,5 +98,4 @@ module Almodovar
   class HttpResponse
     attr_accessor :status, :body
   end
-
 end

@@ -7,18 +7,19 @@ module Almodovar
         Nokogiri::XML.parse(response.body).root
       end
     end
-    
+
     def url_with_params
       @options[:expand] = @options[:expand].join(",") if @options[:expand].is_a?(Array)
       params = @options.map { |k, v| "#{k}=#{v}" }.join("&")
       params = "?#{params}" unless params.empty?
       @url + params
     end
-    
+
     def http
       @http ||= Almodovar::HttpClient.new.tap do |session|
-        session.timeout  = Almodovar::default_options[:timeout]
+        session.send_timeout = Almodovar::default_options[:send_timeout]
         session.connect_timeout = Almodovar::default_options[:connect_timeout]
+        session.receive_timeout = Almodovar::default_options[:receive_timeout]
         session.agent_name = Almodovar::default_options[:user_agent]
 
         if @auth
@@ -28,10 +29,9 @@ module Almodovar
         end
       end
     end
-    
+
     def check_errors(response, url)
       raise(Almodovar::HttpError.new(response, url)) if response.status >= 400
     end
   end
-  
 end
