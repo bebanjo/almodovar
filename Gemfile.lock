@@ -21,7 +21,7 @@ GEM
     diff-lcs (1.2.5)
     httpclient (2.7.0.1)
     i18n (0.7.0)
-    json (1.8.1)
+    json (1.8.3)
     lorax (0.2.0)
       nokogiri (>= 1.4.0)
     multi_json (1.8.4)
@@ -57,4 +57,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
