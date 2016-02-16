@@ -75,8 +75,12 @@ module Almodovar
         set_client_auth(domain)
       end
       client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
-    rescue HTTPClient::TimeoutError => e
-      raise TimeoutError.new(e)
+    rescue HTTPClient::SendTimeoutError => e
+      raise SendTimeoutError.new(e)
+    rescue HTTPClient::ReceiveTimeoutError => e
+      raise ReceiveTimeoutError.new(e)
+    rescue HTTPClient::ConnectTimeoutError => e
+      raise ConnectTimeoutError.new(e)
     end
   end
 

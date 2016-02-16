@@ -11,4 +11,13 @@ module Almodovar
 
   class TimeoutError < StandardError
   end
+
+  class SendTimeoutError < TimeoutError
+  end
+
+  class ReceiveTimeoutError < TimeoutError
+  end
+
+  class ConnectTimeoutError < TimeoutError
+  end
 end
