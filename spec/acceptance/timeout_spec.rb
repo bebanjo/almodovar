@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Timeout" do
-  context "raise Almodovar::HttpClient::TimeoutError exception" do
+  context "raise Almodovar::TimeoutError exception" do
     it "for get" do
       project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
 

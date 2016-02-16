@@ -17,9 +17,9 @@ require 'almodovar/to_xml'
 
 module Almodovar
   class << self
-    DEFAULT_SEND_TIMEOUT = 30
+    DEFAULT_SEND_TIMEOUT = 120
     DEFAULT_CONNECT_TIMEOUT = 30
-    DEFAULT_RECEIVE_TIMEOUT = 30
+    DEFAULT_RECEIVE_TIMEOUT = 120
 
     def default_options
       default = {
