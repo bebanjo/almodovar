@@ -67,7 +67,7 @@ module Almodovar
     end
 
     def request(method, uri, options = {})
-      uri = URI.parse(uri)
+      uri = URI.parse(URI.escape(URI.unescape(uri)))
       if (requires_auth?)
         domain = domain_for(uri)
         uri.user = username
