@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.5.0 (2016-02-22)
+
+## Other
+
+Timeout refactoring [#34](https://github.com/bebanjo/almodovar/pull/34)
+
 ## Version 1.4.0 (2016-01-08)
 
 ## Other
