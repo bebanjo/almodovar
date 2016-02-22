@@ -81,6 +81,8 @@ module Almodovar
       raise ReceiveTimeoutError.new(e)
     rescue HTTPClient::ConnectTimeoutError => e
       raise ConnectTimeoutError.new(e)
+    rescue HTTPClient::TimeoutError => e
+      raise TimeoutError.new(e)
     end
   end
 
