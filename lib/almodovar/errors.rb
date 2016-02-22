@@ -8,4 +8,16 @@ module Almodovar
       super("Status code #{response.status} on resource #{url}")
     end
   end
+
+  class TimeoutError < StandardError
+  end
+
+  class SendTimeoutError < TimeoutError
+  end
+
+  class ReceiveTimeoutError < TimeoutError
+  end
+
+  class ConnectTimeoutError < TimeoutError
+  end
 end
