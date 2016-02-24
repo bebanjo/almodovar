@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.5.1 (2016-02-24)
+
+## Other
+
+Handle HTTPClient::TimeoutError [#37](https://github.com/bebanjo/almodovar/pull/37)
+
 ## Version 1.5.0 (2016-02-22)
 
 ## Other
