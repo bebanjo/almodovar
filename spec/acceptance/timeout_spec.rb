@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "Timeout" do
   context "raise Almodovar::TimeoutError exception" do
-    [[HTTPClient::SendTimeoutError, Almodovar::SendTimeoutError],
+    [[HTTPClient::TimeoutError, Almodovar::TimeoutError],
+     [HTTPClient::SendTimeoutError, Almodovar::SendTimeoutError],
      [HTTPClient::ReceiveTimeoutError, Almodovar::ReceiveTimeoutError],
      [HTTPClient::ConnectTimeoutError, Almodovar::ConnectTimeoutError]].each do |httpclient_exception, almodovar_exception|
       it "for get" do
