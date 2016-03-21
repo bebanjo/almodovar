@@ -70,8 +70,6 @@ module Almodovar
       uri = URI.parse(URI.escape(URI.unescape(uri)))
       if (requires_auth?)
         domain = domain_for(uri)
-        uri.user = username
-        uri.password = password
         set_client_auth(domain)
       end
       client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
