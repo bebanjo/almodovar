@@ -22,8 +22,8 @@ module Almodovar
       resource_object(meth).send(meth, *args, &blk)
     end
 
-    def respond_to?(meth)
-      super || resource_object(meth).respond_to?(meth)
+    def respond_to?(meth, include_all=false)
+      super || resource_object(meth).respond_to?(meth, include_all)
     end
 
     private
