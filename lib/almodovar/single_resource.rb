@@ -36,7 +36,7 @@ module Almodovar
       Hash.from_xml(xml.to_xml).values.first[key]
     end
     
-    def respond_to?(meth)
+    def respond_to?(meth, include_all=false)
       super || (node(meth) != nil) || (link(meth) != nil)
     end
   
