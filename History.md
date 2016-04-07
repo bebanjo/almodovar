@@ -1,5 +1,12 @@
 # Almodovar Release History
 
+## Version 1.5.2 (2016-04-07)
+
+## Other
+
+* Fix respond_to? signature to match Object signature [#39](https://github.com/bebanjo/almodovar/pull/39)
+* Remove username/password validation in HttpClient [#40](https://github.com/bebanjo/almodovar/pull/40)
+
 ## Version 1.5.1 (2016-02-24)
 
 ## Other
