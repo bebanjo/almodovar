@@ -29,11 +29,15 @@ module Almodovar
     end
 
     def to_hash
-      xml.delete("type")
-      if xml.content.strip.empty?
+      xml_without_type = xml.dup.tap do |xml|
+        xml.delete("type")
+      end
+
+      if xml_without_type.content.strip.empty?
         {}
       else
-        Hash.from_xml(xml.to_s).to_hash[xml.name]
+        xml_hash = Hash.from_xml(xml_without_type.to_s)
+        xml_hash[xml_without_type.name]
       end
     end
 
