@@ -55,6 +55,3 @@ DEPENDENCIES
   rspec
   safe_yaml (>= 1.0.4)
   webmock
-
-BUNDLED WITH
-   1.11.2
