@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.5.3 (2016-08-31)
+
+## Feature
+
+* Adding to_hash to SingleResource [#43](https://github.com/bebanjo/almodovar/pull/43)
+
 ## Version 1.5.2 (2016-04-07)
 
 ## Other
