@@ -109,6 +109,19 @@ And exactly the same with the _delete_ method:
   => <job> ... </job>
   >> job.delete
 
+== Detailed error messages
+
+In case an incorrect _PUT/POST_ request fails with 422 response status, you can access list of errors using _error_messages_ method of Almodovar::UnprocessableEntityError:
+
+  >> collection_entry = Almodovar::Resource("http://sequence.example.com/api/collection_entries/12345", auth)
+  => <collection-entry> ... </collection-entry>
+  >> begin
+      collection_entry.update(:collection_entry => {:position => 3.2})
+     rescue Almodovar::UnprocessableEntityError => e
+       e.error_messages
+     end
+  => ["Position must be an integer"]
+
 ==To-do
 
 * Better error management
