@@ -157,5 +157,32 @@ describe "Creating new resources" do
     project.should be_a(Almodovar::Resource)
     project.tasks.first.name.should == "Start project"
   end
+
+  example "Creating a resource raise UnprocessableEntityError" do
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth)
+
+    stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
+      # we parse because comparing strings is too fragile because of order changing, different indentations, etc.
+      # we're expecting something very close to this:
+      # <project>
+      #   <name>Wadus</name>
+      # </project>
+      Nokogiri::XML.parse(req.body).at_xpath("/project/name").text == "Wadus"
+    end.to_return(:body => %q{
+      <errors>
+        <error>Name is taken</error>
+      </errors>
+    }, status: 422)
+
+    expect do
+      begin
+        projects.create(:project => {:name => "Wadus"})
+      rescue Almodovar::UnprocessableEntityError => exception
+        expect(exception.errors?).to eq true
+        expect(exception.error_messages).to eq ["Name is taken"]
+        raise exception
+      end
+    end.to raise_error(Almodovar::UnprocessableEntityError)
+  end
   
 end

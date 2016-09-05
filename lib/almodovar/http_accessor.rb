@@ -31,7 +31,10 @@ module Almodovar
     end
 
     def check_errors(response, url)
-      raise(Almodovar::HttpError.new(response, url)) if response.status >= 400
+      if response.status >= 400
+        http_error_klass = Almodovar::HTTP_ERRORS[response.status] || Almodovar::HttpError
+        raise http_error_klass.new(response, url)
+      end
     end
   end
 end
