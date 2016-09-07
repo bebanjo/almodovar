@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.5.4 (2016-09-07)
+
+## Feature
+
+* On 422 response code raise an UnprocessableEntityError instance [#45](https://github.com/bebanjo/almodovar/pull/45)
+
 ## Version 1.5.3 (2016-08-31)
 
 ## Feature

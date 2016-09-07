@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (1.5.3)
+    almodovar (1.5.4)
       activesupport
       builder
       httpclient (~> 2.5)
@@ -19,7 +19,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
-    httpclient (2.7.0.1)
+    httpclient (2.8.2.3)
     i18n (0.7.0)
     json (1.8.3)
     lorax (0.2.0)
