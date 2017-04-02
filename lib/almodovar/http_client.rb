@@ -12,6 +12,7 @@ module Almodovar
              :connect_timeout=,
              :send_timeout=,
              :receive_timeout=,
+             :force_basic_auth=,
              :to => :client
 
     def initialize
