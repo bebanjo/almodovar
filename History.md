@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.5.5 (2017-04-03)
+
+## Feature
+
+* HTTPClient force_basic_auth setting [#47](https://github.com/bebanjo/almodovar/pull/47)
+
 ## Version 1.5.4 (2016-09-07)
 
 ## Feature
