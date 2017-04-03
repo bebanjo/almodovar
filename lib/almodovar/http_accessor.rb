@@ -23,6 +23,7 @@ module Almodovar
         session.agent_name = Almodovar::default_options[:user_agent]
 
         if @auth
+          session.force_basic_auth = Almodovar::default_options[:force_basic_auth]
           session.username = @auth.username
           session.password = @auth.password
           session.auth_type = :digest
