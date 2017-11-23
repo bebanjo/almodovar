@@ -10,7 +10,7 @@ module Almodovar
 
     def url_with_params
       @options[:expand] = @options[:expand].join(",") if @options[:expand].is_a?(Array)
-      params = @options.map { |k, v| "#{k}=#{v}" }.join("&")
+      params = @options.to_query
       params = "?#{params}" unless params.empty?
       @url + params
     end

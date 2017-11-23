@@ -25,33 +25,20 @@ describe "Fetching resource collections" do
   end
 
   example "Fetch a collection with params" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow&parents=Eddard%20%26%20Lyanna%20Stark").to_return(:body => %q{
       <resources type='array'>
         <resource>
           <name>Jon Snow</name>
+          <parents>Eddard &amp; Lyanna Stark</parents>
         </resource>
       </resources>
     })
 
-    resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "Jon Snow")
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "Jon Snow", :parents => "Eddard & Lyanna Stark")
 
     resources.size.should == 1
     resources.first.name.should == "Jon Snow"
-  end
-
-  example "Fetch a collection with params unescaped in the url" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(:body => %q{
-      <resources type='array'>
-        <resource>
-          <name>Jon Snow</name>
-        </resource>
-      </resources>
-    })
-
-    resources = Almodovar::Resource("http://movida.example.com/resources?name=Jon Snow", auth)
-
-    resources.size.should == 1
-    resources.first.name.should == "Jon Snow"
+    resources.first.parents.should == "Eddard & Lyanna Stark"
   end
 
   example "Fetch a collection with params escaped in the url" do
