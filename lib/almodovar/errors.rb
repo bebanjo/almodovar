@@ -3,10 +3,12 @@ module Almodovar
     attr_reader :response_status, :response_body
 
     # Children of this class must not override the initialize method
-    def initialize(response, url)
+    def initialize(response, url, query_params = {})
       @response_status = response.status
       @response_body = response.body
-      super("Status code #{response.status} on resource #{url}")
+      message = "Status code #{response.status} on resource #{url}"
+      message += " with params: #{query_params.inspect}" if query_params.present?
+      super(message)
     end
   end
 

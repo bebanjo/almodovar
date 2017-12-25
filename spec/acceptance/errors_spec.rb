@@ -55,9 +55,23 @@ describe "Errors should raise exceptions" do
     end
   end
 
+  example "Receiving a failure in a GET request with query params" do
+    stub_auth_request(:get, resource_url + "?page=2").to_return(body: '<error>more info</error>', status: 400)
+
+    resource = Almodovar::Resource(resource_url, auth, page: 2)
+
+    expect { resource.wadus }.to raise_error{ |error|
+      expect(error).to be_a(Almodovar::HttpError)
+      expect(error.message).to eq(error_message(400, resource_url, { page: 2 }))
+      expect(error.response_body).to eq('<error>more info</error>')
+    }
+  end
+
   private
 
-  def error_message(code, url)
-    "Status code #{code} on resource #{url}"
+  def error_message(code, url, query_params = {})
+    message = "Status code #{code} on resource #{url}"
+    message += " with params: #{query_params.inspect}" if query_params.any?
+    message
   end
 end

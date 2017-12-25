@@ -9,7 +9,7 @@ describe Almodovar::HttpClient do
       client.headers = {'Foo' => 'Bar', 'Baz' => 'Bas'}
     end
 
-    client.get("http://www.bebanjo.com", 'Baz' => 'Oink')
+    client.get("http://www.bebanjo.com", {}, {'Baz' => 'Oink'})
 
     expect(a_request(:get, "http://www.bebanjo.com").with(headers: {'Foo' => 'Bar', 'Baz' => 'Oink'})).to have_been_made
   end

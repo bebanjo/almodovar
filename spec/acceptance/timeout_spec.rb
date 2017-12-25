@@ -22,7 +22,7 @@ describe "Timeout" do
         stub_auth_request(:post, "http://movida.example.com/projects").to_raise(httpclient_exception)
 
         expect {
-          projects.create(project: { name: "Wadus"})
+          projects.create(project: { name: "Wadus" })
         }.to raise_error(almodovar_exception)
       end
 
@@ -32,7 +32,7 @@ describe "Timeout" do
         stub_auth_request(:put, "http://movida.example.com/projects/1").to_raise(httpclient_exception)
 
         expect {
-          projects.update(project: { name: "Wadus"})
+          projects.update(project: { name: "Wadus" })
         }.to raise_error(almodovar_exception)
       end
 

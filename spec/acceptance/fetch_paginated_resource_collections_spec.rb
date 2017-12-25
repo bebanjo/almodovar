@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Fetching paginated resource collections" do
-  
+
   example "Fetch collection" do
     stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
@@ -17,7 +17,7 @@ describe "Fetching paginated resource collections" do
         </resource>
       </resources>
     })
-    
+
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
     expect(resources.total_entries).to eq(4)
     expect(resources.size).to eq(2)
@@ -55,9 +55,9 @@ describe "Fetching paginated resource collections" do
         </resource>
       </resources>
     })
-    
+
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
-    
+
     expect(resources.map(&:name)).to eq(["Resource 1", "Resource 2"])
     expect(resources.next_url).to eq("http://movida.example.com/resources?page=2")
     expect(resources.prev_url).to be_nil
@@ -76,15 +76,55 @@ describe "Fetching paginated resource collections" do
     expect(resources.total_entries).to eq(4)
   end
 
+  example "Navigate through collection pages with query params" do
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Resource%20Item").to_return(body: %q{
+      <resources type='array'>
+        <total-entries>4</total-entries>
+        <link rel='next' href='http://movida.example.com/resources?name=Resource Item&amp;page=2'/>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/1'/>
+          <name>Resource Item 1</name>
+        </resource>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/2'/>
+          <name>Resource Item 2</name>
+        </resource>
+      </resources>
+    })
+
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Resource%20Item&page=2").to_return(body: %q{
+      <resources type='array'>
+        <total-entries>4</total-entries>
+        <link rel='prev' href='http://movida.example.com/resources?name=Resource Item&amp;page=2'/>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/3'/>
+          <name>Resource Item 3</name>
+        </resource>
+        <resource>
+          <link rel='self' href='http://movida.example.com/resources/4'/>
+          <name>Resource Item 4</name>
+        </resource>
+      </resources>
+    })
+
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth, name: "Resource Item")
+    expect(resources.map(&:name)).to eq(["Resource Item 1", "Resource Item 2"])
+    expect(resources.next_url).to eq("http://movida.example.com/resources?name=Resource Item&page=2")
+    expect(resources.prev_url).to be_nil
+    resources = resources.next_page
+
+    expect(resources.map(&:name)).to eq(["Resource Item 3", "Resource Item 4"])
+  end
+
   example "Fetch empty collection" do
     stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <total-entries>0</total-entries>
       </resources>
     })
-    
+
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
-    
+
     expect(resources.size).to eq(0)
     expect(resources.total_entries).to eq(0)
     expect(resources.next_url).to be_nil
