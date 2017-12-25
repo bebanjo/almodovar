@@ -7,7 +7,7 @@ Bundler::GemHelper.install_tasks
 require 'rspec/core/rake_task'
 
 desc 'Default: run specs.'
-task :default => :spec
+task default: :spec
 
 desc "Run all specs"
 RSpec::Core::RakeTask.new("spec") do |t|
@@ -31,4 +31,4 @@ Rake::RDocTask.new do |rd|
 end
 
 desc 'Clear out RDoc and generated packages'
-task :clean => [:clobber_rdoc, :clobber_package]
+task clean: [:clobber_rdoc, :clobber_package]

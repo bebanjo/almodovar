@@ -5,7 +5,7 @@ describe "Deleting resources" do
   example "Deleting a resource" do
     project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
     
-    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(:status => 200)
+    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(status: 200)
     
     project.delete
     
@@ -15,7 +15,7 @@ describe "Deleting resources" do
   example "Deleting a resource raise UnprocessableEntityError" do
     project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
 
-    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(:body => %q{
+    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(body: %q{
       <errors>
         <error>Should delete existing tasks first</error>
       </errors>

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Fetching paginated resource collections" do
   
   example "Fetch collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <total-entries>4</total-entries>
         <link rel='next' href='http://movida.example.com/resources?page=2'/>
@@ -26,7 +26,7 @@ describe "Fetching paginated resource collections" do
   end
 
   example "Navigate through collection pages" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <total-entries>4</total-entries>
         <link rel='next' href='http://movida.example.com/resources?page=2'/>
@@ -41,7 +41,7 @@ describe "Fetching paginated resource collections" do
       </resources>
     })
 
-    stub_auth_request(:get, "http://movida.example.com/resources?page=2").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources?page=2").to_return(body: %q{
       <resources type='array'>
         <total-entries>4</total-entries>
         <link rel='prev' href='http://movida.example.com/resources'/>
@@ -77,7 +77,7 @@ describe "Fetching paginated resource collections" do
   end
 
   example "Fetch empty collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <total-entries>0</total-entries>
       </resources>

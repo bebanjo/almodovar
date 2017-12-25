@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Fetching individual resources" do  
 
   example "Fetching untyped attributes" do
-    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(body: %q{
       <resource>
         <name>Resource Name</name>
         <res_id>12345</res_id>
@@ -20,7 +20,7 @@ describe "Fetching individual resources" do
   end
   
   example "Fetching typed attributes" do
-    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(body: %q{
       <resource>
         <id type="integer">12345</id>
         <date type="datetime">2009-01-01T10:00:00Z</date>
@@ -44,7 +44,7 @@ describe "Fetching individual resources" do
   end
 
   example "Fetching typed attributes: array" do
-    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(body: %q{
       <resource>
         <cue-points type="array">
           <cue-point>00:07:00</cue-point>
@@ -71,7 +71,7 @@ describe "Fetching individual resources" do
         <date type="datetime">2009-01-01T10:00:00Z</date>
       </resource>      
     }
-    stub_auth_request(:get, "http://movida.example.com/resource").to_return(:body => xml)
+    stub_auth_request(:get, "http://movida.example.com/resource").to_return(body: xml)
     
     resource = Almodovar::Resource("http://movida.example.com/resource", auth)
 
@@ -79,7 +79,7 @@ describe "Fetching individual resources" do
   end
   
   example "Using a port different than default" do
-    stub_auth_request(:get, "http://movida.example.com:3000/resource").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com:3000/resource").to_return(body: %q{
       <resource>
         <name>Resource Name</name>
       </resource>

@@ -13,19 +13,19 @@ describe "Creating new resources" do
       #   <name>Wadus</name>
       # </project>      
       Nokogiri::XML.parse(req.body).at_xpath("/project/name").text == "Wadus"
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <project>
         <name>Wadus</name>
         <link rel="self" href="http://movida.example.com/projects/1"/>
       </project>
     })
     
-    project = projects.create(:project => {:name => "Wadus"})
+    project = projects.create(project: {name: "Wadus"})
     
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
     
-    stub_auth_request(:get, "http://movida.example.com/projects/1").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/projects/1").to_return(body: %q{
       <project>
         <name>Wadus</name>
         <link rel="self" href="http://movida.example.com/projects/1"/>
@@ -44,7 +44,7 @@ describe "Creating new resources" do
       xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/template").text == "Basic"
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <project>
         <name>Wadus</name>
         <template>Basic</template>
@@ -59,8 +59,8 @@ describe "Creating new resources" do
       </project>
     })
     
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)    
-    project = projects.create(:project => {:name => "Wadus", :template => "Basic"})
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)    
+    project = projects.create(project: {name: "Wadus", template: "Basic"})
     
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
@@ -77,21 +77,21 @@ describe "Creating new resources" do
       # </project>
       xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/link[@rel='owner'][@href='http://example.com/people/luismi'][not(node())]")
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <project>
         <link rel="self" href="http://movida.example.com/projects/1"/>
         <link rel="owner" href="http://example.com/people/luismi"/>
       </project>
     })
     
-    project = projects.create(:project => {:owner => Almodovar::Resource("http://example.com/people/luismi")})
+    project = projects.create(project: {owner: Almodovar::Resource("http://example.com/people/luismi")})
     
     expect(project).to be_a(Almodovar::Resource)
     expect(project.owner.url).to eq("http://example.com/people/luismi")
   end
   
   example "Creating single nested resources" do
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)
     
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
@@ -106,7 +106,7 @@ describe "Creating new resources" do
       xml.at_xpath("/project/name").text == "Wadus" &&
       xml.at_xpath("/project/link[@rel='timeline']/timeline/name").text == "Start project" &&
       xml.at_xpath("/project/link[@rel='timeline']/timeline/link[@rel='wadus']/wadus") != nil
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <project>
         <name>Wadus</name>
         <link rel="self" href="http://movida.example.com/projects/1"/>
@@ -118,7 +118,7 @@ describe "Creating new resources" do
       </project>
     })
     
-    project = projects.create(:project => {:name => "Wadus", :timeline => {:name => "Start project", :wadus => {}}})
+    project = projects.create(project: {name: "Wadus", timeline: {name: "Start project", wadus: {}}})
     
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
@@ -126,7 +126,7 @@ describe "Creating new resources" do
   end
   
   example "Creating multiple nested resources" do
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)
     
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
@@ -140,7 +140,7 @@ describe "Creating new resources" do
       # </project>
       xml = Nokogiri::XML.parse(req.body)
       xml.at_xpath("/project/link[@rel='tasks']/tasks[@type='array']/task/name").text == "Start project"
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <project>
         <link rel="tasks" href="http://movida.example.com/projects/1/tasks">
           <tasks type="array">
@@ -152,7 +152,7 @@ describe "Creating new resources" do
       </project>
     })
     
-    project = projects.create(:project => {:tasks => [{:name => "Start project"}]})
+    project = projects.create(project: {tasks: [{name: "Start project"}]})
     
     expect(project).to be_a(Almodovar::Resource)
     expect(project.tasks.first.name).to eq("Start project")
@@ -168,7 +168,7 @@ describe "Creating new resources" do
       #   <name>Wadus</name>
       # </project>
       Nokogiri::XML.parse(req.body).at_xpath("/project/name").text == "Wadus"
-    end.to_return(:body => %q{
+    end.to_return(body: %q{
       <errors>
         <error>Name is taken</error>
       </errors>
@@ -176,7 +176,7 @@ describe "Creating new resources" do
 
     expect do
       begin
-        projects.create(:project => {:name => "Wadus"})
+        projects.create(project: {name: "Wadus"})
       rescue Almodovar::UnprocessableEntityError => exception
         expect(exception.errors?).to eq true
         expect(exception.error_messages).to eq ["Name is taken"]

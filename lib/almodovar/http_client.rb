@@ -13,26 +13,26 @@ module Almodovar
              :send_timeout=,
              :receive_timeout=,
              :force_basic_auth=,
-             :to => :client
+             to: :client
 
     def initialize
       @client = HTTPClient.new
     end
 
     def get(uri, headers = {})
-      request(:get, uri, :headers => merge_headers(headers))
+      request(:get, uri, headers: merge_headers(headers))
     end
 
     def post(uri, data, headers = {})
-      request(:post, uri, :body => data, :headers => merge_headers(headers))
+      request(:post, uri, body: data, headers: merge_headers(headers))
     end
 
     def put(uri, data, headers = {})
-      request(:put, uri, :body => data, :headers => merge_headers(headers))
+      request(:put, uri, body: data, headers: merge_headers(headers))
     end
 
     def delete(uri, headers = {})
-      request(:delete, uri, :headers => merge_headers(headers))
+      request(:delete, uri, headers: merge_headers(headers))
     end
 
     private
@@ -73,7 +73,7 @@ module Almodovar
         domain = domain_for(uri)
         set_client_auth(domain)
       end
-      client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
+      client.request(method, uri, body: options[:body], header: options[:headers].stringify_keys || {}, follow_redirect: true)
     rescue HTTPClient::SendTimeoutError => e
       raise SendTimeoutError.new(e)
     rescue HTTPClient::ReceiveTimeoutError => e

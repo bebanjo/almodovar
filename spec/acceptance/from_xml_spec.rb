@@ -32,7 +32,7 @@ describe "Instantiate resources from xml" do
     
     expect(project.name).to eq("My cool project")
     
-    stub_auth_request(:get, "http://example.com/p/1/t?expand=responsible").to_return(:body => %q{
+    stub_auth_request(:get, "http://example.com/p/1/t?expand=responsible").to_return(body: %q{
       <tasks type="array">
         <task>
           <name>Start project</name>
@@ -45,7 +45,7 @@ describe "Instantiate resources from xml" do
       </tasks>      
     })
     
-    tasks = project.tasks(:expand => "responsible")
+    tasks = project.tasks(expand: "responsible")
     
     expect(tasks.first.name).to eq("Start project")
     tasks.first.responsible.name == "El Fary"

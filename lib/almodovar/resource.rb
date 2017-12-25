@@ -5,7 +5,7 @@ module Almodovar
     undef_method :id if instance_methods.include?("id")
     undef_method :type if instance_methods.include?("type")
 
-    delegate :inspect, :to => :get!
+    delegate :inspect, to: :get!
 
     def self.from_xml(xml, auth = nil)
       new(nil, auth, Nokogiri::XML.parse(xml).root)

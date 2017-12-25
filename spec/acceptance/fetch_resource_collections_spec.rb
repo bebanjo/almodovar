@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Fetching resource collections" do
 
   example "Fetch collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <resource>
           <link rel='self' href='http://movida.example.com/resources/1'/>
@@ -25,7 +25,7 @@ describe "Fetching resource collections" do
   end
 
   example "Fetch a collection with params" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(body: %q{
       <resources type='array'>
         <resource>
           <name>Jon Snow</name>
@@ -33,14 +33,14 @@ describe "Fetching resource collections" do
       </resources>
     })
 
-    resources = Almodovar::Resource("http://movida.example.com/resources", auth, :name => "Jon Snow")
+    resources = Almodovar::Resource("http://movida.example.com/resources", auth, name: "Jon Snow")
 
     expect(resources.size).to eq(1)
     expect(resources.first.name).to eq("Jon Snow")
   end
 
   example "Fetch a collection with params unescaped in the url" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(body: %q{
       <resources type='array'>
         <resource>
           <name>Jon Snow</name>
@@ -55,7 +55,7 @@ describe "Fetching resource collections" do
   end
 
   example "Fetch a collection with params escaped in the url" do
-    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources?name=Jon%20Snow").to_return(body: %q{
       <resources type='array'>
         <resource>
           <name>Jon Snow</name>
@@ -70,7 +70,7 @@ describe "Fetching resource collections" do
   end
 
   example "Inspecting a collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <resource>
           <name>Pedro</name>
@@ -84,7 +84,7 @@ describe "Fetching resource collections" do
   end
 
   example "Selecting elements from a collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <resource>
           <link rel='self' href='http://movida.example.com/resources/1'/>
@@ -106,7 +106,7 @@ describe "Fetching resource collections" do
   end
 
   example "Pagination methods on non paginated collection" do
-    stub_auth_request(:get, "http://movida.example.com/resources").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/resources").to_return(body: %q{
       <resources type='array'>
         <resource>
           <link rel='self' href='http://movida.example.com/resources/1'/>
