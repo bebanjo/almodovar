@@ -45,7 +45,7 @@ module NokogiriMatchers
       xml_string.starts_with?(processing_instruction)
     end
 
-    failure_message_for_should do |xml_string|
+    failure_message do |xml_string|
       "expected to have #{processing_instruction} at the beggining of xml:\n#{xml_string}"
     end
   end
@@ -55,11 +55,11 @@ module NokogiriMatchers
       Nokogiri::XML.parse(xml_string).at_xpath(xpath) != nil
     end
 
-    failure_message_for_should do |xml_string|
+    failure_message do |xml_string|
       "expected to match xpath #{xpath} in xml:\n#{xml_string}"
     end
 
-    failure_message_for_should_not do |xml_string|
+    failure_message_when_negated do |xml_string|
       "expected to not match xpath #{xpath} in xml:\n#{xml_string}"
     end
 
@@ -72,11 +72,11 @@ module NokogiriMatchers
       Lorax::Signature.new(@expected_doc.root).signature == Lorax::Signature.new(@actual_doc.root).signature
     end
 
-    failure_message_for_should do |actual_xml_string|
+    failure_message do |actual_xml_string|
       "XML documents expected to be the same:\n\nExpected:\n#{expected_xml_string}\n\nActual:\n#{actual_xml_string}"
     end
 
-    failure_message_for_should_not do |actual_xml_string|
+    failure_message_when_negated do |actual_xml_string|
       "XML documents expected to be different but are equal"
     end
 
@@ -88,11 +88,11 @@ module NokogiriMatchers
       actual_text.gsub(/\s+/,' ').include? expected_text.gsub(/\s+/,' ')
     end
 
-    failure_message_for_should do |actual_xml_string|
+    failure_message do |actual_xml_string|
       "Document expected to contain \"#{expected_text}\". Actual:\n#{actual_xml_string}"
     end
 
-    failure_message_for_should_not do |actual_xml_string|
+    failure_message_when_negated do |actual_xml_string|
       "Document expected to not contain \"#{expected_text}\". Actual:\n#{actual_xml_string}"
     end
   end

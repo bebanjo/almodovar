@@ -19,10 +19,10 @@ describe "Fetching paginated resource collections" do
     })
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
-    resources.total_entries.should == 4
-    resources.size.should == 2
-    resources.map(&:name).should == ["Resource 1", "Resource 2"]
-    resources.next_url.should == "http://movida.example.com/resources?page=2"
+    expect(resources.total_entries).to eq(4)
+    expect(resources.size).to eq(2)
+    expect(resources.map(&:name)).to eq(["Resource 1", "Resource 2"])
+    expect(resources.next_url).to eq("http://movida.example.com/resources?page=2")
   end
 
   example "Navigate through collection pages" do
@@ -58,22 +58,22 @@ describe "Fetching paginated resource collections" do
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
     
-    resources.map(&:name).should == ["Resource 1", "Resource 2"]
-    resources.next_url.should == "http://movida.example.com/resources?page=2"
-    resources.prev_url.should be_nil
+    expect(resources.map(&:name)).to eq(["Resource 1", "Resource 2"])
+    expect(resources.next_url).to eq("http://movida.example.com/resources?page=2")
+    expect(resources.prev_url).to be_nil
     resources = resources.next_page
 
-    resources.map(&:name).should == ["Resource 3", "Resource 4"]
-    resources.size.should == 2
-    resources.total_entries.should == 4
-    resources.prev_url.should == "http://movida.example.com/resources"
-    resources.next_url.should be_nil
+    expect(resources.map(&:name)).to eq(["Resource 3", "Resource 4"])
+    expect(resources.size).to eq(2)
+    expect(resources.total_entries).to eq(4)
+    expect(resources.prev_url).to eq("http://movida.example.com/resources")
+    expect(resources.next_url).to be_nil
 
     resources = resources.prev_page
 
-    resources.map(&:name).should == ["Resource 1", "Resource 2"]
-    resources.size.should == 2
-    resources.total_entries.should == 4
+    expect(resources.map(&:name)).to eq(["Resource 1", "Resource 2"])
+    expect(resources.size).to eq(2)
+    expect(resources.total_entries).to eq(4)
   end
 
   example "Fetch empty collection" do
@@ -85,12 +85,12 @@ describe "Fetching paginated resource collections" do
     
     resources = Almodovar::Resource("http://movida.example.com/resources", auth)
     
-    resources.size.should == 0
-    resources.total_entries.should == 0
-    resources.next_url.should be_nil
-    resources.prev_url.should be_nil
-    resources.next_page.should be_nil
-    resources.prev_page.should be_nil
+    expect(resources.size).to eq(0)
+    expect(resources.total_entries).to eq(0)
+    expect(resources.next_url).to be_nil
+    expect(resources.prev_url).to be_nil
+    expect(resources.next_page).to be_nil
+    expect(resources.prev_page).to be_nil
   end
 
 end

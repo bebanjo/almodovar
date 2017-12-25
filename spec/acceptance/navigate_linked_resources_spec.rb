@@ -16,10 +16,10 @@ describe "Navigating linked resources" do
       </company>
     })
     
-    user.should respond_to(:related_company)
+    expect(user).to respond_to(:related_company)
     
-    user.related_company.should_not be_nil
-    user.related_company.age.should == 15
+    expect(user.related_company).not_to be_nil
+    expect(user.related_company.age).to eq(15)
   end
   
   example "Link to a collection of resources" do
@@ -42,11 +42,11 @@ describe "Navigating linked resources" do
       </users>
     })
     
-    company.should respond_to(:related_users)
+    expect(company).to respond_to(:related_users)
     
-    company.related_users.size.should == 2
-    company.related_users.first.age.should == 46
-    company.related_users.last.age.should == 33
+    expect(company.related_users.size).to eq(2)
+    expect(company.related_users.first.age).to eq(46)
+    expect(company.related_users.last.age).to eq(33)
   end
   
   example "Link to a collection of resources with params" do
@@ -69,7 +69,7 @@ describe "Navigating linked resources" do
       </users>
     })
     
-    company.related_users(:min_age => 23, :recent => true).size.should == 2
+    expect(company.related_users(:min_age => 23, :recent => true).size).to eq(2)
   end
   
   example "Expanded link to a single resource" do
@@ -85,8 +85,8 @@ describe "Navigating linked resources" do
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth, :expand => :employer)
     
-    user.employer.should_not be_nil
-    user.employer.age.should == 15
+    expect(user.employer).not_to be_nil
+    expect(user.employer.age).to eq(15)
   end
   
   example "Expanded link to a resource collection" do
@@ -116,9 +116,9 @@ describe "Navigating linked resources" do
     
     company = Almodovar::Resource("http://movida.example.com/company/1", auth, :expand => [:users, :department])
     
-    company.users.size.should == 2
-    company.users.first.department.name.should == "Sales"
-    company.users.last.department.name.should == "Development"
+    expect(company.users.size).to eq(2)
+    expect(company.users.first.department.name).to eq("Sales")
+    expect(company.users.last.department.name).to eq("Development")
     
   end
   
@@ -148,7 +148,7 @@ describe "Navigating linked resources" do
       </users>
     })
     
-    company.users(:min_age => 40).size.should == 1
+    expect(company.users(:min_age => 40).size).to eq(1)
   end
 
   example "Link to self" do
@@ -160,7 +160,7 @@ describe "Navigating linked resources" do
     
     user = Almodovar::Resource("http://movida.example.com/user/1", auth)
     
-    user.url.should == "http://movida.example.com/user/1"
+    expect(user.url).to eq("http://movida.example.com/user/1")
   end
   
   example "Using a port different than default" do
@@ -178,7 +178,7 @@ describe "Navigating linked resources" do
       </company>
     })
     
-    user.related_company.should_not be_nil
-    user.related_company.age.should == 15
+    expect(user.related_company).not_to be_nil
+    expect(user.related_company.age).to eq(15)
   end
 end

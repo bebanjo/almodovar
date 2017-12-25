@@ -16,7 +16,7 @@ describe "Updating resources" do
     
     project.update(:project => {:name => "Wadus Wadus"})
     
-    project.name.should == "Wadus Wadus"
+    expect(project.name).to eq("Wadus Wadus")
   end
   
   example "Updating a document resource" do
@@ -31,7 +31,7 @@ describe "Updating resources" do
     
     extra_data = Almodovar::Resource("http://movida.example.com/people/1/extra_data", auth)
     extra_data.update(:extra_data => {:birthplace => "Calzada de Calatrava"})
-    extra_data.birthplace.should == "Calzada de Calatrava"
+    expect(extra_data.birthplace).to eq("Calzada de Calatrava")
   end
   
 end

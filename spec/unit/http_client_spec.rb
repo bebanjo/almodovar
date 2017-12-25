@@ -11,7 +11,7 @@ describe Almodovar::HttpClient do
 
     client.get("http://www.bebanjo.com", 'Baz' => 'Oink')
 
-    a_request(:get, "http://www.bebanjo.com").with(:headers => {'Foo' => 'Bar', 'Baz' => 'Oink'}).should have_been_made
+    expect(a_request(:get, "http://www.bebanjo.com").with(:headers => {'Foo' => 'Bar', 'Baz' => 'Oink'})).to have_been_made
   end
 
   it "allows URI escaped characters in password" do
@@ -25,6 +25,6 @@ describe Almodovar::HttpClient do
 
     client.get("http://www.bebanjo.com")
 
-    a_request(:get, "http://www.bebanjo.com").with(basic_auth: ['username', '[]']).should have_been_made
+    expect(a_request(:get, "http://www.bebanjo.com").with(basic_auth: ['username', '[]'])).to have_been_made
   end
 end

@@ -9,7 +9,7 @@ describe "Deleting resources" do
     
     project.delete
     
-    auth_request(:delete, "http://movida.example.com/projects/1").should have_been_made.once
+    expect(auth_request(:delete, "http://movida.example.com/projects/1")).to have_been_made.once
   end
 
   example "Deleting a resource raise UnprocessableEntityError" do

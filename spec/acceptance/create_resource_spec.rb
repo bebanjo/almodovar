@@ -22,8 +22,8 @@ describe "Creating new resources" do
     
     project = projects.create(:project => {:name => "Wadus"})
     
-    project.should be_a(Almodovar::Resource)
-    project.name.should == "Wadus"
+    expect(project).to be_a(Almodovar::Resource)
+    expect(project.name).to eq("Wadus")
     
     stub_auth_request(:get, "http://movida.example.com/projects/1").to_return(:body => %q{
       <project>
@@ -32,7 +32,7 @@ describe "Creating new resources" do
       </project>
     })
     
-    project.name.should == Almodovar::Resource(project.url, auth).name
+    expect(project.name).to eq(Almodovar::Resource(project.url, auth).name)
   end
   
   example "Creating a resource expanding links" do
@@ -62,10 +62,10 @@ describe "Creating new resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, :expand => :tasks)    
     project = projects.create(:project => {:name => "Wadus", :template => "Basic"})
     
-    project.should be_a(Almodovar::Resource)
-    project.name.should == "Wadus"
-    project.tasks.size.should == 1
-    project.tasks.first.name.should == "Starting Meeting"
+    expect(project).to be_a(Almodovar::Resource)
+    expect(project.name).to eq("Wadus")
+    expect(project.tasks.size).to eq(1)
+    expect(project.tasks.first.name).to eq("Starting Meeting")
   end
   
   example "Creating linking to existing resources" do
@@ -86,8 +86,8 @@ describe "Creating new resources" do
     
     project = projects.create(:project => {:owner => Almodovar::Resource("http://example.com/people/luismi")})
     
-    project.should be_a(Almodovar::Resource)
-    project.owner.url.should == "http://example.com/people/luismi"
+    expect(project).to be_a(Almodovar::Resource)
+    expect(project.owner.url).to eq("http://example.com/people/luismi")
   end
   
   example "Creating single nested resources" do
@@ -120,9 +120,9 @@ describe "Creating new resources" do
     
     project = projects.create(:project => {:name => "Wadus", :timeline => {:name => "Start project", :wadus => {}}})
     
-    project.should be_a(Almodovar::Resource)
-    project.name.should == "Wadus"
-    project.timeline.name.should == "Start project"
+    expect(project).to be_a(Almodovar::Resource)
+    expect(project.name).to eq("Wadus")
+    expect(project.timeline.name).to eq("Start project")
   end
   
   example "Creating multiple nested resources" do
@@ -154,8 +154,8 @@ describe "Creating new resources" do
     
     project = projects.create(:project => {:tasks => [{:name => "Start project"}]})
     
-    project.should be_a(Almodovar::Resource)
-    project.tasks.first.name.should == "Start project"
+    expect(project).to be_a(Almodovar::Resource)
+    expect(project.tasks.first.name).to eq("Start project")
   end
 
   example "Creating a resource raise UnprocessableEntityError" do

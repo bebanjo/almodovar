@@ -12,9 +12,9 @@ describe "Errors should raise exceptions" do
       resource = Almodovar::Resource(resource_url, auth)
 
       expect { resource.wadus }.to raise_error{ |error|
-        error.should be_a(Almodovar::HttpError)
-        error.message.should == error_message(code, resource_url)
-        error.response_body.should == '<error>more info</error>'
+        expect(error).to be_a(Almodovar::HttpError)
+        expect(error.message).to eq(error_message(code, resource_url))
+        expect(error.response_body).to eq('<error>more info</error>')
       }
     end
 
@@ -24,9 +24,9 @@ describe "Errors should raise exceptions" do
       resources = Almodovar::Resource(resources_url, auth)
 
       expect { resources.create(:resource => {:wadus => 'wadus'}) }.to raise_error{ |error|
-        error.should be_a(Almodovar::HttpError)
-        error.message.should == error_message(code, resources_url)
-        error.response_body.should == '<error>more info</error>'
+        expect(error).to be_a(Almodovar::HttpError)
+        expect(error.message).to eq(error_message(code, resources_url))
+        expect(error.response_body).to eq('<error>more info</error>')
       }
     end
 
@@ -36,9 +36,9 @@ describe "Errors should raise exceptions" do
       resource = Almodovar::Resource(resource_url, auth)
 
       expect { resource.update(:resource => {:wadus => 'wadus'}) }.to raise_error{ |error|
-        error.should be_a(Almodovar::HttpError)
-        error.message.should == error_message(code, resource_url)
-        error.response_body.should == '<error>more info</error>'
+        expect(error).to be_a(Almodovar::HttpError)
+        expect(error.message).to eq(error_message(code, resource_url))
+        expect(error.response_body).to eq('<error>more info</error>')
       }
     end
 
@@ -48,9 +48,9 @@ describe "Errors should raise exceptions" do
       resource = Almodovar::Resource(resource_url, auth)
 
       expect { resource.delete }.to raise_error{ |error|
-        error.should be_a(Almodovar::HttpError)
-        error.message.should == error_message(code, resource_url)
-        error.response_body.should == '<error>more info</error>'
+        expect(error).to be_a(Almodovar::HttpError)
+        expect(error.message).to eq(error_message(code, resource_url))
+        expect(error.response_body).to eq('<error>more info</error>')
       }
     end
   end
