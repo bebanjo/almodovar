@@ -10,29 +10,33 @@ module Helpers
   end
 
   def stub_auth_request(method, url)
-    stub_request(method, auth_url(url))
+    stub_request(method, url).with(basic_auth: [auth.username, auth.password])
   end
-  
+
   def auth_request(method, url)
-    a_request(method, auth_url(url))
+    a_request(method, url).with(basic_auth: [auth.username, auth.password])
   end
-  
+
   def auth
     @auth ||= Almodovar::DigestAuth.new("realm", "user", "password")
-  end
-  
-  def auth_url(url)
-    URI.parse(url).tap do |uri|
-      uri.user = auth.username
-      uri.password = auth.password
-    end.to_s
   end
 end
 
 RSpec.configure do |config|
   config.include Helpers
   config.include WebMock::API
-  config.after(:each) { WebMock.reset! }
+  config.before(:suite) do
+    $default_options = Almodovar.default_options.dup
+  end
+  config.before(:each) do |example|
+    unless example.metadata[:skip_force_basic_auth]
+      Almodovar.default_options = $default_options.merge(force_basic_auth: true)
+    end
+  end
+  config.after(:each) do
+    WebMock.reset!
+    Almodovar.default_options = $default_options
+  end
 end
 
 module NokogiriMatchers
@@ -45,37 +49,37 @@ module NokogiriMatchers
       "expected to have #{processing_instruction} at the beggining of xml:\n#{xml_string}"
     end
   end
-  
+
   RSpec::Matchers.define :match_xpath do |xpath|
     match do |xml_string|
       Nokogiri::XML.parse(xml_string).at_xpath(xpath) != nil
     end
-    
+
     failure_message_for_should do |xml_string|
       "expected to match xpath #{xpath} in xml:\n#{xml_string}"
     end
-    
+
     failure_message_for_should_not do |xml_string|
       "expected to not match xpath #{xpath} in xml:\n#{xml_string}"
     end
-    
+
   end
-  
+
   RSpec::Matchers.define :equal_xml do |expected_xml_string|
     match do |actual_xml_string|
       @expected_doc = Nokogiri.parse(expected_xml_string)
       @actual_doc   = Nokogiri.parse(actual_xml_string)
       Lorax::Signature.new(@expected_doc.root).signature == Lorax::Signature.new(@actual_doc.root).signature
     end
-    
+
     failure_message_for_should do |actual_xml_string|
       "XML documents expected to be the same:\n\nExpected:\n#{expected_xml_string}\n\nActual:\n#{actual_xml_string}"
     end
-    
+
     failure_message_for_should_not do |actual_xml_string|
       "XML documents expected to be different but are equal"
     end
-    
+
   end
 
   RSpec::Matchers.define :have_text do |expected_text|
