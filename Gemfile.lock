@@ -3,6 +3,7 @@ PATH
   specs:
     almodovar (1.5.5)
       activesupport
+      addressable (>= 2.3.6)
       builder
       httpclient (~> 2.5)
       i18n
