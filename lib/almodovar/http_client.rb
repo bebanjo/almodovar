@@ -1,3 +1,4 @@
+require 'addressable/uri'
 require 'httpclient'
 
 module Almodovar
@@ -68,7 +69,7 @@ module Almodovar
     end
 
     def request(method, uri, options = {})
-      uri = URI.parse(uri)
+      uri = Addressable::URI.parse(uri)
       if (requires_auth?)
         domain = domain_for(uri)
         set_client_auth(domain)
