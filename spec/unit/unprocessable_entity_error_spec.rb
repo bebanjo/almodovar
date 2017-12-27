@@ -25,7 +25,7 @@ describe Almodovar::UnprocessableEntityError do
         </errors>
       }
       error = unprocessable_entity_error(double_response(body))
-      error.error_messages.should eq(['Name is taken'])
+      expect(error.error_messages).to eq(['Name is taken'])
 
 
       body = %q{
@@ -35,7 +35,7 @@ describe Almodovar::UnprocessableEntityError do
         </errors>
       }
       error = unprocessable_entity_error(double_response(body))
-      error.error_messages.should eq(['Name is taken', 'External ID is required'])
+      expect(error.error_messages).to eq(['Name is taken', 'External ID is required'])
 
       body = %q{
         <error>
@@ -43,20 +43,20 @@ describe Almodovar::UnprocessableEntityError do
         </error>
       }
       error = unprocessable_entity_error(double_response(body))
-      error.error_messages.should eq(['per_page maximum value is 200'])
+      expect(error.error_messages).to eq(['per_page maximum value is 200'])
     end
 
     it 'returns an empty array on empty response bodies' do
       error = unprocessable_entity_error(double_response(''))
-      error.error_messages.should eq([])
+      expect(error.error_messages).to eq([])
 
       error = unprocessable_entity_error(double_response(nil))
-      error.error_messages.should eq([])
+      expect(error.error_messages).to eq([])
     end
 
     it 'returns an empty array on json response bodies (it\'s not supported from the moment)' do
       error = unprocessable_entity_error(double_response('{"wadus": "foo"}'))
-      error.error_messages.should eq([])
+      expect(error.error_messages).to eq([])
     end
   end
 

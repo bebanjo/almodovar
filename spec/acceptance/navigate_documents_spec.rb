@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "Navigating included documents" do
   
   example "Accesing included data" do
-    stub_auth_request(:get, "http://movida.example.com/people/1").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/people/1").to_return(body: %q{
       <person>
         <name>Pedro Almodóvar</name>
         <extra-data type="document">
@@ -39,24 +39,24 @@ describe "Navigating included documents" do
   
     person = Almodovar::Resource("http://movida.example.com/people/1", auth)
     
-    person.should respond_to(:extra_data)
+    expect(person).to respond_to(:extra_data)
     
-    person.name.should == "Pedro Almodóvar"
-    person.extra_data["biography"]["birthplace"].should == "Calzada de Calatrava"
-    person.extra_data["biography"]["birthyear"].should == 1949
-    person.extra_data["biography"]["films"][0]["title"].should == "¿Qué he hecho yo para merecer esto?"
-    person.extra_data["biography"]["films"][0]["year"].should == 1984
-    person.extra_data["biography"]["films"][1]["title"].should == "Mujeres al borde de un ataque de nervios"
-    person.extra_data["biography"]["films"][1]["year"].should == 1988
-    person.extra_data["oscars"][0]["year"].should == 1999
-    person.extra_data["oscars"][0]["film"].should == "Todo sobre mi madre"
-    person.extra_data["oscars"][1]["year"].should == 2002
-    person.extra_data["oscars"][1]["film"].should == "Hable con ella"
+    expect(person.name).to eq("Pedro Almodóvar")
+    expect(person.extra_data["biography"]["birthplace"]).to eq("Calzada de Calatrava")
+    expect(person.extra_data["biography"]["birthyear"]).to eq(1949)
+    expect(person.extra_data["biography"]["films"][0]["title"]).to eq("¿Qué he hecho yo para merecer esto?")
+    expect(person.extra_data["biography"]["films"][0]["year"]).to eq(1984)
+    expect(person.extra_data["biography"]["films"][1]["title"]).to eq("Mujeres al borde de un ataque de nervios")
+    expect(person.extra_data["biography"]["films"][1]["year"]).to eq(1988)
+    expect(person.extra_data["oscars"][0]["year"]).to eq(1999)
+    expect(person.extra_data["oscars"][0]["film"]).to eq("Todo sobre mi madre")
+    expect(person.extra_data["oscars"][1]["year"]).to eq(2002)
+    expect(person.extra_data["oscars"][1]["film"]).to eq("Hable con ella")
     
   end
   
   example "Accessing document resources" do
-    stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(:body => %q{
+    stub_auth_request(:get, "http://movida.example.com/people/1/biography").to_return(body: %q{
       <biography type="document">
         <birthplace>Calzada de Calatrava</birthplace>
         <birthyear type="integer">1949</birthyear>
@@ -75,12 +75,12 @@ describe "Navigating included documents" do
   
     bio = Almodovar::Resource("http://movida.example.com/people/1/biography", auth)
     
-    bio["birthplace"].should == "Calzada de Calatrava"
-    bio["birthyear"].should == 1949
-    bio["films"][0]["title"].should == "¿Qué he hecho yo para merecer esto?"
-    bio["films"][0]["year"].should == 1984
-    bio["films"][1]["title"].should == "Mujeres al borde de un ataque de nervios"
-    bio["films"][1]["year"].should == 1988
+    expect(bio["birthplace"]).to eq("Calzada de Calatrava")
+    expect(bio["birthyear"]).to eq(1949)
+    expect(bio["films"][0]["title"]).to eq("¿Qué he hecho yo para merecer esto?")
+    expect(bio["films"][0]["year"]).to eq(1984)
+    expect(bio["films"][1]["title"]).to eq("Mujeres al borde de un ataque de nervios")
+    expect(bio["films"][1]["year"]).to eq(1988)
   end
   
 end

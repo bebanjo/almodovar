@@ -1,3 +1,4 @@
+require 'addressable/uri'
 require 'httpclient'
 
 module Almodovar
@@ -13,26 +14,26 @@ module Almodovar
              :send_timeout=,
              :receive_timeout=,
              :force_basic_auth=,
-             :to => :client
+             to: :client
 
     def initialize
       @client = HTTPClient.new
     end
 
-    def get(uri, headers = {})
-      request(:get, uri, :headers => merge_headers(headers))
+    def get(uri, query = {}, headers = {})
+      request(:get, uri, query: query, headers: merge_headers(headers))
     end
 
-    def post(uri, data, headers = {})
-      request(:post, uri, :body => data, :headers => merge_headers(headers))
+    def post(uri, data, query = {}, headers = {})
+      request(:post, uri, body: data, query: query, headers: merge_headers(headers))
     end
 
-    def put(uri, data, headers = {})
-      request(:put, uri, :body => data, :headers => merge_headers(headers))
+    def put(uri, data, query = {}, headers = {})
+      request(:put, uri, body: data, query: query, headers: merge_headers(headers))
     end
 
-    def delete(uri, headers = {})
-      request(:delete, uri, :headers => merge_headers(headers))
+    def delete(uri, query = {}, headers = {})
+      request(:delete, uri, query: query, headers: merge_headers(headers))
     end
 
     private
@@ -68,12 +69,18 @@ module Almodovar
     end
 
     def request(method, uri, options = {})
-      uri = URI.parse(URI.escape(URI.unescape(uri)))
+      uri = Addressable::URI.parse(uri)
       if (requires_auth?)
         domain = domain_for(uri)
         set_client_auth(domain)
       end
-      client.request(method, uri, :body => options[:body], :header => options[:headers].stringify_keys || {}, :follow_redirect => true)
+      request_options = {
+        body: options[:body],
+        header: options[:headers].stringify_keys || {},
+        follow_redirect: true
+      }
+      request_options[:query] = options[:query] if options[:query].present?
+      client.request(method, uri, request_options)
     rescue HTTPClient::SendTimeoutError => e
       raise SendTimeoutError.new(e)
     rescue HTTPClient::ReceiveTimeoutError => e

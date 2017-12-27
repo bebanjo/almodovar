@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Almodovar do
-  describe '.default_options' do
+  describe '.default_options', :skip_force_basic_auth do
     it 'should return set default_options' do
       expect(Almodovar.default_options[:send_timeout]).to eq(Almodovar::DEFAULT_SEND_TIMEOUT)
       expect(Almodovar.default_options[:connect_timeout]).to eq(Almodovar::DEFAULT_CONNECT_TIMEOUT)

@@ -17,8 +17,8 @@ describe "Instantiate resources from xml" do
     }
     project = Almodovar::Resource.from_xml(xml)
     
-    project.name.should == "My cool project"
-    project.tasks.first.name.should == "Start project"
+    expect(project.name).to eq("My cool project")
+    expect(project.tasks.first.name).to eq("Start project")
   end
   
   it "should make further HTTP calls if needed" do
@@ -30,9 +30,9 @@ describe "Instantiate resources from xml" do
     }
     project = Almodovar::Resource.from_xml(xml, auth)
     
-    project.name.should == "My cool project"
+    expect(project.name).to eq("My cool project")
     
-    stub_auth_request(:get, "http://example.com/p/1/t?expand=responsible").to_return(:body => %q{
+    stub_auth_request(:get, "http://example.com/p/1/t?expand=responsible").to_return(body: %q{
       <tasks type="array">
         <task>
           <name>Start project</name>
@@ -45,9 +45,9 @@ describe "Instantiate resources from xml" do
       </tasks>      
     })
     
-    tasks = project.tasks(:expand => "responsible")
+    tasks = project.tasks(expand: "responsible")
     
-    tasks.first.name.should == "Start project"
+    expect(tasks.first.name).to eq("Start project")
     tasks.first.responsible.name == "El Fary"
   end
   

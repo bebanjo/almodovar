@@ -2,17 +2,15 @@ module Almodovar
   module HttpAccessor
     def xml
       @xml ||= begin
-        response = http.get(url_with_params)
-        check_errors(response, url_with_params)
+        response = http.get(@url, query_params)
+        check_errors(response, @url, query_params)
         Nokogiri::XML.parse(response.body).root
       end
     end
 
-    def url_with_params
+    def query_params
       @options[:expand] = @options[:expand].join(",") if @options[:expand].is_a?(Array)
-      params = @options.map { |k, v| "#{k}=#{v}" }.join("&")
-      params = "?#{params}" unless params.empty?
-      @url + params
+      @options
     end
 
     def http
@@ -31,10 +29,10 @@ module Almodovar
       end
     end
 
-    def check_errors(response, url)
+    def check_errors(response, url, query_params = {})
       if response.status >= 400
         http_error_klass = Almodovar::HTTP_ERRORS[response.status] || Almodovar::HttpError
-        raise http_error_klass.new(response, url)
+        raise http_error_klass.new(response, url, query_params)
       end
     end
   end
