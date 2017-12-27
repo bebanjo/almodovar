@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.6.0 (2017-12-27)
+
+## Feature
+
+* HTTPClient query parameters encoding [#49](https://github.com/bebanjo/almodovar/pull/49)
+
 ## Version 1.5.5 (2017-04-03)
 
 ## Feature
