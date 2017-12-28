@@ -29,8 +29,10 @@ GEM
     json (1.8.3)
     lorax (0.2.0)
       nokogiri (>= 1.4.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.3)
-    nokogiri (1.5.11)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
@@ -63,7 +65,7 @@ DEPENDENCIES
   activesupport (>= 3.1.0)
   almodovar!
   lorax
-  nokogiri (~> 1.5.10)
+  nokogiri (~> 1.8.1)
   rake
   rdoc
   rspec
