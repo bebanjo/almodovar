@@ -18,9 +18,9 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency("builder")
   s.add_runtime_dependency("nokogiri")
-  s.add_runtime_dependency("activesupport")
+  s.add_runtime_dependency("activesupport", ["< 5.0"])
   s.add_runtime_dependency("i18n")
-  s.add_runtime_dependency("httpclient", "~> 2.5")
-  s.add_runtime_dependency("addressable", ">= 2.3.6")
+  s.add_runtime_dependency("httpclient")
+  s.add_runtime_dependency("addressable")
   s.add_runtime_dependency("json")
 end
