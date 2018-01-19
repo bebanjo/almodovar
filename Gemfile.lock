@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    almodovar (1.6.0)
+    almodovar (1.7.0)
       activesupport
       addressable (>= 2.3.6)
       builder

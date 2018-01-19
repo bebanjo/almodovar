@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.7.0 (2018-01-19)
+
+## Feature
+
+* Remove alias_method_chain [#49](https://github.com/bebanjo/almodovar/pull/50)
+
 ## Version 1.6.0 (2017-12-27)
 
 ## Feature
