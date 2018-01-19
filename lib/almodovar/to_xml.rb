@@ -1,17 +1,13 @@
 module Almodovar
   module ToXml
-    def self.included(base)
-      base.alias_method_chain :to_xml, :links
-    end
-
-    def to_xml_with_links(options = {}, &block)
-      return to_xml_without_links(options, &block) if !options[:convert_links] || options.delete(:skip_links_one_level)
+    def to_xml(options = {}, &block)
+      return super(options, &block) if !options[:convert_links] || options.delete(:skip_links_one_level)
       options[:builder].tag!(:link, rel: options[:root]) do |xml|
-        to_xml_without_links options.merge(skip_links_one_level: self.is_a?(Array)), &block
+        super options.merge(skip_links_one_level: self.is_a?(Array)), &block
       end
     end
   end
-  
+
   class Resource
     def to_xml(options = {})
       options[:builder].tag!(:link, rel: options[:root], href: url)
@@ -19,5 +15,5 @@ module Almodovar
   end
 end
 
-Array.send :include, Almodovar::ToXml
-Hash.send :include, Almodovar::ToXml
+Array.send :prepend, Almodovar::ToXml
+Hash.send :prepend, Almodovar::ToXml
