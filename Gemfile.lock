@@ -8,7 +8,7 @@ PATH
       httpclient (~> 2.5)
       i18n
       json
-      nokogiri
+      nokogiri (~> 1.8.2)
 
 GEM
   remote: https://rubygems.org/
@@ -31,7 +31,7 @@ GEM
       nokogiri (>= 1.4.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     rake (10.1.1)
     rdoc (4.1.1)
@@ -65,7 +65,7 @@ DEPENDENCIES
   activesupport (>= 3.1.0)
   almodovar!
   lorax
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.8.2)
   rake
   rdoc
   rspec
