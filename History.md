@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.7.1 (2018-04-16)
+
+## Feature
+
+* Upgrade to nokogiri to a version without vulnerabilities [#51](https://github.com/bebanjo/almodovar/pull/51)
+
 ## Version 1.7.0 (2018-01-19)
 
 ## Feature
