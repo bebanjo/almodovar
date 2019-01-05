@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.7.2 (2019-01-05)
+
+## Other
+
+* Relax Nokogiri [#52](https://github.com/bebanjo/almodovar/pull/52)
+
 ## Version 1.7.1 (2018-04-16)
 
 ## Feature
