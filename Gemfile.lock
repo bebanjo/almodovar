@@ -8,7 +8,7 @@ PATH
       httpclient (~> 2.5)
       i18n
       json
-      nokogiri (~> 1.8.2)
+      nokogiri (~> 1.8, >= 1.8.2)
 
 GEM
   remote: https://rubygems.org/
@@ -73,4 +73,4 @@ DEPENDENCIES
   webmock (= 2.3.2)
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
