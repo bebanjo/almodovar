@@ -32,7 +32,7 @@ GEM
       nokogiri (>= 1.4.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    nokogiri (1.8.2)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     public_suffix (3.0.3)
     rake (10.1.1)
@@ -75,4 +75,4 @@ DEPENDENCIES
   webmock (= 2.3.2)
 
 BUNDLED WITH
-   1.17.1
+   1.17.3
