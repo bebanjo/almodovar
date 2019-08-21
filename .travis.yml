@@ -5,7 +5,5 @@ before_install:
   # Lastest version of bundler require ruby > 2.3
   - gem install bundler -v 1.17.1 --no-ri --no-rdoc
 rvm:
-  - 2.1.10
-  - 2.2.9
   - 2.3.6
   - 2.4.3
