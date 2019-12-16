@@ -101,6 +101,18 @@ You can use the _update_ method:
   >> job.name
   => "Wadus wadus"
 
+== Updating associations
+
+When updating a resource you can call the update method with other resources as parameters too. This allows you to create or update associations between resources (if they are supported, of course):
+
+  >> series = Almodovar::Resource("http://localhost:4001/api/title_groups/101", auth)
+  => <title-group> ... </title-group>
+  >> title = Almodovar::Resource("http://localhost:4001/api/titles/1001", auth)
+  => <title> ... </title>
+  >> title.update( title: { series: series } )
+
+This will work the same with the create method, in case you need it.
+
 == Deleting resources
 
 And exactly the same with the _delete_ method:
