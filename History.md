@@ -1,10 +1,16 @@
 # Almodovar Release History
 
+## Version 1.7.4 (2020-03-10)
+
+## Other
+
+* Bump nokogiri from 1.10.4 to 1.10.8 [#55](https://github.com/bebanjo/almodovar/pull/55)
+
 ## Version 1.7.3 (2019-08-21)
 
 ## Other
 
-* Upgrade Nokogiri [#52](https://github.com/bebanjo/almodovar/pull/53)
+* Upgrade Nokogiri [#53](https://github.com/bebanjo/almodovar/pull/53)
 
 ## Version 1.7.2 (2019-01-05)
 
