@@ -1,10 +1,16 @@
 # Almodovar Release History
 
+## Version 1.7.6 (2020-03-10)
+
+## Other
+
+* Setup GitHub actions and remove travis [#57](https://github.com/bebanjo/almodovar/pull/57)
+
 ## Version 1.7.5 (2020-03-10)
 
 ## Other
 
-* Bump rake from 10.1.1 to 13.0.1 [#55](https://github.com/bebanjo/almodovar/pull/56)
+* Bump rake from 10.1.1 to 13.0.1 [#56](https://github.com/bebanjo/almodovar/pull/56)
 
 ## Version 1.7.4 (2020-03-10)
 
