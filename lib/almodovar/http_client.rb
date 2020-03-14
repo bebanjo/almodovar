@@ -38,8 +38,15 @@ module Almodovar
 
     private
 
-    def merge_headers(headers)
-      (self.headers ||= {}).merge(headers)
+    def merge_headers(req_headers)
+      (default_headers || {}).
+        merge(self.headers ||= {}).
+        merge(req_headers)
+    end
+
+    def default_headers
+      defaults = Almodovar::default_options[:headers] || {}
+      defaults = defaults.is_a?(Proc) ? defaults.call() : defaults
     end
 
     def requires_auth?
