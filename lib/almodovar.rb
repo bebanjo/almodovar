@@ -46,13 +46,16 @@ module Almodovar
     end
 
     def default_options=(options = {})
-      @default_options = {
-        send_timeout: options[:send_timeout],
-        connect_timeout: options[:connect_timeout],
-        receive_timeout: options[:receive_timeout],
-        force_basic_auth: options[:force_basic_auth],
-        headers: options[:headers]
-      }
+      @default_options ||= {}
+      # Only assign provided keys too keep defaults when merging
+      %i(send_timeout connect_timeout receive_timeout force_basic_auth headers).each do |key|
+        @default_options[key] = options[key] if options.has_key?(key)
+      end
+      @default_options
+    end
+
+    def reset_options
+      @default_options = nil
     end
   end
 end
