@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.7.7 (2020-03-16)
+
+## Other
+
+* Support to provide request headers based on current thread values, and bump development dependencies [#58](https://github.com/bebanjo/almodovar/pull/58)
+
 ## Version 1.7.6 (2020-03-10)
 
 ## Other
