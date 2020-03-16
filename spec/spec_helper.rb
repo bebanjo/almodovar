@@ -24,16 +24,13 @@ end
 RSpec.configure do |config|
   config.include Helpers
   config.include WebMock::API
-  config.before(:suite) do
-    $default_options = Almodovar.default_options.dup
+  config.before(:each) do
+    Almodovar.reset_options
+    WebMock.reset!
   end
   config.before(:each) do |example|
     unless example.metadata[:skip_force_basic_auth]
-      Almodovar.default_options = $default_options.merge(force_basic_auth: true)
+      Almodovar.default_options = { force_basic_auth: true }
     end
-  end
-  config.after(:each) do
-    WebMock.reset!
-    Almodovar.default_options = $default_options
   end
 end

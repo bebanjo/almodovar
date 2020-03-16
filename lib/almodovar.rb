@@ -21,24 +21,41 @@ module Almodovar
   DEFAULT_RECEIVE_TIMEOUT = 120
 
   class << self
+
+    # default_options allows to configure some settings on the underlying HTTP client used by Almodovar:
+    #   - send_timeout: Request sending timeout in sec. Defaults to 120
+    #   - connect_timeout: Connect timeout in sec. Defaults to 30
+    #   - receive_timeout: Response receiving timeout in sec. Defaults to 120
+    #   - user_agent: User-Agent header in HTTP request. defaults to Almodovar/#{Almodovar::VERSION}
+    #   - force_basic_auth: flag for sending Authorization header w/o getting 401 first. Useful during tests
+    #   - headers: is for providing default headers Hash that all HTTP
+    #     requests should have, such as custom 'X-Request-Id' header in tracing.
+    #     As Almodovar does not expose http API, this accept a proc which will be
+    #     evaluated per request. You can override :headers with Almodovar::HTTPClient headers method
+    #     or using Hash parameter in HTTP request methods but this is not accessible on default Almodovar usage.
     def default_options
       default = {
         send_timeout: DEFAULT_SEND_TIMEOUT,
         connect_timeout: DEFAULT_CONNECT_TIMEOUT,
         receive_timeout: DEFAULT_RECEIVE_TIMEOUT,
         user_agent: "Almodovar/#{Almodovar::VERSION}",
-        force_basic_auth: false
+        force_basic_auth: false,
+        headers: nil,
       }
       default.merge(@default_options || {})
     end
 
     def default_options=(options = {})
-      @default_options = {
-        send_timeout: options[:send_timeout],
-        connect_timeout: options[:connect_timeout],
-        receive_timeout: options[:receive_timeout],
-        force_basic_auth: options[:force_basic_auth]
-      }
+      @default_options ||= {}
+      # Only assign provided keys too keep defaults when merging
+      %i(send_timeout connect_timeout receive_timeout force_basic_auth headers).each do |key|
+        @default_options[key] = options[key] if options.has_key?(key)
+      end
+      @default_options
+    end
+
+    def reset_options
+      @default_options = nil
     end
   end
 end

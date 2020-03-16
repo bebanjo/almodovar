@@ -32,5 +32,23 @@ describe Almodovar do
 
       expect(Almodovar.default_options[:user_agent]).to eq("Almodovar/#{Almodovar::VERSION}")
     end
+
+    it "overrides just provided options" do
+      Almodovar.default_options = { force_basic_auth: true }
+
+      options = Almodovar.default_options
+      expect(options[:send_timeout]).to eq(Almodovar::DEFAULT_SEND_TIMEOUT)
+      expect(options[:connect_timeout]).to eq(Almodovar::DEFAULT_CONNECT_TIMEOUT)
+      expect(options[:receive_timeout]).to eq(Almodovar::DEFAULT_RECEIVE_TIMEOUT)
+      expect(options[:headers]).to eq(nil)
+
+      Almodovar.default_options = { send_timeout: 10, headers: { 'Host' => 'movida.example.com' } }
+
+      options = Almodovar.default_options
+      expect(options[:send_timeout]).to eq(10)
+      expect(options[:connect_timeout]).to eq(Almodovar::DEFAULT_CONNECT_TIMEOUT)
+      expect(options[:receive_timeout]).to eq(Almodovar::DEFAULT_RECEIVE_TIMEOUT)
+      expect(options[:headers]).to eq({ 'Host' => 'movida.example.com' })
+    end
   end
 end
