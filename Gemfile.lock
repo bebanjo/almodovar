@@ -27,15 +27,14 @@ GEM
     hashdiff (1.0.1)
     httpclient (2.8.3)
     i18n (0.8.1)
-    json (1.8.6)
+    json (2.5.1)
     mini_portile2 (2.4.0)
     minitest (5.10.3)
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     public_suffix (4.0.3)
     rake (13.0.1)
-    rdoc (4.1.1)
-      json (~> 1.4)
+    rdoc (5.1.0)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -64,9 +63,10 @@ PLATFORMS
 DEPENDENCIES
   activesupport (>= 3.1.0)
   almodovar!
+  json (>= 2.3.0)
   nokogiri (~> 1.10.8)
   rake
-  rdoc
+  rdoc (= 5.1.0)
   rspec
   safe_yaml (>= 1.0.4)
   webmock
