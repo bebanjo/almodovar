@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths     = ["lib"]
 
   s.add_runtime_dependency("builder")
-  s.add_runtime_dependency("nokogiri", "~> 1.10.4")
+  s.add_runtime_dependency("nokogiri", ">= 1.10.4", "< 1.13.0")
   s.add_runtime_dependency("activesupport")
   s.add_runtime_dependency("i18n")
   s.add_runtime_dependency("httpclient", "~> 2.5")
