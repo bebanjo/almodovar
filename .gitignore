@@ -2,4 +2,5 @@ rdoc
 pkg
 .bundle/config
 almodovar-*.gem
+Gemfile.lock
 .bin
