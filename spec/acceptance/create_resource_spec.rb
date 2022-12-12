@@ -158,6 +158,64 @@ describe "Creating new resources" do
     expect(project.tasks.first.name).to eq("Start project")
   end
 
+  example "Creating batched resources" do
+    requirements = Almodovar::Resource("http://movida.example.com/api/requirements", auth)
+    granted_requirements = Almodovar::Resource("http://movida.example.com/api/blackouts/13/granted_requirements", auth)
+
+    stub_auth_request(:get, "http://movida.example.com/api/requirements").to_return(body: %q{
+      <?xml version="1.0" encoding="UTF-8"?>
+      <requirements type="array">
+        <requirement>
+          <id type="integer">5214</id>
+          <category>Owner</category>
+          <value>Virgin Media Ireland</value>
+          <link rel="self" href="http://movida.example.com/api/requirements/5214"/>
+        </requirement>
+        <requirement>
+          <id type="integer">5149</id>
+          <category>Owner</category>
+          <value>YouTube (CMS)</value>
+          <link rel="self" href="http://movida.example.com/api/requirements/5149"/>
+        </requirement>
+      </requirements>
+    })
+
+    stub_auth_request(:post, "http://movida.example.com/api/blackouts/13/granted_requirements").with do |req|
+      # <granted-requirements type="array">
+      #   <granted-requirement>
+      #     <link rel="requirement" href="http://movida.example.com/api/requirements/5214"/>
+      #   </granted-requirement>
+      #   <granted-requirement>
+      #     <link rel="requirement" href="http://movida.example.com/api/requirements/5149"/>
+      #   </granted-requirement>
+      # </granted-requirements>
+      xml = Nokogiri::XML.parse(req.body)
+      xml.at_xpath("/granted-requirements[@type='array']/granted-requirement/link[@rel='requirement'][@href='http://movida.example.com/api/requirements/5214'][not(node())]")
+      xml.at_xpath("/granted-requirements[@type='array']/granted-requirement[2]/link[@rel='requirement'][@href='http://movida.example.com/api/requirements/5149'][not(node())]")
+    end.to_return(body: %q{
+      <?xml version="1.0" encoding="UTF-8"?>
+      <granted-requirements type="array">
+        <granted-requirement>
+          <id type="integer">10</id>
+          <link rel="self" href="http://movida.example.com/api/granted_requirements/10"/>
+          <link rel="requirement" href="http://movida.example.com/api/requirements/5214"/>
+        </granted-requirement>
+        <granted-requirement>
+          <id type="integer">11</id>
+          <link rel="self" href="http://movida.example.com/api/granted_requirements/11"/>
+          <link rel="requirement" href="http://movida.example.com/api/requirements/5149"/>
+        </granted-requirement>
+      </granted-requirements>
+    })
+
+    granted_requirements = granted_requirements.create(granted_requirements:
+      requirements.map { |r| {requirement: r} }
+    )
+
+    expect(granted_requirements).to be_a(Almodovar::Resource)
+    expect(granted_requirements.first.id).to eq(10)
+  end
+
   example "Creating a resource raise UnprocessableEntityError" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth)
 
