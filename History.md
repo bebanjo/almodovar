@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.7.8 (2022-12-14)
+
+## Other
+
+* Add support for batch creation api endpoints [#74](https://github.com/bebanjo/almodovar/pull/74)
+
 ## Version 1.7.7 (2020-03-16)
 
 ## Other
