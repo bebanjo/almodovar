@@ -61,7 +61,7 @@ describe Almodovar::UnprocessableEntityError do
   end
 
   def double_response(body)
-    double(:response, body: body, status: nil)
+    double(:response, body: body, headers: {}, status: nil)
   end
 
   def unprocessable_entity_error(response)

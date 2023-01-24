@@ -5,7 +5,7 @@ describe "Errors should raise exceptions" do
   let(:resource_url)  { "http://movida.example.com/resource" }
   let(:resources_url) { "http://movida.example.com/resources" }
 
-  %w{400 401 403 404 405 406 422 500 502 503}.each do |code|
+  %w{400 401 403 404 405 406 422 429 500 502 503}.each do |code|
     example "Receiving #{code} in a GET request" do
       stub_auth_request(:get, resource_url).to_return(body: '<error>more info</error>', status: code.to_i)
 
