@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 1.8.0 (2023-02-06)
+
+## Feature
+
+* Add specific TooManyRequestsError class [#77](https://github.com/bebanjo/almodovar/pull/77)
+
 ## Version 1.7.8 (2022-12-14)
 
 ## Other
