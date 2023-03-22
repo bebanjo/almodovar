@@ -17,10 +17,11 @@ Gem::Specification.new do |s|
   s.require_paths     = ["lib"]
 
   s.add_runtime_dependency("builder")
-  s.add_runtime_dependency("nokogiri", "~> 1.10.4")
-  s.add_runtime_dependency("activesupport")
+  s.add_runtime_dependency("nokogiri", "~> 1.12.0")
+  s.add_runtime_dependency("activesupport", "~> 5.2.4")
   s.add_runtime_dependency("i18n")
   s.add_runtime_dependency("httpclient", "~> 2.5")
   s.add_runtime_dependency("addressable", ">= 2.3.6")
   s.add_runtime_dependency("json")
+  s.add_runtime_dependency("rexml", ">= 3.2.5")
 end
