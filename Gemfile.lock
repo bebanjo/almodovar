@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     almodovar (1.8.0)
-      activesupport (~> 5.2.4)
+      activesupport (>= 5.2.4)
       addressable (>= 2.3.6)
       builder
       httpclient (~> 2.5)
