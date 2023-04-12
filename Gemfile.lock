@@ -8,7 +8,7 @@ PATH
       httpclient (~> 2.5)
       i18n
       json
-      nokogiri (~> 1.12.0)
+      nokogiri (>= 1.12.0)
       rexml (>= 3.2.5)
 
 GEM
@@ -70,7 +70,7 @@ DEPENDENCIES
   activesupport (>= 5.2.4)
   almodovar!
   json (>= 2.3.0)
-  nokogiri (~> 1.12.0)
+  nokogiri (>= 1.12.0)
   rake
   rdoc (= 5.1.0)
   rspec
