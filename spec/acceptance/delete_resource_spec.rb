@@ -1,21 +1,44 @@
 require 'spec_helper'
 
 describe "Deleting resources" do
-  
   example "Deleting a resource" do
-    project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
+    url = "http://movida.example.com/projects/1"
+
+    project = Almodovar::Resource(url, auth)
     
-    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(status: 200)
+    stub_auth_request(:delete, url).to_return(status: 200)
     
     project.delete
     
-    expect(auth_request(:delete, "http://movida.example.com/projects/1")).to have_been_made.once
+    expect(auth_request(:delete, url)).to have_been_made.once
+  end
+
+  example "Deleting a resource with query params" do
+    url = "http://movida.example.com/projects/1"
+
+    project = Almodovar::Resource(url, auth)
+
+    stub_auth_request(:delete, url).with({
+      query: {
+        param1: 1,
+        param2: 2,
+      }
+    }).to_return(status: 200)
+
+    project.delete({
+      param1: 1,
+      param2: 2,
+    })
+
+    expect(auth_request(:delete, url + "?param1=1&param2=2")).to have_been_made.once
   end
 
   example "Deleting a resource raise UnprocessableEntityError" do
-    project = Almodovar::Resource("http://movida.example.com/projects/1", auth)
+    url = "http://movida.example.com/projects/1"
 
-    stub_auth_request(:delete, "http://movida.example.com/projects/1").to_return(body: %q{
+    project = Almodovar::Resource(url, auth)
+
+    stub_auth_request(:delete, url).to_return(body: %q{
       <errors>
         <error>Should delete existing tasks first</error>
       </errors>

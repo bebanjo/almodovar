@@ -20,8 +20,8 @@ module Almodovar
       @xml = Nokogiri::XML.parse(response.body).root
     end
 
-    def delete
-      check_errors(http.delete(@url), @url)
+    def delete(extra_query_params = {})
+      check_errors(http.delete(@url, extra_query_params), @url, extra_query_params)
     end
 
     def url
