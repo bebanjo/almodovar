@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe "Creating new resources" do
-  
+
   example "Creating a resource in a collection" do
-    
+
     projects = Almodovar::Resource("http://movida.example.com/projects", auth)
-    
+
     stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
       # we parse because comparing strings is too fragile because of order changing, different indentations, etc.
       # we're expecting something very close to this:
       # <project>
       #   <name>Wadus</name>
-      # </project>      
+      # </project>
       Nokogiri::XML.parse(req.body).at_xpath("/project/name").text == "Wadus"
     end.to_return(body: %q{
       <project>
@@ -19,22 +19,22 @@ describe "Creating new resources" do
         <link rel="self" href="http://movida.example.com/projects/1"/>
       </project>
     })
-    
+
     project = projects.create(project: {name: "Wadus"})
-    
+
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
-    
+
     stub_auth_request(:get, "http://movida.example.com/projects/1").to_return(body: %q{
       <project>
         <name>Wadus</name>
         <link rel="self" href="http://movida.example.com/projects/1"/>
       </project>
     })
-    
+
     expect(project.name).to eq(Almodovar::Resource(project.url, auth).name)
   end
-  
+
   example "Creating a resource expanding links" do
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
@@ -58,19 +58,19 @@ describe "Creating new resources" do
         </link>
       </project>
     })
-    
-    projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)    
+
+    projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)
     project = projects.create(project: {name: "Wadus", template: "Basic"})
-    
+
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
     expect(project.tasks.size).to eq(1)
     expect(project.tasks.first.name).to eq("Starting Meeting")
   end
-  
+
   example "Creating linking to existing resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth)
-    
+
     stub_auth_request(:post, "http://movida.example.com/projects").with do |req|
       # <project>
       #   <link rel="owner" href="http://example.com/people/luismi"/>
@@ -83,16 +83,16 @@ describe "Creating new resources" do
         <link rel="owner" href="http://example.com/people/luismi"/>
       </project>
     })
-    
+
     project = projects.create(project: {owner: Almodovar::Resource("http://example.com/people/luismi")})
-    
+
     expect(project).to be_a(Almodovar::Resource)
     expect(project.owner.url).to eq("http://example.com/people/luismi")
   end
-  
+
   example "Creating single nested resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)
-    
+
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <name>Wadus</name>
@@ -117,17 +117,17 @@ describe "Creating new resources" do
         </link>
       </project>
     })
-    
+
     project = projects.create(project: {name: "Wadus", timeline: {name: "Start project", wadus: {}}})
-    
+
     expect(project).to be_a(Almodovar::Resource)
     expect(project.name).to eq("Wadus")
     expect(project.timeline.name).to eq("Start project")
   end
-  
+
   example "Creating multiple nested resources" do
     projects = Almodovar::Resource("http://movida.example.com/projects", auth, expand: :tasks)
-    
+
     stub_auth_request(:post, "http://movida.example.com/projects?expand=tasks").with do |req|
       # <project>
       #   <link rel="tasks">
@@ -151,9 +151,9 @@ describe "Creating new resources" do
         </link>
       </project>
     })
-    
+
     project = projects.create(project: {tasks: [{name: "Start project"}]})
-    
+
     expect(project).to be_a(Almodovar::Resource)
     expect(project.tasks.first.name).to eq("Start project")
   end
@@ -242,5 +242,5 @@ describe "Creating new resources" do
       end
     end.to raise_error(Almodovar::UnprocessableEntityError)
   end
-  
+
 end
