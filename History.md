@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 2.0.0 (2023-04-25)
+
+## Feature
+
+* Update Nokogiri to v1.12 for Ruby 3 support [#79](https://github.com/bebanjo/almodovar/pull/79)
+
 ## Version 1.8.0 (2023-02-06)
 
 ## Feature
