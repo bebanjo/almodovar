@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 2.0.1 (2023-06-08)
+
+## Feature
+
+* Add support to specify query params when deleting resources [#80](https://github.com/bebanjo/almodovar/pull/80)
+
 ## Version 2.0.0 (2023-04-25)
 
 ## Feature
