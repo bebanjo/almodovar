@@ -140,4 +140,4 @@ In case an incorrect _PUT/POST_ request fails with 422 response status, you can 
 * Write the conventions Almodovar expects in an API
 * Other authentication methods than digest
 
-Copyright (c) 2010 BeBanjo S.L., released under the MIT license
+Copyright (c) 2023 BeBanjo S.L., released under the MIT license
