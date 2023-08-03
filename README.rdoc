@@ -1,4 +1,4 @@
-=Almodovar {<img src="https://github.com/bebanjo/almodovar/workflows/CI/badge.svg" />}[http://travis-ci.org/bebanjo/almodovar]
+=Almodovar
 
 Almodovar is a client for BeBanjo's Sequence & Movida API written in Ruby (it's actually a generic client which plays nice with any RESTful API following some conventions).
   
