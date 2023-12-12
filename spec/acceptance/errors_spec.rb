@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe "Errors should raise exceptions" do
-
   let(:resource_url)  { "http://movida.example.com/resource" }
   let(:resources_url) { "http://movida.example.com/resources" }
 
@@ -15,6 +14,7 @@ describe "Errors should raise exceptions" do
         expect(error).to be_a(Almodovar::HttpError)
         expect(error.message).to eq(error_message(code, resource_url))
         expect(error.response_body).to eq('<error>more info</error>')
+        expect(error.response_url).to eq(resource_url)  # Check for the response_url
       }
     end
 
@@ -27,6 +27,7 @@ describe "Errors should raise exceptions" do
         expect(error).to be_a(Almodovar::HttpError)
         expect(error.message).to eq(error_message(code, resources_url))
         expect(error.response_body).to eq('<error>more info</error>')
+        expect(error.response_url).to eq(resources_url)  # Check for the response_url
       }
     end
 
@@ -39,6 +40,7 @@ describe "Errors should raise exceptions" do
         expect(error).to be_a(Almodovar::HttpError)
         expect(error.message).to eq(error_message(code, resource_url))
         expect(error.response_body).to eq('<error>more info</error>')
+        expect(error.response_url).to eq(resource_url)  # Check for the response_url
       }
     end
 
@@ -51,6 +53,7 @@ describe "Errors should raise exceptions" do
         expect(error).to be_a(Almodovar::HttpError)
         expect(error.message).to eq(error_message(code, resource_url))
         expect(error.response_body).to eq('<error>more info</error>')
+        expect(error.response_url).to eq(resource_url)  # Check for the response_url
       }
     end
   end
@@ -64,6 +67,7 @@ describe "Errors should raise exceptions" do
       expect(error).to be_a(Almodovar::HttpError)
       expect(error.message).to eq(error_message(400, resource_url, { page: 2 }))
       expect(error.response_body).to eq('<error>more info</error>')
+      expect(error.response_url).to eq(resource_url + "?page=2")  # Check for the response_url with query params
     }
   end
 

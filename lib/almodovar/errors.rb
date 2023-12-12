@@ -7,6 +7,7 @@ module Almodovar
       @response_status = response.status
       @response_body = response.body
       @response_headers = response.headers
+      @response_url = url
       message = "Status code #{response.status} on resource #{url}"
       message += " with params: #{query_params.inspect}" if query_params.present?
       super(message)
