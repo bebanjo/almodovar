@@ -1,6 +1,6 @@
 module Almodovar
   class HttpError < StandardError
-    attr_reader :response_status, :response_body, :response_headers
+    attr_reader :response_status, :response_body, :response_headers, :response_url
 
     # Children of this class must not override the initialize method
     def initialize(response, url, query_params = {})
