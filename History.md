@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 2.0.2 (2023-12-26)
+
+## Feature
+
+* Add response url to HttpErrors [#82](https://github.com/bebanjo/almodovar/pull/82)
+
 ## Version 2.0.1 (2023-06-08)
 
 ## Feature
