@@ -23,6 +23,21 @@ describe Almodovar::SingleResource do
     expect(Almodovar::SingleResource.new(url, nil).to_hash).to eq({ "name" => "Resource Name" })
   end
 
+  it "does not crash and returns string if duration is not ISO" do
+    url = "http://movida.bebanjo.com/titles/3"
+
+    stub_request(:get, url).to_return(body: %q{
+      <resource type="document">
+        <duration type="duration">30m</duration>
+      </resource>
+    })
+
+    expect {
+      result = Almodovar::SingleResource.new(url, nil).to_hash
+      expect(result["duration"]).to eq("30m")
+    }.not_to raise_error
+  end
+
   it "#delete" do
     url = "http://movida.bebanjo.com/titles/1"
 

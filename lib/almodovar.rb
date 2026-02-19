@@ -14,6 +14,7 @@ require 'almodovar/resource_collection'
 require 'almodovar/single_resource'
 require 'almodovar/errors'
 require 'almodovar/to_xml'
+require 'almodovar/disable_duration_parsing'
 
 module Almodovar
   DEFAULT_SEND_TIMEOUT = 120
