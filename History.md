@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 2.0.3 (2026-02-19)
+
+## Feature
+
+* Avoid automatic duration type parsing [#83](https://github.com/bebanjo/almodovar/pull/83)
+
 ## Version 2.0.2 (2023-12-26)
 
 ## Feature
