@@ -40,7 +40,7 @@ GEM
     date (3.5.1)
     diff-lcs (1.6.2)
     drb (2.2.3)
-    erb (6.0.1)
+    erb (6.0.2)
     hashdiff (1.2.1)
     httpclient (2.9.0)
       mutex_m
@@ -96,12 +96,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (>= 6.1.7.5)
+  activesupport (>= 8.1.2)
   almodovar!
   json (>= 2.3.0)
   nokogiri (>= 1.19.1)
   rake
-  rdoc (>= 6.1.2.1)
+  rdoc (>= 7.2)
   rspec
   safe_yaml (>= 1.0.4)
   webmock
