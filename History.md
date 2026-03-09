@@ -1,5 +1,11 @@
 # Almodovar Release History
 
+## Version 2.0.4 (2026-03-09)
+
+## Feature
+
+* Upgrade gem dependencies to fix security issues. [#84](https://github.com/bebanjo/almodovar/pull/84)
+
 ## Version 2.0.3 (2026-02-19)
 
 ## Feature
